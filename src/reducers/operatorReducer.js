@@ -1,11 +1,4 @@
 const initialState = {
-  diner: {
-    username: "",
-    email: "",
-    password: "",
-    currentLocation: "",
-    favoriteTrucks: [],
-  },
   operator: {
     username: "",
     email: "",
@@ -38,7 +31,7 @@ const initialState = {
   },
 };
 
-export const foodTruckReducer = (state = initialState, action) => {
+export const operatorReducer = (state = initialState, action) => {
   switch (action.type) {
     default:
       return state;

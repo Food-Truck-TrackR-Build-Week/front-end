@@ -1,7 +1,9 @@
 import {combineReducers} from "redux";
 
-import {foodTruckReducer} from "./foodTruckReducer";
+import {dinerReducer} from "./dinerReducer";
+import {operatorReducer} from "./operatorReducer";
 
 export const rootReducer = combineReducers({
-  foodTruckReducer,
+  dinerReducer,
+  operatorReducer,
 });
