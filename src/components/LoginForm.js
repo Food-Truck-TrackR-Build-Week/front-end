@@ -11,13 +11,35 @@ const Login = () => {
 // Update state from false to true based on which option is selected
 // Login will Route to correct dashboard based on which option is selected
 
+// const handleChange = (e) => {
+//   if (e.target.value === 'operator') {
+//   setIsOperator(true)
+//   setIsDiner(false)
+//   } // } else if (e.target.value === 'operator') {
+//   //   setIsDiner(false)
+//   //   setIsOperator(true)
+//   // }
+//   console.log('isDiner', isDiner)
+// };
+
+const changeStateD = () => {
+  setIsDiner(!isDiner)  
+  console.log(isDiner)
+}
+
+const changeStateO = () => {
+  setIsOperator(!isOperator)
+  console.log(isOperator)
+}
+
+// onSubmit should contain IF statement based on checked radio
 
 
   return (
     <>
       <h1>Login component</h1>
-      <input type='radio' />I'm a Foodie!
-      <input type='radio' />I'm an Operator!
+      <input type='radio' name='select' value='diner' onClick={changeStateD} />I'm a Foodie!
+      <input type='radio' name='select' value='operator' onClick={changeStateO} />I'm an Operator!
       <form>
         <br />
         <label htmlFor='username' />Username: 
