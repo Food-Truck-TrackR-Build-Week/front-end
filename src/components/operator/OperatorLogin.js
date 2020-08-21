@@ -12,6 +12,7 @@ const Operator = () => {
 
       <LoginForm />
       <RegisterForm />
+
       <Switch>
         <PrivateRoute
           exact
