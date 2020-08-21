@@ -6,8 +6,7 @@ const PrivateRoute = ({component: Component}, ...rest) => {
     <Route
       {...rest}
       render={() =>
-        // Will add Token name once provided by backend
-        localStorage.getItem("") ? <Component /> : <Redirect to="/" />
+        localStorage.getItem("token") ? <Component /> : <Redirect to="/" />
       }
     />
   );
