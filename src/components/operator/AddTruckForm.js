@@ -1,14 +1,15 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {fetchOperatorData} from "../../actions";
+import {addFoodTruck} from "../../actions";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
-const AddTruckForm = () => {
+const AddTruckForm = (props) => {
   const [open, setOpen] = useState(false);
   const [truck, setTruck] = useState({
     truckName: "",
     imageOfTruck: "",
     cuisineType: "",
+    id: Date.now(),
   });
 
   const handleChange = (e) => {
@@ -21,7 +22,7 @@ const AddTruckForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetchOperatorData(truck);
+    props.addFoodTruck(truck);
 
     setTruck({
       truckName: "",
@@ -89,4 +90,10 @@ const AddTruckForm = () => {
   );
 };
 
-export default connect(null, {fetchOperatorData})(AddTruckForm);
+const mapStateToProps = (state) => {
+  return {
+    truck: state.operator.truck,
+  };
+};
+
+export default connect(mapStateToProps, {addFoodTruck})(AddTruckForm);
