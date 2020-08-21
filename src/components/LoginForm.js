@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React, { useState } from "react";
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Container, Input } from "semantic-ui-react";
+import axios from "axios";
 
 const Login = () => {
   // Setting state for diner / operator
@@ -9,20 +9,14 @@ const Login = () => {
 
   const [isOperator, setIsOperator] = useState(false);
 
+  const [user, setUser] = useState({
+    username: '',
+    password: ''
+  })
+
 // Create radio(?) buttons for Diner / Operator - DONE
 // Update state from false to true based on which option is selected - DONE
 // Login will Route to correct dashboard based on which option is selected
-
-// const handleChange = (e) => {
-//   if (e.target.value === 'operator') {
-//   setIsOperator(true)
-//   setIsDiner(false)
-//   } // } else if (e.target.value === 'operator') {
-//   //   setIsDiner(false)
-//   //   setIsOperator(true)
-//   // }
-//   console.log('isDiner', isDiner)
-// };
 
 const changeStateD = () => {
   setIsDiner(!isDiner)  
@@ -34,13 +28,31 @@ const changeStateO = () => {
   console.log(isOperator)
 }
 
-// onSubmit should contain IF statement based on checked radio
+const handleChange = (evt) => {
+  evt.persist();
+  setUser({
+    ...user, 
+    [evt.target.name]: evt.target.value 
+  })
+}
 
+// onSubmit should contain IF statement based on checked radio
+const submitLogin = (e) => {
+  e.preventDefault();
+  axios
+  .post('https://food-truck-trackr-api.herokuapp.com/api/auth/login', {
+    username: user.username,
+    password: user.password
+  })
+  .then((res) => {
+    console.log('submitted', res)
+  })
+}
 
   return (
     <Container textalign='center'>
       <h1>Welcome to FoodTruckFindr</h1>
-      <Form>
+      <Form onSubmit={submitLogin}>
         <Form.Field>
           <Button.Group>
             <Button onClick={changeStateD}>Diner</Button>
@@ -49,12 +61,12 @@ const changeStateO = () => {
           </Button.Group>
         </Form.Field>
         <Form.Field>
-          <Input size='small' placeholder='Username: ' type='text' />
+          <Input size='small' placeholder='Username: ' name='username' type='text' value={user.username} onChange={handleChange} />
           <br />
           <br />
-          <Input size='small' placeholder='Password: ' type='password' />
+          <Input size='small' placeholder='Password: ' name='password' type='password' value={user.password} onChange={handleChange} />
         </Form.Field>
-          <Button content='login' type='submit'>Login</Button>
+          <Button type='submit'>Login</Button>
       </Form>
     </Container>
   );
