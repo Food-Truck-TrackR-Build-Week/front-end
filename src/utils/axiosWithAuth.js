@@ -1,12 +1,10 @@
 import axios from "axios";
 
 export const axiosWithAuth = () => {
-  // Will add Token name once provided by backend
-  const token = localStorage.getItem("");
+  const token = localStorage.getItem("token");
 
-  // Will add baseURL once provided by backend
   return axios.create({
-    baseURL: "",
+    baseURL: "https://food-truck-trackr-api.herokuapp.com",
     headers: {
       Authorization: token,
     },
