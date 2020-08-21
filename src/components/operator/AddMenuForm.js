@@ -4,6 +4,7 @@ import {Button, Modal, Icon, Form} from "semantic-ui-react";
 const AddMenuForm = () => {
   const [open, setOpen] = useState(false);
   const [menuItem, setMenuItem] = useState({
+    id: Date.now(),
     itemName: "",
     itemDescription: "",
     itemPhotos: [],
