@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+import * as yup from 'yup';
+import 'semantic-ui-css/semantic.min.css';
+import { Form, Button, Container, Input } from "semantic-ui-react";
+import axios from "axios";
+
+// TODO: Apply error handlers to JSX
+// TODO: Complete routing in onSubmit function using history.push
 
 const Login = () => {
   // Setting state for diner / operator
@@ -7,20 +14,19 @@ const Login = () => {
 
   const [isOperator, setIsOperator] = useState(false);
 
-// Create radio(?) buttons for Diner / Operator
-// Update state from false to true based on which option is selected
-// Login will Route to correct dashboard based on which option is selected
+  const [user, setUser] = useState({
+    username: '',
+    password: ''
+  })
 
-// const handleChange = (e) => {
-//   if (e.target.value === 'operator') {
-//   setIsOperator(true)
-//   setIsDiner(false)
-//   } // } else if (e.target.value === 'operator') {
-//   //   setIsDiner(false)
-//   //   setIsOperator(true)
-//   // }
-//   console.log('isDiner', isDiner)
-// };
+// Displays errors when validation is failed
+  const [errors, setErrors] = useState({
+    username: '',
+    password: ''
+  })
+
+// Keeps submit button in disabled state until validation is passed
+  const [btnDisabled, setBtnDisabled] = useState(true)
 
 const changeStateD = () => {
   setIsDiner(!isDiner)  
@@ -32,25 +38,84 @@ const changeStateO = () => {
   console.log(isOperator)
 }
 
-// onSubmit should contain IF statement based on checked radio
+// Yup validation schema
+const formSchema = yup.object().shape({
+  username: yup
+  .string()
+  .required('Username is a required field'),
+  password: yup
+  .string()
+  .required('Password is a required field')
+})
 
+// Form validation to display errors
+const validateChange = (e) => {
+  yup
+  .reach(formSchema, e.target.name)
+  .validate(e.target.value)
+  .then((valid) => {
+    setErrors({
+      ...errors, 
+      [e.target.name]: ""
+    })
+  })
+  .catch((err) => {
+    setErrors({
+      ...errors,
+      [e.target.name]: err.errors[0]
+    })
+  })
+}
+
+// Function to keep button disabled until validation is passed
+useEffect(() => {
+  formSchema.isValid(user).then((valid) => {
+      setBtnDisabled(!valid)
+  })
+}, [user])
+
+const handleChange = (evt) => {
+  evt.persist();
+  setUser({
+    ...user, 
+    [evt.target.name]: evt.target.value
+  })
+  validateChange(evt)
+}
+
+const submitLogin = (e) => {
+  e.preventDefault();
+  axios
+  .post('https://food-truck-trackr-api.herokuapp.com/api/auth/login', {
+    username: user.username,
+    password: user.password
+  })
+  .then((res) => {
+    console.log('submitted', res)
+    // history.push()
+  })
+}
 
   return (
-    <>
-      <h1>Login component</h1>
-      <input type='radio' name='select' value='diner' onClick={changeStateD} />I'm a Foodie!
-      <input type='radio' name='select' value='operator' onClick={changeStateO} />I'm an Operator!
-      <form>
-        <br />
-        <label htmlFor='username' />Username: 
-          <input id='username' type='text' />
-        <br /><br />
-        <label htmlFor='password' />Password: 
-          <input id='password' type='password' />
-          <br /><br />
-          <button id='login' type='submit'>Login</button>
-      </form>
-    </>
+    <Container textalign='center'>
+      <h1>Welcome to FoodTruckFindr</h1>
+      <Form onSubmit={submitLogin}>
+        <Form.Field>
+          <Button.Group>
+            <Button type='button' onClick={changeStateD}>Diner</Button>
+            <Button.Or text='or' /> 
+            <Button type='button' onClick={changeStateO}>Operator</Button>
+          </Button.Group>
+        </Form.Field>
+        <Form.Field>
+          <Input size='small' placeholder='Username:' name='username' type='text' value={user.username} onChange={handleChange} />
+          <br />
+          <br />
+          <Input size='small' placeholder='Password:' name='password' type='password' value={user.password} onChange={handleChange} />
+        </Form.Field>
+          <Button type='submit' disabled={btnDisabled}>Login</Button>
+      </Form>
+    </Container>
   );
 };
 
