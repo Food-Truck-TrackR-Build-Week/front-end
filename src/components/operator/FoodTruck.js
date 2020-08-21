@@ -1,17 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
-import {Container, Grid, Segment, Card, Icon, Image} from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Segment,
+  Card,
+  Icon,
+  Image,
+  Header,
+} from "semantic-ui-react";
 import AddMenuForm from "./AddMenuForm";
 import MenuList from "./MenuList";
 
+import Chart from "react-apexcharts";
+
 //Operator should be able to edit, delete, add menu items, see ratings
 const FoodTruck = (props) => {
+  const [chart, setChart] = useState({
+    options: {},
+    series: [44, 55, 41, 17, 15],
+    labels: ["A", "B", "C", "D", "E"],
+  });
   return (
     <Container>
       {props.truck.map((t) => (
-        <Grid key={t.truckName}>
+        <Grid key={t.id}>
           <Grid.Row>
-            <Grid.Column width={8}>
+            <Grid.Column computer={6} tablet={16}>
+              <Header size="large">{t.truckName}</Header>
+
               {/* <Segment> */}
               <Card fluid>
                 <Image
@@ -20,7 +37,7 @@ const FoodTruck = (props) => {
                   fluid
                 />
                 <Card.Content>
-                  <Card.Header>{t.truckName}</Card.Header>
+                  <Card.Header></Card.Header>
 
                   <Card.Meta>
                     <span className="date">
@@ -42,31 +59,34 @@ const FoodTruck = (props) => {
               </Card>
               {/* </Segment> */}
             </Grid.Column>
-
-            <Grid.Column width={8}>
-              <Segment textAlign="center">
-                <AddMenuForm />
-              </Segment>
-              <Segment>
-                <MenuList />
-              </Segment>
+            <Grid.Column computer={10} tablet={16}>
+              <Grid columns="equal">
+                <Grid.Column>
+                  <Chart
+                    options={chart.options}
+                    series={chart.series}
+                    type="donut"
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <Segment.Group>
+                    {t.customerRatings.map((rating) => (
+                      <Segment key={rating}>{rating}</Segment>
+                    ))}
+                  </Segment.Group>
+                </Grid.Column>
+              </Grid>
             </Grid.Column>
           </Grid.Row>
 
           <Grid.Row>
             <Grid.Column>
-              <Segment>
-                User Ratings
-                <Card.Group>
-                  {t.customerRatings.map((rating) => (
-                    <Card key={rating}>
-                      <Card.Content>
-                        <Card.Header> {rating}</Card.Header>
-                        <Card.Meta>User</Card.Meta>
-                      </Card.Content>
-                    </Card>
-                  ))}
-                </Card.Group>
+              <Segment vertical textAlign="right">
+                <AddMenuForm />
+              </Segment>
+
+              <Segment vertical>
+                <MenuList />
               </Segment>
             </Grid.Column>
           </Grid.Row>
