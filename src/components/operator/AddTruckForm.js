@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import {connect} from "react-redux";
+import {fetchOperatorData} from "../../actions";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
 const AddTruckForm = () => {
@@ -19,7 +21,7 @@ const AddTruckForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //Have create action that will post to truck in reducers
+    fetchOperatorData(truck);
 
     setTruck({
       truckName: "",
@@ -87,4 +89,4 @@ const AddTruckForm = () => {
   );
 };
 
-export default AddTruckForm;
+export default connect(null, {fetchOperatorData})(AddTruckForm);
