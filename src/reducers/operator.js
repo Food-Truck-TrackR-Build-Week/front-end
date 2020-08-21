@@ -12,30 +12,25 @@ const initialState = {
   password: "",
   trucksOwned: [],
 
-  truck: {
-    imageOfTruck:
-      "https://images.unsplash.com/photo-1567129937968-cdad8f07e2f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=945&q=80",
-    cuisineType: "Vietnamese",
-    customerRatings: [4, 4, 4],
-    customerRatingAvg: 4,
+  truck: [
+    {
+      truckName: "Kitchenette Karts",
+      imageOfTruck:
+        "https://images.unsplash.com/photo-1567129937968-cdad8f07e2f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=945&q=80",
+      cuisineType: "Vietnamese",
+      customerRatings: [3, 4, 2],
+      customerRatingAvg: 4,
+      menu: [],
 
-    menu: {
-      itemName: "",
-      itemDescription: "",
-      itemPhotos: [],
-      itemPrice: "",
-      customerRatings: [],
-      customerRatingAvg: "",
-    },
-
-    currentLocation: {
-      location: "Soho, NYC",
-      departureTime: {
-        date: "08/20/20",
-        time: "12:48AM",
+      currentLocation: {
+        location: "Soho, NYC",
+        departureTime: {
+          date: "08/20/20",
+          time: "12:48AM",
+        },
       },
     },
-  },
+  ],
 };
 
 export const operator = (state = initialState, action) => {
