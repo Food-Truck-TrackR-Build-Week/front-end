@@ -1,9 +1,10 @@
 import React from "react";
+import MapContainer from "./MapContainer";
 
 const DinerDashboard = () => {
   return (
     <>
-      <h1>Diner Dashboard component</h1>
+      <MapContainer />
     </>
   );
 };
