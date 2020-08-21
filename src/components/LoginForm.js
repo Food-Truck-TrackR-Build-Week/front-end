@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import 'semantic-ui-css/semantic.min.css';
+import { Form, Button, Container, Input } from "semantic-ui-react";
 
 const Login = () => {
   // Setting state for diner / operator
@@ -7,8 +9,8 @@ const Login = () => {
 
   const [isOperator, setIsOperator] = useState(false);
 
-// Create radio(?) buttons for Diner / Operator
-// Update state from false to true based on which option is selected
+// Create radio(?) buttons for Diner / Operator - DONE
+// Update state from false to true based on which option is selected - DONE
 // Login will Route to correct dashboard based on which option is selected
 
 // const handleChange = (e) => {
@@ -36,21 +38,25 @@ const changeStateO = () => {
 
 
   return (
-    <>
-      <h1>Login component</h1>
-      <input type='radio' name='select' value='diner' onClick={changeStateD} />I'm a Foodie!
-      <input type='radio' name='select' value='operator' onClick={changeStateO} />I'm an Operator!
-      <form>
-        <br />
-        <label htmlFor='username' />Username: 
-          <input id='username' type='text' />
-        <br /><br />
-        <label htmlFor='password' />Password: 
-          <input id='password' type='password' />
-          <br /><br />
-          <button id='login' type='submit'>Login</button>
-      </form>
-    </>
+    <Container textalign='center'>
+      <h1>Welcome to FoodTruckFindr</h1>
+      <Form>
+        <Form.Field>
+          <Button.Group>
+            <Button onClick={changeStateD}>Diner</Button>
+            <Button.Or text='or' /> 
+            <Button onClick={changeStateO}>Operator</Button>
+          </Button.Group>
+        </Form.Field>
+        <Form.Field>
+          <Input size='small' placeholder='Username: ' type='text' />
+          <br />
+          <br />
+          <Input size='small' placeholder='Password: ' type='password' />
+        </Form.Field>
+          <Button content='login' type='submit'>Login</Button>
+      </Form>
+    </Container>
   );
 };
 
