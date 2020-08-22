@@ -6,7 +6,7 @@ import {Header, Segment, Icon} from "semantic-ui-react";
 const TruckList = (props) => {
   useEffect(() => {
     props.fetchOperatorData();
-  }, []);
+  });
   return (
     <>
       <h3>Food Trucks</h3>
@@ -14,7 +14,7 @@ const TruckList = (props) => {
       {props.truck.map((t) => (
         <Segment vertical key={t.id}>
           <Header size="large">{t.truckName}</Header>
-          <p>{t.cuisineType}</p>
+          <p>Cuisine: {t.cuisineType}</p>
           Edit <Icon name="pencil" />
           Delete <Icon name="delete" />
         </Segment>
