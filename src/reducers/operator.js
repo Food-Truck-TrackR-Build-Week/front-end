@@ -21,7 +21,7 @@ const initialState = {
       imageOfTruck:
         "https://images.unsplash.com/photo-1567129937968-cdad8f07e2f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=945&q=80",
       cuisineType: "Vietnamese",
-      customerRatings: [3, 4, 2, 4],
+      customerRatings: [3, 4, 2, 5],
       customerRatingAvg: 4,
       menu: [],
 
