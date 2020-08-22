@@ -5,7 +5,6 @@ import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Container, Input } from "semantic-ui-react";
 import axios from "axios";
 
-// TODO: Apply error handlers to JSX
 // TODO: Complete routing in onSubmit function using history.push
 
 const Login = () => {
@@ -38,6 +37,13 @@ const changeStateO = () => {
   console.log(isOperator)
 }
 
+// Function to keep button disabled until validation is passed
+useEffect(() => {
+  formSchema.isValid(user).then((valid) => {
+      setBtnDisabled(!valid)
+  })
+}, [user])
+
 // Yup validation schema
 const formSchema = yup.object().shape({
   username: yup
@@ -66,13 +72,6 @@ const validateChange = (e) => {
     })
   })
 }
-
-// Function to keep button disabled until validation is passed
-useEffect(() => {
-  formSchema.isValid(user).then((valid) => {
-      setBtnDisabled(!valid)
-  })
-}, [user])
 
 const handleChange = (evt) => {
   evt.persist();
@@ -109,9 +108,11 @@ const submitLogin = (e) => {
         </Form.Field>
         <Form.Field>
           <Input size='small' placeholder='Username:' name='username' type='text' value={user.username} onChange={handleChange} />
+          {errors.username.length > 0 ? <p className='error'>{errors.username}</p>: null}
           <br />
           <br />
           <Input size='small' placeholder='Password:' name='password' type='password' value={user.password} onChange={handleChange} />
+          {errors.password.length > 0 ? <p className='error'>{errors.password}</p>: null}
         </Form.Field>
           <Button type='submit' disabled={btnDisabled}>Login</Button>
       </Form>
