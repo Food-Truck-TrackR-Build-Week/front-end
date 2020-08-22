@@ -27,16 +27,6 @@ const Login = () => {
 // Keeps submit button in disabled state until validation is passed
   const [btnDisabled, setBtnDisabled] = useState(true)
 
-const changeStateD = () => {
-  setIsDiner(!isDiner)  
-  console.log(isDiner)
-}
-
-const changeStateO = () => {
-  setIsOperator(!isOperator)
-  console.log(isOperator)
-}
-
 // Function to keep button disabled until validation is passed
 useEffect(() => {
   formSchema.isValid(user).then((valid) => {
@@ -98,20 +88,25 @@ const submitLogin = (e) => {
   return (
     <Container textalign='center'>
       <h1>Welcome to FoodTruckFindr</h1>
-      <Form onSubmit={submitLogin}>
+      <Form onSubmit={submitLogin}>      
         <Form.Field>
-          <Button.Group>
-            <Button type='button' onClick={changeStateD}>Diner</Button>
-            <Button.Or text='or' /> 
-            <Button type='button' onClick={changeStateO}>Operator</Button>
-          </Button.Group>
-        </Form.Field>
-        <Form.Field>
-          <Input size='small' placeholder='Username:' name='username' type='text' value={user.username} onChange={handleChange} />
+          <Input 
+          size='small' 
+          placeholder='Username:' 
+          name='username' 
+          type='text' 
+          value={user.username} 
+          onChange={handleChange} />
           {errors.username.length > 0 ? <p className='error'>{errors.username}</p>: null}
           <br />
           <br />
-          <Input size='small' placeholder='Password:' name='password' type='password' value={user.password} onChange={handleChange} />
+          <Input 
+          size='small' 
+          placeholder='Password:' 
+          name='password' 
+          type='password' 
+          value={user.password} 
+          onChange={handleChange} />
           {errors.password.length > 0 ? <p className='error'>{errors.password}</p>: null}
         </Form.Field>
           <Button type='submit' disabled={btnDisabled}>Login</Button>
