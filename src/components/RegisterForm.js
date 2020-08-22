@@ -4,8 +4,6 @@ import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Container, Input } from "semantic-ui-react";
 import axios from "axios";
 
-// TODO: Create form layout to accept Username, Email, Password
-// TODO: Allow the form to choose whether the newUser is a diner or operator
 // TODO: Form validation to include test for valid email
 
 const Register = () => {
@@ -13,6 +11,7 @@ const Register = () => {
     username: '',
     email: '',
     password: '',
+    location: '',
     isDiner: null,
     isOperator: null
   })
@@ -29,7 +28,8 @@ const inputChange = (e) => {
 const [errors, setErrors] = useState({
   username: '',
   email:'',
-  password: ''
+  password: '',
+  location: ''
 })
 
 // This submit function directs to proper API based on the value of the button selected
@@ -40,7 +40,8 @@ const handleSubmit = (e) => {
     .post('https://food-truck-trackr-api.herokuapp.com/api/auth/register/diner', {
       username: newUser.username,
       email: newUser.email,
-      password: newUser.password
+      password: newUser.password,
+      location: newUser.location
     })
     .then((res) => {
       console.log('New Diner Created', res)
@@ -56,7 +57,8 @@ const handleSubmit = (e) => {
     .post('https://food-truck-trackr-api.herokuapp.com/api/auth/register/operator', {
       username: newUser.username,
       email: newUser.email,
-      password: newUser.password
+      password: newUser.password,
+      location: newUser.location
     })
     .then((res) => {
       console.log('New Operator Created', res)

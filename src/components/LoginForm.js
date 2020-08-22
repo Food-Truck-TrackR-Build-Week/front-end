@@ -81,7 +81,11 @@ const submitLogin = (e) => {
   })
   .then((res) => {
     console.log('submitted', res)
-    // history.push()
+    // const pushRoute = () => {
+    //   if (res.data.isDiner == true) {
+    //     history.push({DinerDashboard}, pushRoute)
+    //   }
+    // }
   })
 }
 
