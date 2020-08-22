@@ -4,7 +4,6 @@ import {Card, Icon, Image, Header} from "semantic-ui-react";
 const TruckCard = (props) => {
   return (
     <>
-      {/* {props.truck.map((t) => ( */}
       <div>
         <Header size="large">{props.truck.truckName}</Header>
 
@@ -38,7 +37,6 @@ const TruckCard = (props) => {
           </Card.Content>
         </Card>
       </div>
-      {/* ))} */}
     </>
   );
 };

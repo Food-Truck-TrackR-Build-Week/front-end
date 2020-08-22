@@ -11,22 +11,14 @@ const TruckList = (props) => {
     <>
       <h3>Food Trucks</h3>
 
-      {props.truck.map((t) => (
-        <Segment vertical key={t.id}>
-          <Header size="large">{t.truckName}</Header>
-          <p>Cuisine: {t.cuisineType}</p>
-          Edit <Icon name="pencil" />
-          Delete <Icon name="delete" />
-        </Segment>
-      ))}
+      <Segment vertical>
+        <Header size="large">{props.truck.truckName}</Header>
+        <p>Cuisine: {props.truck.cuisineType}</p>
+        Edit <Icon name="pencil" />
+        Delete <Icon name="delete" />
+      </Segment>
     </>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    truck: state.operator.truck,
-  };
-};
-
-export default connect(mapStateToProps, {fetchOperatorData})(TruckList);
+export default connect(null, {fetchOperatorData})(TruckList);
