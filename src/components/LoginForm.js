@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import 'semantic-ui-css/semantic.min.css';
-import { Form, Button, Container, Input } from "semantic-ui-react";
+import { Form, Button, Container, Input, Segment, Grid, Divider } from "semantic-ui-react";
 import axios from "axios";
 
 // TODO: Complete routing in onSubmit function using history.push
@@ -92,30 +92,40 @@ const submitLogin = (e) => {
   return (
     <Container textalign='center'>
       <h1>Welcome to FoodTruckFindr</h1>
-      <Form onSubmit={submitLogin}>      
-        <Form.Field>
-          <Input 
-          size='small' 
-          placeholder='Username:' 
-          name='username' 
-          type='text' 
-          value={user.username} 
-          onChange={handleChange} />
+      <Segment placeholder>
+    <Grid columns={2} relaxed='very' stackable>
+      <Grid.Column>
+        <Form onSubmit={submitLogin}>
+          <Form.Input
+            icon='user'
+            iconPosition='left'
+            label='Username'
+            placeholder='Username'
+            name='username'
+            value={user.username}
+            onChange={handleChange}
+          />
           {errors.username.length > 0 ? <p className='error'>{errors.username}</p>: null}
-          <br />
-          <br />
-          <Input 
-          size='small' 
-          placeholder='Password:' 
-          name='password' 
-          type='password' 
-          value={user.password} 
-          onChange={handleChange} />
+          <Form.Input
+            icon='lock'
+            iconPosition='left'
+            label='Password'
+            type='password'
+            name='password'
+            value={user.password}
+            onChange={handleChange}
+          />
           {errors.password.length > 0 ? <p className='error'>{errors.password}</p>: null}
-        </Form.Field>
-          <Button type='submit' disabled={btnDisabled}>Login</Button>
-      </Form>
-    </Container>
+          <Button type='submit' disabled={btnDisabled} content='Login' primary />
+        </Form>
+      </Grid.Column>
+      <Grid.Column verticalAlign='middle'>
+        <Button content='Sign up' icon='signup' size='big' />
+      </Grid.Column>
+    </Grid>
+    <Divider vertical>Or</Divider>
+  </Segment>
+  </Container>
   );
 };
 
