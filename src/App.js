@@ -1,9 +1,12 @@
 import React from "react";
-import {BrowserRouter as Router, Route, NavLink} from "react-router-dom";
-import LoginForm from './components/LoginForm';
+import {
+  BrowserRouter as Router,
+  Route,
+  NavLink,
+  Switch,
+} from "react-router-dom";
 import DinerLogin from "./components/diner/DinerLogin";
 import OperatorLogin from "./components/operator/OperatorLogin";
-import RegisterForm from './components/RegisterForm';
 
 const App = () => {
   return (
@@ -11,9 +14,10 @@ const App = () => {
       <div className="App">Food Truck TrackR</div>
       <NavLink to="/diner">Diner</NavLink>
       <NavLink to="/operator">Operator</NavLink>
-      <LoginForm />
-      <Route exact path="/diner" component={DinerLogin} />
-      <Route exact path="/operator" component={OperatorLogin} />
+      <Switch>
+        <Route exact path="/diner" component={DinerLogin} />
+        <Route exact path="/operator" component={OperatorLogin} />
+      </Switch>
     </Router>
   );
 };
