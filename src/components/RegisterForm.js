@@ -4,8 +4,6 @@ import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Container, Input } from "semantic-ui-react";
 import axios from "axios";
 
-// TODO: Form validation to include test for valid email
-
 const Register = () => {
   const [newUser, setNewUser] = useState({
     username: '',
@@ -16,6 +14,38 @@ const Register = () => {
     isOperator: null
   })
 
+const [errors, setErrors] = useState({
+  username: '',
+  email:'',
+  password: '',
+  location: ''
+})
+
+const formSchema = yup.object().shape({
+  username: yup.string().required('Username is a required field').min(6, 'Username must be at least 6 characters'),
+  email: yup.string().email().required('Email is a required field'),
+  password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is a required field'),
+  location: yup.string().required('Location is a required field')
+})
+
+const handleValidation = (e) => {
+  yup
+  .reach(formSchema, e.target.name) 
+  .validate(e.target.value)
+  .then((valid) => {
+    setErrors({
+      ...errors,
+      [e.target.name]: "",
+    })
+  })
+  .catch((err) => {
+    setErrors({
+      ...errors, 
+      [e.target.name]: err.errors[0]
+    })
+  })
+}
+
 const inputChange = (e) => {
   e.persist();
   setNewUser({
@@ -23,14 +53,8 @@ const inputChange = (e) => {
     [e.target.name === 'diner']: e.target.value,
     [e.target.name === 'operator']: e.target.value
   })
+  handleValidation(e);
 }
-
-const [errors, setErrors] = useState({
-  username: '',
-  email:'',
-  password: '',
-  location: ''
-})
 
 // This submit function directs to proper API based on the value of the button selected
 const handleSubmit = (e) => {
@@ -94,7 +118,7 @@ const handleSubmit = (e) => {
           placeholder='Username:' 
           name='username' 
           type='text' 
-          // value={newUser.username} Inputs are not editable if value property is set?
+          value={newUser.username} // Inputs are not editable if value property is set?
           onChange={inputChange} 
           />
           <br />
@@ -104,7 +128,7 @@ const handleSubmit = (e) => {
           placeholder='Email:' 
           name='email' 
           type='email' 
-          // value={newUser.email} 
+          value={newUser.email} 
           onChange={inputChange} 
           />
           <br />
@@ -114,7 +138,7 @@ const handleSubmit = (e) => {
           placeholder='Password:' 
           name='password' 
           type='password' 
-          // value={newUser.password} 
+          value={newUser.password} 
           onChange={inputChange} 
           />
           <br />
@@ -124,11 +148,11 @@ const handleSubmit = (e) => {
           placeholder='Location:' 
           name='location' 
           type='location' 
-          // value={newUser.location} 
+          value={newUser.location} 
           onChange={inputChange} 
           />
         </Form.Field>
-          <Button type='submit' /* disabled={btnDisabled} */>Register</Button>
+          <Button type='submit' disabled={btnDisabled}>Register</Button>
     </Form>
     </Container>
   );
