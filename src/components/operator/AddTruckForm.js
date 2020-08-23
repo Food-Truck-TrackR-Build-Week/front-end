@@ -1,19 +1,15 @@
 import React, {useState} from "react";
-import {connect} from "react-redux";
-import {fetchOperatorData} from "../../actions";
+import {axiosWithAuth} from "../../utils/axiosWithAuth";
+import {truckState} from "../../utils/initialTruckState";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
 const AddTruckForm = () => {
   const [open, setOpen] = useState(false);
-  const [truck, setTruck] = useState({
-    truckName: "",
-    imageOfTruck: "",
-    cuisineType: "",
-  });
+  const [addTruck, setAddTruck] = useState(truckState);
 
   const handleChange = (e) => {
-    setTruck({
-      ...truck,
+    setAddTruck({
+      ...addTruck,
       [e.target.name]: e.target.value,
     });
   };
@@ -21,13 +17,24 @@ const AddTruckForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetchOperatorData(truck);
+    axiosWithAuth()
+      .post("/api/trucks", addTruck)
+      .then((res) => {
+        console.log(res.data);
+        setAddTruck(addTruck);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
-    setTruck({
-      truckName: "",
-      imageOfTruck: "",
-      cuisineType: "",
-    });
+    // setTruck({
+    //   ...addTruck,
+    //   name: "",
+    //   imageOfTruck: "",
+    //   cuisineType: "",
+    //   currentLocation: "",
+    //   departureTime: "",
+    // });
 
     setOpen(false);
   };
@@ -53,18 +60,18 @@ const AddTruckForm = () => {
                 <label>Truck Name</label>
                 <input
                   type="text"
-                  name="truckName"
+                  name="name"
                   placeholder="ex. Vietnamese"
-                  value={truck.truckName}
+                  value={addTruck.name}
                   onChange={handleChange}
                 />
               </Form.Field>
               <Form.Field>
                 <label>Select Truck Image</label>
                 <input
-                  type="file"
+                  type="text"
                   name="imageOfTruck"
-                  value={truck.imageOfTruck}
+                  value={addTruck.imageOfTruck}
                   onChange={handleChange}
                 />
               </Form.Field>
@@ -74,7 +81,27 @@ const AddTruckForm = () => {
                   type="text"
                   name="cuisineType"
                   placeholder="ex. Vietnamese"
-                  value={truck.cuisineType}
+                  value={addTruck.cuisineType}
+                  onChange={handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Location</label>
+                <input
+                  type="text"
+                  name="currentLocation"
+                  placeholder=""
+                  value={addTruck.currentLocation}
+                  onChange={handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Departure Time</label>
+                <input
+                  type="time"
+                  name="departureTime"
+                  placeholder=""
+                  value={addTruck.departureTime}
                   onChange={handleChange}
                 />
               </Form.Field>
@@ -89,4 +116,4 @@ const AddTruckForm = () => {
   );
 };
 
-export default connect(null, {fetchOperatorData})(AddTruckForm);
+export default AddTruckForm;

@@ -1,6 +1,10 @@
 import React from "react";
-import {BrowserRouter as Router, Route, NavLink} from "react-router-dom";
-import LoginForm from './components/LoginForm';
+import {
+  BrowserRouter as Router,
+  Route,
+  NavLink,
+  Switch,
+} from "react-router-dom";
 import DinerLogin from "./components/diner/DinerLogin";
 import OperatorLogin from "./components/operator/OperatorLogin";
 import DinerDashboard from "./components/diner/DinerDashboard";
