@@ -1,20 +1,15 @@
 import React, {useState} from "react";
-import {connect} from "react-redux";
-import {addFoodTruck} from "../../actions";
+import {axiosWithAuth} from "../../utils/axiosWithAuth";
+import {truckState} from "../../utils/initialTruckState";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
-const AddTruckForm = (props) => {
+const AddTruckForm = () => {
   const [open, setOpen] = useState(false);
-  const [truck, setTruck] = useState({
-    truckName: "",
-    imageOfTruck: "",
-    cuisineType: "",
-    id: Date.now(),
-  });
+  const [addTruck, setAddTruck] = useState(truckState);
 
   const handleChange = (e) => {
-    setTruck({
-      ...truck,
+    setAddTruck({
+      ...addTruck,
       [e.target.name]: e.target.value,
     });
   };
@@ -22,13 +17,24 @@ const AddTruckForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.addFoodTruck(truck);
+    axiosWithAuth()
+      .post("/api/trucks", addTruck)
+      .then((res) => {
+        console.log(res.data);
+        setAddTruck(addTruck);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
-    setTruck({
-      truckName: "",
-      imageOfTruck: "",
-      cuisineType: "",
-    });
+    // setTruck({
+    //   ...addTruck,
+    //   name: "",
+    //   imageOfTruck: "",
+    //   cuisineType: "",
+    //   currentLocation: "",
+    //   departureTime: "",
+    // });
 
     setOpen(false);
   };
@@ -54,18 +60,18 @@ const AddTruckForm = (props) => {
                 <label>Truck Name</label>
                 <input
                   type="text"
-                  name="truckName"
+                  name="name"
                   placeholder="ex. Vietnamese"
-                  value={truck.truckName}
+                  value={addTruck.name}
                   onChange={handleChange}
                 />
               </Form.Field>
               <Form.Field>
                 <label>Select Truck Image</label>
                 <input
-                  type="file"
+                  type="text"
                   name="imageOfTruck"
-                  value={truck.imageOfTruck}
+                  value={addTruck.imageOfTruck}
                   onChange={handleChange}
                 />
               </Form.Field>
@@ -75,7 +81,27 @@ const AddTruckForm = (props) => {
                   type="text"
                   name="cuisineType"
                   placeholder="ex. Vietnamese"
-                  value={truck.cuisineType}
+                  value={addTruck.cuisineType}
+                  onChange={handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Location</label>
+                <input
+                  type="text"
+                  name="currentLocation"
+                  placeholder=""
+                  value={addTruck.currentLocation}
+                  onChange={handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Departure Time</label>
+                <input
+                  type="time"
+                  name="departureTime"
+                  placeholder=""
+                  value={addTruck.departureTime}
                   onChange={handleChange}
                 />
               </Form.Field>
@@ -90,10 +116,4 @@ const AddTruckForm = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    truck: state.operator.truck,
-  };
-};
-
-export default connect(mapStateToProps, {addFoodTruck})(AddTruckForm);
+export default AddTruckForm;

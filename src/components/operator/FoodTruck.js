@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {connect} from "react-redux";
 import {Container, Grid, Segment} from "semantic-ui-react";
 import AddMenuForm from "./AddMenuForm";
 import MenuList from "./MenuList";
@@ -15,45 +16,52 @@ const FoodTruck = (props) => {
   });
   return (
     <Container>
-      <Grid>
-        <Grid.Row>
-          <Grid.Column computer={6} tablet={16}>
-            <TruckCard truck={props.truck} />
-          </Grid.Column>
-          <Grid.Column computer={10} tablet={16}>
-            <Grid columns="equal">
-              <Grid.Column>
-                <Chart
-                  options={chart.options}
-                  series={chart.series}
-                  type="donut"
-                />
-              </Grid.Column>
-              <Grid.Column>
-                <Segment.Group>
+      {props.trucks.map((truck) => (
+        <Grid key={truck.operatorId}>
+          <Grid.Row>
+            <Grid.Column computer={6} tablet={16}>
+              <TruckCard truck={truck} />
+            </Grid.Column>
+            <Grid.Column computer={10} tablet={16}>
+              <Grid columns="equal">
+                <Grid.Column>
+                  <Chart
+                    options={chart.options}
+                    series={chart.series}
+                    type="donut"
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  {/* <Segment.Group>
                   {props.truck.customerRatings.map((rating) => (
                     <Segment key={rating}>{rating}</Segment>
                   ))}
-                </Segment.Group>
-              </Grid.Column>
-            </Grid>
-          </Grid.Column>
-        </Grid.Row>
+                </Segment.Group> */}
+                </Grid.Column>
+              </Grid>
+            </Grid.Column>
+          </Grid.Row>
 
-        <Grid.Row>
-          <Grid.Column>
-            <Segment vertical textAlign="right">
-              <AddMenuForm />
-            </Segment>
+          <Grid.Row>
+            <Grid.Column>
+              <Segment vertical textAlign="right">
+                <AddMenuForm />
+              </Segment>
 
-            <Segment vertical>
-              <MenuList />
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+              <Segment vertical>
+                <MenuList />
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      ))}
     </Container>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    trucks: state.operator.truck,
+  };
+};
 
-export default FoodTruck;
+export default connect(mapStateToProps)(FoodTruck);

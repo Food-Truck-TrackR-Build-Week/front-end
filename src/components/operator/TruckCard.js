@@ -5,7 +5,7 @@ const TruckCard = (props) => {
   return (
     <>
       <div>
-        <Header size="large">{props.truck.truckName}</Header>
+        <Header size="large">{props.truck.name}</Header>
 
         <Card fluid>
           <Image
@@ -18,17 +18,14 @@ const TruckCard = (props) => {
 
             <Card.Meta>
               <span className="date">
-                Date: {props.truck.currentLocation.departureTime.date}
-              </span>
-              <span className="date">
-                Time: {props.truck.currentLocation.departureTime.time}
+                Departure Time: {props.truck.departureTime}
               </span>
             </Card.Meta>
             <Card.Description>
               Cuisine: {props.truck.cuisineType}
             </Card.Description>
             <Card.Description>
-              Current Location: {props.truck.currentLocation.location}
+              Current Location: {props.truck.currentLocation}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
