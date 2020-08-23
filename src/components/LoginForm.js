@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 // import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import 'semantic-ui-css/semantic.min.css';
-import { Form, Button, Container, Input } from "semantic-ui-react";
+import { Form, Button, Container, Input, Segment, Grid, Divider } from "semantic-ui-react";
 import axios from "axios";
 
-// TODO: Apply error handlers to JSX
 // TODO: Complete routing in onSubmit function using history.push
 
 const Login = () => {
@@ -28,15 +27,12 @@ const Login = () => {
 // Keeps submit button in disabled state until validation is passed
   const [btnDisabled, setBtnDisabled] = useState(true)
 
-const changeStateD = () => {
-  setIsDiner(!isDiner)  
-  console.log(isDiner)
-}
-
-const changeStateO = () => {
-  setIsOperator(!isOperator)
-  console.log(isOperator)
-}
+// Function to keep button disabled until validation is passed
+useEffect(() => {
+  formSchema.isValid(user).then((valid) => {
+      setBtnDisabled(!valid)
+  })
+}, [user])
 
 // Yup validation schema
 const formSchema = yup.object().shape({
@@ -67,13 +63,6 @@ const validateChange = (e) => {
   })
 }
 
-// Function to keep button disabled until validation is passed
-useEffect(() => {
-  formSchema.isValid(user).then((valid) => {
-      setBtnDisabled(!valid)
-  })
-}, [user])
-
 const handleChange = (evt) => {
   evt.persist();
   setUser({
@@ -92,30 +81,51 @@ const submitLogin = (e) => {
   })
   .then((res) => {
     console.log('submitted', res)
-    // history.push()
+    // const pushRoute = () => {
+    //   if (res.data.isDiner == true) {
+    //     history.push({DinerDashboard}, pushRoute)
+    //   }
+    // }
   })
 }
 
   return (
     <Container textalign='center'>
       <h1>Welcome to FoodTruckFindr</h1>
-      <Form onSubmit={submitLogin}>
-        <Form.Field>
-          <Button.Group>
-            <Button type='button' onClick={changeStateD}>Diner</Button>
-            <Button.Or text='or' /> 
-            <Button type='button' onClick={changeStateO}>Operator</Button>
-          </Button.Group>
-        </Form.Field>
-        <Form.Field>
-          <Input size='small' placeholder='Username:' name='username' type='text' value={user.username} onChange={handleChange} />
-          <br />
-          <br />
-          <Input size='small' placeholder='Password:' name='password' type='password' value={user.password} onChange={handleChange} />
-        </Form.Field>
-          <Button type='submit' disabled={btnDisabled}>Login</Button>
-      </Form>
-    </Container>
+      <Segment placeholder>
+    <Grid columns={2} relaxed='very' stackable>
+      <Grid.Column>
+        <Form onSubmit={submitLogin}>
+          <Form.Input
+            icon='user'
+            iconPosition='left'
+            label='Username'
+            placeholder='Username'
+            name='username'
+            value={user.username}
+            onChange={handleChange}
+          />
+          {errors.username.length > 0 ? <p className='error'>{errors.username}</p>: null}
+          <Form.Input
+            icon='lock'
+            iconPosition='left'
+            label='Password'
+            type='password'
+            name='password'
+            value={user.password}
+            onChange={handleChange}
+          />
+          {errors.password.length > 0 ? <p className='error'>{errors.password}</p>: null}
+          <Button type='submit' disabled={btnDisabled} content='Login' primary />
+        </Form>
+      </Grid.Column>
+      <Grid.Column verticalAlign='middle'>
+        <Button content='Sign up' icon='signup' size='big' />
+      </Grid.Column>
+    </Grid>
+    <Divider vertical>Or</Divider>
+  </Segment>
+  </Container>
   );
 };
 
