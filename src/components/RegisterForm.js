@@ -82,7 +82,7 @@ const handleSubmit = (e) => {
               isDiner: true, 
               isOperator: false})}>Diner</Button>
             <Button.Or text='or' /> 
-            <Button type='button' name='operator' onClick= {() => setNewUser({
+            <Button type='button' name='operator' onClick={() => setNewUser({
               ...newUser, 
               isOperator: true, 
               isDiner: false})}>Operator</Button>
@@ -115,6 +115,16 @@ const handleSubmit = (e) => {
           name='password' 
           type='password' 
           // value={newUser.password} 
+          onChange={inputChange} 
+          />
+          <br />
+          <br />
+          <Input 
+          size='small' 
+          placeholder='Location:' 
+          name='location' 
+          type='location' 
+          // value={newUser.location} 
           onChange={inputChange} 
           />
         </Form.Field>

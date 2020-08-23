@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import { useHistory } from 'react-router-dom';
+import RegisterForm from './RegisterForm';
+import { Route } from 'react-router-dom';
 import * as yup from 'yup';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Container, Input, Segment, Grid, Divider } from "semantic-ui-react";
@@ -9,14 +10,12 @@ import axios from "axios";
 
 const Login = () => {
   // Setting state for diner / operator
-  const [isDiner, setIsDiner] = useState(false);
-
-  const [isOperator, setIsOperator] = useState(false);
-
   const [user, setUser] = useState({
     username: '',
     password: ''
   })
+
+  const [userId, setUserId] = useState()
 
 // Displays errors when validation is failed
   const [errors, setErrors] = useState({
@@ -72,6 +71,10 @@ const handleChange = (evt) => {
   validateChange(evt)
 }
 
+// const regPath = () => {
+//   <Route path='/register' component={RegisterForm} />
+// }
+
 const submitLogin = (e) => {
   e.preventDefault();
   axios
@@ -81,8 +84,9 @@ const submitLogin = (e) => {
   })
   .then((res) => {
     console.log('submitted', res)
+    setUserId(res.data.diner.id)
     // const pushRoute = () => {
-    //   if (res.data.isDiner == true) {
+    //   if (res.data.type === 'diner') {
     //     history.push({DinerDashboard}, pushRoute)
     //   }
     // }
@@ -120,7 +124,7 @@ const submitLogin = (e) => {
         </Form>
       </Grid.Column>
       <Grid.Column verticalAlign='middle'>
-        <Button content='Sign up' icon='signup' size='big' />
+        <Button content='Sign up' icon='signup' size='big' /*onClick={regPath}*/ />
       </Grid.Column>
     </Grid>
     <Divider vertical>Or</Divider>
