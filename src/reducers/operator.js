@@ -20,11 +20,40 @@ const initialState = {
       cuisineType: "Vietnamese",
       customerRatings: [3, 4, 2, 4],
       customerRatingAvg: 4,
-      menu: [],
+      menu: [
+        {
+          name: "Soda",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 4,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Soup",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 4,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Beef",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 4,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Cookies",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 4,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+      ],
 
       currentLocation: {
-        lat: -1.2899,
-        lng: 36.8290,
+        lat: 25.601299399999998,
+        lng: -80.40306919999999,
         location: "Soho, NYC",
         departureTime: {
           date: "08/20/20",
@@ -39,11 +68,40 @@ const initialState = {
       cuisineType: "Latin Cuisine",
       customerRatings: [3, 4, 2, 4],
       customerRatingAvg: 4,
-      menu: [],
+      menu: [
+        {
+          name: "Soda",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 4,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Soup",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 4,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Beef",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 4,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Cookies",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 4,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+      ],
 
       currentLocation: {
-        lat: -1.2884,
-        lng: 36.8233,
+        lat: 25.601699399999998,
+        lng: -80.41486919999999,
         location: "Soho, NYC",
         departureTime: {
           date: "08/20/20",

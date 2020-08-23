@@ -26,10 +26,12 @@ const DinerDashboard = () => {
       }
     })
 
+    const [destination, setDestination] = useState(null)
+
   return (
     <>
-      <SideBar infoWindow={infoWindow} setInfoWindow={setInfoWindow}/>
-      <MapContainer infoWindow={infoWindow} setInfoWindow={setInfoWindow}/>
+      <SideBar infoWindow={infoWindow} setInfoWindow={setInfoWindow} setDestination={setDestination}/>
+      <MapContainer infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination}/>
     </>
       
   );
