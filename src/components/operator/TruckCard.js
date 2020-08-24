@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Icon, Image, Header} from "semantic-ui-react";
+import {Card, Icon, Image, Header, Rating} from "semantic-ui-react";
 
 const TruckCard = (props) => {
   return (
@@ -18,19 +18,30 @@ const TruckCard = (props) => {
 
             <Card.Meta>
               <span className="date">
+                <Icon name="clock" />
                 Departure Time: {props.truck.departureTime}
               </span>
             </Card.Meta>
             <Card.Description>
+              <Icon name="food" />
               Cuisine: {props.truck.cuisineType}
             </Card.Description>
             <Card.Description>
-              Current Location: {props.truck.currentLocation.location}
+              <Icon name="map pin" />
+              Location: {props.truck.currentLocation.location}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
-            <Icon name="star" />
-            Average Rating: {props.truck.customerRatingAvg}
+            Average Rating:
+            <br />
+            <Rating
+              maxRating={5}
+              defaultRating={props.truck.customerRatingAvg}
+              icon="star"
+              disabled
+              size="large"
+              style={{marginTop: ".75rem"}}
+            />
           </Card.Content>
         </Card>
       </div>
