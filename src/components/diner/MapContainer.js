@@ -38,16 +38,19 @@ function MapContainer(props) {
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(function(position) {
                 setMyLocation({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                })
+                console.log("got position");
+                if(myLocation !== '' && !mapCenterHasBeingSet) {
+                    setMapCenter(myLocation)
+                    setMapCenterHasBeingSet(true)
+                }
+            }, function() {
+                console.log("error position");
             })
-            
-        })
-    }
-    if(myLocation !== '' && !mapCenterHasBeingSet) {
-        setMapCenter(myLocation)
-        setMapCenterHasBeingSet(true)
-    }
+        }
+        
     })
     
     useEffect(() => {
@@ -61,7 +64,7 @@ function MapContainer(props) {
             
             directionsService.route(request, function(result, status) {
                 if (status === 'OK') {
-                directionsRenderer.setDirections(result);
+                    directionsRenderer.setDirections(result);
                 } else {
                     window.alert("Directions request failed due to " + status);
                   }
@@ -69,7 +72,7 @@ function MapContainer(props) {
         } else {
             directionsRenderer.setDirections({routes: []})
         }
-    },[props.destination, myLocation])
+    },[props.destination])
 
     const setDirectionsRenderer = (mapProps, map) => {
         directionsRenderer.setMap(map);
@@ -78,6 +81,7 @@ function MapContainer(props) {
     return(
         <Map
             google={props.google}
+            disableDefaultUI={true}
             zoom={16}
             style={mapStyles}
             center={mapCenter}
@@ -156,7 +160,7 @@ function MapContainer(props) {
                                             </List.Description>
                                         </List.Content>
                                         <List.Content floated="left" style={{paddingTop: 5}}>
-                                            <Rating defaultRating={3} maxRating={5} />
+                                            <Rating defaultRating={menu.ratings} maxRating={5} />
                                         </List.Content>
                                     </List.Item>
                                         

@@ -28,14 +28,14 @@ const initialState = {
           name: "Soda",
           price: 0.50,
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 4,
+          ratings: 3,
           image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
         },
         {
           name: "Soup",
           price: 0.50,
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 4,
+          ratings: 5,
           image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
         },
         {
@@ -49,7 +49,7 @@ const initialState = {
           name: "Cookies",
           price: 0.50,
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 4,
+          ratings: 2,
           image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
         },
       ],
@@ -76,21 +76,21 @@ const initialState = {
           name: "Soda",
           price: 0.50,
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 4,
+          ratings: 5,
           image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
         },
         {
           name: "Soup",
           price: 0.50,
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 4,
+          ratings: 1,
           image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
         },
         {
           name: "Beef",
           price: 0.50,
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 4,
+          ratings: 3,
           image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
         },
         {
