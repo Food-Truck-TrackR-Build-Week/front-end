@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import MapContainer from "./MapContainer";
 import SideBar from "./SideBar";
+import DinerNavBar from "./DinerNavBar";
+import ClearRoute from "./ClearRoute";
 
 const DinerDashboard = () => {
   const [infoWindow, setInfoWindow] = useState({
@@ -30,7 +32,9 @@ const DinerDashboard = () => {
 
   return (
     <>
-      <SideBar infoWindow={infoWindow} setInfoWindow={setInfoWindow} setDestination={setDestination}/>
+      <ClearRoute destination={destination} setDestination={setDestination}/>
+      <DinerNavBar />
+      <SideBar infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination} setDestination={setDestination}/>
       <MapContainer infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination}/>
     </>
       

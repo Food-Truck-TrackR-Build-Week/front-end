@@ -9,7 +9,7 @@ function LocationFinder(props) {
             apiKey={'AIzaSyAKgYAy4mmkRtFlnYenEWKjuZPZ2c-JbMs'}
             style={{width: '90%'}}
             onPlaceSelected={(place) => {
-            console.log(place.geometry.location.lat());
+            console.log(place);
             }}
             types={['address']}
         />

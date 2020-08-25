@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {connect} from "react-redux";
 import { Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react'
+import {mapStyles} from "../../utils/mapStyles"
 
 import { Card, Icon, Image, Grid, Header, List, Rating } from "semantic-ui-react";
 
 
-const mapStyles = {
+const mapStyle = {
     width: '100%',
     height: '100%'
   };
@@ -57,7 +58,7 @@ function MapContainer(props) {
         if(props.destination !== null) {
             const request = {
                 origin: myLocation,
-                destination: props.destination,
+                destination: props.destination.location,
                 travelMode: 'DRIVING'
             };
             console.log(request);
@@ -83,7 +84,8 @@ function MapContainer(props) {
             google={props.google}
             disableDefaultUI={true}
             zoom={16}
-            style={mapStyles}
+            style={mapStyle}
+            styles={mapStyles}
             center={mapCenter}
             onReady={setDirectionsRenderer}
         >
