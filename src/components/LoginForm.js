@@ -20,6 +20,7 @@ import RegisterForm from './RegisterForm';
 const Login = () => {
   // Setting state for diner / operator
   const [dinerId, setDinerId] = useState();
+
   const [operatorId, setOperatorId] = useState();
   const {push} = useHistory();
 
@@ -90,13 +91,18 @@ const Login = () => {
         console.log("submitted", res);
         if (res.data.type === 'operator') {
         setOperatorId(res.data.operator.id);
-        localStorage.setItem(operatorId, res.data.operator.id);
-        push('/dashboard-operator/:operatorId');
+        localStorage.setItem('operatorId', res.data.operator.id);
+        localStorage.setItem('Token', res.data.token)
+        const oID = localStorage.getItem('operatorId')
+        push(`/dashboard-operator/${oID}`);
         } 
         else if (res.data.type === 'diner') {
             setDinerId(res.data.diner.id);
-            localStorage.setItem(dinerId, res.data.diner.id);
-            push('/dashboard-diner/:dinerId');
+            localStorage.setItem('dinerId', res.data.diner.id);
+            localStorage.setItem('Token', res.data.token)
+            const dID = localStorage.getItem('dinerId')
+            console.log(res.data.token)
+            push(`/dashboard-diner/${dID}`);
         }
       });
   };

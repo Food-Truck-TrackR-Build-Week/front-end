@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as yup from 'yup';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Container, Input } from "semantic-ui-react";
-import axios from "axios";
 import Header from './Header';
 import { useHistory } from "react-router-dom";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
@@ -57,8 +56,7 @@ const inputChange = (e) => {
   e.persist();
   setNewUser({
     ...newUser,
-    [e.target.name === 'diner']: e.target.value,
-    [e.target.name === 'operator']: e.target.value
+    [e.target.name]: e.target.value,
   })
   handleValidation(e);
 }
@@ -68,6 +66,11 @@ const handleSubmit = (e) => {
   e.preventDefault();
   e.persist();
   if (newUser.isDiner === true) {
+    console.log('username', newUser.username,
+    'email', newUser.email,
+    'password', newUser.password,
+    'location', newUser.location)
+
     axiosWithAuth()
     .post('/api/auth/register/diner', {
       username: newUser.username,
@@ -77,9 +80,11 @@ const handleSubmit = (e) => {
     })
     .then((res) => {
       console.log('New Diner Created', res);
-      setDinerId(res.data.diner.id);
-      localStorage.setItem(dinerId, res.data.diner.id);
-      push('/dashboard-diner/:dinerId');
+      setDinerId(res.data.diner.userId);
+      localStorage.setItem('dinerId', res.data.diner.userId);
+      localStorage.setItem('Token', res.data.token);
+      const dID = localStorage.getItem('dinerId')
+      push(`/dashboard-diner/${dID}`);
     }) .catch((err) => {
         setErrors({
           ...errors,
@@ -88,7 +93,7 @@ const handleSubmit = (e) => {
     })
   } 
   else if (newUser.isOperator === true) {
-    axios
+    axiosWithAuth()
     .post('/api/auth/register/operator', {
       username: newUser.username,
       email: newUser.email,
@@ -97,9 +102,11 @@ const handleSubmit = (e) => {
     })
     .then((res) => {
       console.log('New Operator Created', res);
-      setOperatorId(res.data.operator.id);
-      localStorage.setItem(operatorId, res.data.operator.id);
-      push('/dashboard-operator/:operatorId');
+      setOperatorId(res.data.userId);
+      localStorage.setItem('operatorId', res.data.userId);
+      localStorage.setItem('Token', res.data.token);
+      const oID = localStorage.getItem('operatorId')
+      push(`/dashboard-operator/${oID}`);
     }) .catch((err) => {
       setErrors({
         ...errors,
@@ -113,15 +120,15 @@ const handleSubmit = (e) => {
     <Container textalign='center'>
       <Header />
     <Form onSubmit={handleSubmit}>
-      <h1>Register component</h1>
+      <h1>Sign Up to Join Food Truck TrackR!</h1>
         <Form.Field>
           <Button.Group>
-            <Button type='button' name='diner' onClick={() => setNewUser({
+            <Button primary type='button' name='diner' onClick={() => setNewUser({
               ...newUser, 
               isDiner: true, 
               isOperator: false})}>Diner</Button>
             <Button.Or text='or' /> 
-            <Button type='button' name='operator' onClick={() => setNewUser({
+            <Button color='orange' type='button' name='operator' onClick={() => setNewUser({
               ...newUser, 
               isOperator: true, 
               isDiner: false})}>Operator</Button>
@@ -133,7 +140,7 @@ const handleSubmit = (e) => {
           placeholder='Username:' 
           name='username' 
           type='text' 
-          // value={newUser.username} // Inputs are not editable if value property is set?
+          value={newUser.username} 
           onChange={inputChange} 
           />
           <br />
@@ -143,7 +150,7 @@ const handleSubmit = (e) => {
           placeholder='Email:' 
           name='email' 
           type='email' 
-          // value={newUser.email} 
+          value={newUser.email} 
           onChange={inputChange} 
           />
           <br />
@@ -153,7 +160,7 @@ const handleSubmit = (e) => {
           placeholder='Password:' 
           name='password' 
           type='password' 
-          // value={newUser.password} 
+          value={newUser.password} 
           onChange={inputChange} 
           />
           <br />
@@ -163,11 +170,11 @@ const handleSubmit = (e) => {
           placeholder='Location:' 
           name='location' 
           type='location' 
-          // value={newUser.location} 
+          value={newUser.location} 
           onChange={inputChange} 
           />
         </Form.Field>
-          <Button type='submit'>Register</Button>
+          <Button color='teal' type='submit'>Register</Button>
     </Form>
     </Container>
   );
