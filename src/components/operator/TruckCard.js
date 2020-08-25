@@ -25,7 +25,7 @@ const TruckCard = (props) => {
               Cuisine: {props.truck.cuisineType}
             </Card.Description>
             <Card.Description>
-              Current Location: {props.truck.currentLocation}
+              Current Location: {props.truck.currentLocation.location}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>

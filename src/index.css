@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,3 +16,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.gm-style-iw-t {
+  top: -60px !important
+}
+
+.gm-style-iw.gm-style-iw-c {
+  padding: 0 !important;
+  max-width: 600px !important ;
+  min-width: 600px !important;
+  
+}
+
+.gm-style-iw-d {
+  overflow: hidden !important
+}
+

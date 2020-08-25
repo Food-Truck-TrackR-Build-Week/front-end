@@ -20,9 +20,97 @@ const initialState = {
       imageOfTruck:
         "https://images.unsplash.com/photo-1567129937968-cdad8f07e2f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=945&q=80",
       cuisineType: "Vietnamese",
-      currentLocation: "Soho, NYC",
-      departureTime: "",
-      menu: [],
+
+      customerRatings: [3, 4, 2, 4],
+      customerRatingAvg: 4,
+      menu: [
+        {
+          name: "Soda",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 3,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Soup",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 5,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Beef",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 4,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Cookies",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 2,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+      ],
+
+      currentLocation: {
+        lat: 25.601299399999998,
+        lng: -80.40306919999999,
+        location: "Soho, NYC",
+        departureTime: {
+          date: "08/20/20",
+          time: "12:48AM",
+        },
+      },
+    },
+    {
+      truckName: "The Big Daddy",
+      imageOfTruck:
+        "https://images.unsplash.com/photo-1576595879571-5402d294c407?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2002&q=80",
+      cuisineType: "Latin Cuisine",
+      customerRatings: [3, 4, 2, 4],
+      customerRatingAvg: 4,
+      menu: [
+        {
+          name: "Soda",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 5,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Soup",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 1,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Beef",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 3,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          name: "Cookies",
+          price: 0.50,
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          ratings: 4,
+          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+        },
+      ],
+
+      currentLocation: {
+        lat: 25.601699399999998,
+        lng: -80.41486919999999,
+        location: "Soho, NYC",
+        departureTime: {
+          date: "08/20/20",
+          time: "12:48AM",
+        },
+      },
     },
   ],
 };
