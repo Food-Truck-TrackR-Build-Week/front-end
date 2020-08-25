@@ -27,15 +27,6 @@ const AddTruckForm = () => {
         console.error(err);
       });
 
-    // setTruck({
-    //   ...addTruck,
-    //   name: "",
-    //   imageOfTruck: "",
-    //   cuisineType: "",
-    //   currentLocation: "",
-    //   departureTime: "",
-    // });
-
     setOpen(false);
   };
 
