@@ -28,7 +28,7 @@ const TruckCard = (props) => {
             </Card.Description>
             <Card.Description>
               <Icon name="map pin" />
-              Location: {props.truck.currentLocation.location}
+              Location: {props.truck.currentLocation}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>

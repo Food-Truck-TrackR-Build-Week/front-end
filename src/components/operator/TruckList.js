@@ -61,7 +61,7 @@ const TruckList = (props) => {
         <AddTruckForm />
       </Segment>
       <h3>Food Trucks</h3>
-
+      {console.log(props.trucks)}
       {props.trucks.map((truck) => (
         <Segment key={Date.now()} vertical>
           <Header size="large">{truck.name}</Header>
@@ -150,7 +150,7 @@ const TruckList = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    trucks: state.operator.truck,
+    trucks: state.operator.trucksOwned,
   };
 };
 

@@ -60,7 +60,7 @@ const FoodTruck = (props) => {
 };
 const mapStateToProps = (state) => {
   return {
-    trucks: state.operator.truck,
+    trucks: state.operator.trucksOwned,
   };
 };
 

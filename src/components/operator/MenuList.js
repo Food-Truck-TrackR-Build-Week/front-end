@@ -23,15 +23,15 @@ const MenuList = (props) => {
       <div>
         <Item.Group divided>
           {props.truck.menu.map((item) => (
-            <Item key={Date.now()}>
-              <Item.Image src={item.image} size="tiny" />
+            <Item key={item.id}>
+              {/* <Item.Image src={item.image} size="tiny" /> */}
 
               <Item.Content>
-                <Item.Header as="h3">{item.name}</Item.Header>
+                <Item.Header as="h3">{item.itemName}</Item.Header>
                 <Item.Meta as="h4">
-                  <Icon name="dollar sign" /> {item.price}
+                  <Icon name="dollar sign" /> {item.itemPrice}
                 </Item.Meta>
-                <Item.Description>{item.description}</Item.Description>
+                <Item.Description>{item.itemDescription}</Item.Description>
                 <Item.Extra>
                   <Button.Group basic size="mini">
                     <Button>
