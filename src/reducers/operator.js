@@ -26,31 +26,39 @@ const initialState = {
       menu: [
         {
           name: "Soda",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          price: 0.5,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           ratings: 3,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+          image:
+            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
         },
         {
           name: "Soup",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          price: 0.5,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           ratings: 5,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+          image:
+            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
         },
         {
           name: "Beef",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          price: 0.5,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           ratings: 4,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+          image:
+            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
         },
         {
           name: "Cookies",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          price: 0.5,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           ratings: 2,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+          image:
+            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
         },
       ],
 
@@ -65,40 +73,48 @@ const initialState = {
       },
     },
     {
-      truckName: "The Big Daddy",
+      name: "The Big Daddy",
       imageOfTruck:
         "https://images.unsplash.com/photo-1576595879571-5402d294c407?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2002&q=80",
       cuisineType: "Latin Cuisine",
       customerRatings: [3, 4, 2, 4],
-      customerRatingAvg: 4,
+      customerRatingAvg: 5,
       menu: [
         {
           name: "Soda",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          price: 0.5,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           ratings: 5,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+          image:
+            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
         },
         {
           name: "Soup",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          price: 0.5,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           ratings: 1,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+          image:
+            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
         },
         {
           name: "Beef",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          price: 0.5,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           ratings: 3,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+          image:
+            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
         },
         {
           name: "Cookies",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          price: 0.5,
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           ratings: 4,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+          image:
+            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
         },
       ],
 

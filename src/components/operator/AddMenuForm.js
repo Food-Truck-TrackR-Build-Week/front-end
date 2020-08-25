@@ -1,15 +1,13 @@
 import React, {useState} from "react";
+import {axiosWithAuth} from "../../utils/axiosWithAuth";
+import {useParams} from "react-router-dom";
+import {menuState} from "../../utils/initialMenuState";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
 const AddMenuForm = () => {
   const [open, setOpen] = useState(false);
-  const [menuItem, setMenuItem] = useState({
-    id: Date.now(),
-    itemName: "",
-    itemDescription: "",
-    itemPhotos: [],
-    itemPrice: "",
-  });
+  const [menuItem, setMenuItem] = useState(menuState);
+  const {id} = useParams();
 
   const handleChange = (e) => {
     setMenuItem({
@@ -21,14 +19,15 @@ const AddMenuForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //Have create action that will post to menu in reducers
-
-    setMenuItem({
-      itemName: "",
-      itemDescription: "",
-      itemPhotos: [],
-      itemPrice: "",
-    });
+    axiosWithAuth()
+      .post(`/api/menus/${id}`, menuItem)
+      .then((res) => {
+        console.log(res.data);
+        setMenuItem(menuItem);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     setOpen(false);
   };
@@ -69,21 +68,20 @@ const AddMenuForm = () => {
                 />
               </Form.Field>
               <Form.Field>
-                <label>Photos</label>
-                <input
-                  name="itemPhotos"
-                  type="file"
-                  multiple
-                  value={menuItem.itemPhotos}
-                  onChange={handleChange}
-                />
-              </Form.Field>
-              <Form.Field>
                 <label>Price</label>
                 <input
                   name="itemPrice"
                   type="number"
                   value={menuItem.itemPrice}
+                  onChange={handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Photos</label>
+                <input
+                  name="itemPhotos"
+                  type="text"
+                  value={menuItem.itemPhotos}
                   onChange={handleChange}
                 />
               </Form.Field>
