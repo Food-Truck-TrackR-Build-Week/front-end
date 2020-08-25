@@ -10,9 +10,8 @@ const initialState = {
   username: "",
   email: "",
   password: "",
-  trucksOwned: [],
 
-  truck: [
+  trucksOwned: [
     {
       id: Date.now(),
       operatorId: Date.now(),
@@ -25,92 +24,37 @@ const initialState = {
       customerRatingAvg: 4,
       menu: [
         {
-          name: "Soda",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 3,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
-        },
-        {
-          name: "Soup",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 5,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
-        },
-        {
-          name: "Beef",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 4,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
-        },
-        {
-          name: "Cookies",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 2,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+          id: Date.now(),
+          menuId: Date.now(),
+          itemName: "Soda",
+          itemPrice: 1.5,
+          itemDescription:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          customerRatings: 3,
+          customerRatingAvg: 4,
+          itemPhotos: [
+            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+          ],
         },
       ],
 
-      currentLocation: {
-        lat: 25.601299399999998,
-        lng: -80.40306919999999,
-        location: "Soho, NYC",
-        departureTime: {
-          date: "08/20/20",
-          time: "12:48AM",
-        },
-      },
+      currentLocation: "",
+      departureTime: "",
     },
     {
-      truckName: "The Big Daddy",
+      id: Date.now() + 1,
+      operatorId: Date.now() + 1,
+      name: "The Big Daddy",
       imageOfTruck:
         "https://images.unsplash.com/photo-1576595879571-5402d294c407?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2002&q=80",
       cuisineType: "Latin Cuisine",
       customerRatings: [3, 4, 2, 4],
-      customerRatingAvg: 4,
-      menu: [
-        {
-          name: "Soda",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 5,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
-        },
-        {
-          name: "Soup",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 1,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
-        },
-        {
-          name: "Beef",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 3,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
-        },
-        {
-          name: "Cookies",
-          price: 0.50,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          ratings: 4,
-          image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
-        },
-      ],
+      customerRatingAvg: 5,
+      menu: [],
 
-      currentLocation: {
-        lat: 25.601699399999998,
-        lng: -80.41486919999999,
-        location: "Soho, NYC",
-        departureTime: {
-          date: "08/20/20",
-          time: "12:48AM",
-        },
-      },
+      currentLocation: "",
+      departureTime: "",
     },
   ],
 };
@@ -126,7 +70,7 @@ export const operator = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        truck: action.payload,
+        trucksOwned: action.payload,
         error: "",
       };
     case FETCHING_TRUCKS_ERROR:
