@@ -3,6 +3,9 @@ import * as yup from 'yup';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Container, Input } from "semantic-ui-react";
 import axios from "axios";
+import Header from './Header';
+import { useHistory } from "react-router-dom";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const Register = () => {
   const [newUser, setNewUser] = useState({
@@ -13,6 +16,10 @@ const Register = () => {
     isDiner: null,
     isOperator: null
   })
+
+const push = useHistory();
+const [dinerId, setDinerId] = useState();
+const [operatorId, setOperatorId] = useState();
 
 const [errors, setErrors] = useState({
   username: '',
@@ -59,16 +66,20 @@ const inputChange = (e) => {
 // This submit function directs to proper API based on the value of the button selected
 const handleSubmit = (e) => {
   e.preventDefault();
+  e.persist();
   if (newUser.isDiner === true) {
-    axios
-    .post('https://food-truck-trackr-api.herokuapp.com/api/auth/register/diner', {
+    axiosWithAuth()
+    .post('/api/auth/register/diner', {
       username: newUser.username,
       email: newUser.email,
       password: newUser.password,
       location: newUser.location
     })
     .then((res) => {
-      console.log('New Diner Created', res)
+      console.log('New Diner Created', res);
+      setDinerId(res.data.diner.id);
+      localStorage.setItem(dinerId, res.data.diner.id);
+      push('/dashboard-diner/:dinerId');
     }) .catch((err) => {
         setErrors({
           ...errors,
@@ -78,14 +89,17 @@ const handleSubmit = (e) => {
   } 
   else if (newUser.isOperator === true) {
     axios
-    .post('https://food-truck-trackr-api.herokuapp.com/api/auth/register/operator', {
+    .post('/api/auth/register/operator', {
       username: newUser.username,
       email: newUser.email,
       password: newUser.password,
       location: newUser.location
     })
     .then((res) => {
-      console.log('New Operator Created', res)
+      console.log('New Operator Created', res);
+      setOperatorId(res.data.operator.id);
+      localStorage.setItem(operatorId, res.data.operator.id);
+      push('/dashboard-operator/:operatorId');
     }) .catch((err) => {
       setErrors({
         ...errors,
@@ -97,6 +111,7 @@ const handleSubmit = (e) => {
 
   return (
     <Container textalign='center'>
+      <Header />
     <Form onSubmit={handleSubmit}>
       <h1>Register component</h1>
         <Form.Field>
@@ -118,7 +133,7 @@ const handleSubmit = (e) => {
           placeholder='Username:' 
           name='username' 
           type='text' 
-          value={newUser.username} // Inputs are not editable if value property is set?
+          // value={newUser.username} // Inputs are not editable if value property is set?
           onChange={inputChange} 
           />
           <br />
@@ -128,7 +143,7 @@ const handleSubmit = (e) => {
           placeholder='Email:' 
           name='email' 
           type='email' 
-          value={newUser.email} 
+          // value={newUser.email} 
           onChange={inputChange} 
           />
           <br />
@@ -138,7 +153,7 @@ const handleSubmit = (e) => {
           placeholder='Password:' 
           name='password' 
           type='password' 
-          value={newUser.password} 
+          // value={newUser.password} 
           onChange={inputChange} 
           />
           <br />
@@ -148,11 +163,11 @@ const handleSubmit = (e) => {
           placeholder='Location:' 
           name='location' 
           type='location' 
-          value={newUser.location} 
+          // value={newUser.location} 
           onChange={inputChange} 
           />
         </Form.Field>
-          <Button type='submit' disabled={btnDisabled}>Register</Button>
+          <Button type='submit'>Register</Button>
     </Form>
     </Container>
   );
