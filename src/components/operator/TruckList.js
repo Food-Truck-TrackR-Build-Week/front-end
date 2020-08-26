@@ -26,6 +26,7 @@ const TruckList = (props) => {
             onClick={() => {
               props.setShowTruckById(truck.id);
             }}
+            style={{cursor: "pointer"}}
           >
             {truck.name}
           </Header>

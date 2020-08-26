@@ -11,7 +11,18 @@ const Header = () => {
 
   return (
     <>
-      <Menu inverted size="massive" style={{borderRadius: 0}}>
+      <Menu
+        inverted
+        size="massive"
+        style={{
+          borderRadius: 0,
+          position: "absolute",
+          top: "-1rem",
+          left: 0,
+          width: "100vw",
+          height: "auto",
+        }}
+      >
         <Menu.Item header>Food Truck TrackR</Menu.Item>
 
         <Menu.Menu position="right">

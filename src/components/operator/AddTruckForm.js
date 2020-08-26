@@ -45,7 +45,7 @@ const AddTruckForm = () => {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button>
+          <Button color="orange" style={{marginBottom: "1rem"}}>
             <Icon name="add" />
             Add Food Truck
           </Button>
@@ -60,16 +60,17 @@ const AddTruckForm = () => {
                 <input
                   type="text"
                   name="name"
-                  placeholder="ex. Vietnamese"
+                  placeholder="Name of Truck"
                   value={addTruck.name}
                   onChange={handleChange}
                 />
               </Form.Field>
               <Form.Field>
-                <label>Select Truck Image</label>
+                <label>Image URL</label>
                 <input
                   type="text"
                   name="imageOfTruck"
+                  placeholder="Enter Image URL"
                   value={addTruck.imageOfTruck}
                   onChange={handleChange}
                 />
@@ -89,12 +90,12 @@ const AddTruckForm = () => {
                 <input
                   type="text"
                   name="currentLocation"
-                  placeholder=""
+                  placeholder="Truck's Location"
                   value={addTruck.currentLocation}
                   onChange={handleChange}
                 />
               </Form.Field>
-              <Form.Field>
+              {/* <Form.Field>
                 <label>Departure Time</label>
                 <input
                   type="time"
@@ -103,7 +104,7 @@ const AddTruckForm = () => {
                   value={addTruck.departureTime}
                   onChange={handleChange}
                 />
-              </Form.Field>
+              </Form.Field> */}
               <Button type="submit">
                 <Icon name="add" /> Add Truck
               </Button>
