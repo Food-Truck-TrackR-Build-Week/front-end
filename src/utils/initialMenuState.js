@@ -1,10 +1,10 @@
 export const menuState = {
-  id: Date.now(),
-  menuId: Date.now(),
+  id: "",
+  menuItemId: "",
   itemName: "",
   itemDescription: "",
   itemPrice: "",
-  itemPhotos: [""],
+  itemPhotos: [],
   customerRatings: [],
   customerRatingAvg: "",
 };

@@ -24,18 +24,14 @@ const initialState = {
       customerRatingAvg: 4,
       menu: [
         {
-          id: Date.now(),
-          menuId: Date.now(),
-          itemName: "Soda",
-          itemPrice: 1.5,
-          itemDescription:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          customerRatings: 3,
-          customerRatingAvg: 4,
-          itemPhotos: [
-            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1521305916504-4a1121188589?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
-          ],
+          id: "",
+          menuItemId: "",
+          itemName: "",
+          itemDescription: "",
+          itemPrice: "",
+          itemPhotos: [],
+          customerRatings: [],
+          customerRatingAvg: "",
         },
       ],
 
@@ -51,7 +47,18 @@ const initialState = {
       cuisineType: "Latin Cuisine",
       customerRatings: [3, 4, 2, 4],
       customerRatingAvg: 5,
-      menu: [],
+      menu: [
+        {
+          id: "",
+          menuItemId: "",
+          itemName: "",
+          itemDescription: "",
+          itemPrice: "",
+          itemPhotos: [],
+          customerRatings: [],
+          customerRatingAvg: "",
+        },
+      ],
 
       currentLocation: "",
       departureTime: "",
