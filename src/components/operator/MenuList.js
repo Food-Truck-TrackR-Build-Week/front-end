@@ -14,15 +14,18 @@ const MenuList = (props) => {
   const [open, setOpen] = useState(false);
   //Todo: create Update and Delete function for menu items
 
-  const [itemToEdit, setItemToEdit] = useState(props.truck.menu);
+  const [itemToEdit, setItemToEdit] = useState(menuState);
 
   const updateMenu = () => {
+    console.log("Item to edit comma", itemToEdit);
+
     axiosWithAuth()
-      .put(`/api/trucks/${props.truck.id}/menu/${itemToEdit.menuItemId}`, {
+      .put(`/api/trucks/100001/menu/${itemToEdit.menuItemId}`, {
+        // id: itemToEdit.menuItemId,
         itemName: itemToEdit.itemName,
         itemDescription: itemToEdit.itemDescription,
         itemPrice: itemToEdit.itemPrice,
-        itemPhotos: itemToEdit.itemPhotos,
+        // itemPhotos: itemToEdit.itemPhotos,
       })
       .then((res) => {
         console.log(res.data);
@@ -64,13 +67,8 @@ const MenuList = (props) => {
 
       <div>
         <Item.Group divided>
-          {itemToEdit.map((item) => (
+          {props.truck.menu.map((item) => (
             <Item key={item.id}>
-              {/* <Item.Image src={item.image} size="tiny" /> */}
-              {item.itemPhotos.map((image) => (
-                <Item.Image key={image} src={image} size="tiny" />
-              ))}
-
               <Item.Content>
                 <Item.Header as="h3">{item.itemName}</Item.Header>
                 <Item.Meta as="h4">
@@ -98,7 +96,7 @@ const MenuList = (props) => {
                               <input
                                 name="itemName"
                                 placeholder="ex. French Fries"
-                                value={item.itemName}
+                                value={itemToEdit.itemName}
                                 onChange={handleChange}
                               />
                             </Form.Field>
@@ -132,7 +130,7 @@ const MenuList = (props) => {
                               />
                             </Form.Field>
                             <Button type="submit">
-                              <Icon name="add" /> Add Item
+                              <Icon name="add" /> Update Item
                             </Button>
                           </Form>
                         </Modal.Description>
@@ -145,6 +143,9 @@ const MenuList = (props) => {
                   </Button.Group>
                 </Item.Extra>
               </Item.Content>
+              {item.itemPhotos.map((image) => (
+                <Item.Image key={image} src={image} size="tiny" />
+              ))}
             </Item>
           ))}
         </Item.Group>
