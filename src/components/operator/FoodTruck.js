@@ -17,7 +17,7 @@ const FoodTruck = (props) => {
   return (
     <Container>
       {props.trucks.map((truck) => (
-        <Grid key={truck.operatorId}>
+        <Grid key={truck.id}>
           <Grid.Row>
             <Grid.Column computer={6} tablet={16}>
               <TruckCard truck={truck} />
@@ -49,7 +49,7 @@ const FoodTruck = (props) => {
               </Segment>
 
               <Segment vertical>
-                <MenuList />
+                <MenuList truck={truck} />
               </Segment>
             </Grid.Column>
           </Grid.Row>
@@ -60,7 +60,7 @@ const FoodTruck = (props) => {
 };
 const mapStateToProps = (state) => {
   return {
-    trucks: state.operator.truck,
+    trucks: state.operator.trucksOwned,
   };
 };
 
