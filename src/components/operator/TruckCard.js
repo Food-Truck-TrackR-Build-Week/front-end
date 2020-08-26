@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {axiosWithAuth} from "../../utils/axiosWithAuth";
-import {truckState} from "../../utils/initialTruckState";
 import {
   Card,
   Icon,
@@ -14,7 +13,6 @@ import {
 
 const TruckCard = (props) => {
   const [open, setOpen] = useState(false);
-  // const [truck, setTruck] = useState({});
   const [truckToEdit, setTruckToEdit] = useState(props.truck);
 
   const updateTruck = () => {
@@ -40,10 +38,8 @@ const TruckCard = (props) => {
 
   const handleDeleteTruck = (truckToEdit) => {
     axiosWithAuth()
-      .delete(`/api/trucks/${truckToEdit.id}`, truckToEdit)
-      .then((res) => {
-        props.truck.filter((item) => item.id !== truckToEdit.id);
-      })
+      .delete(`/api/trucks/${props.truck.id}`, truckToEdit)
+      .then((res) => {})
       .catch((err) => console.error(err.message));
   };
 
@@ -68,7 +64,7 @@ const TruckCard = (props) => {
       <div>
         <Header size="large">
           {props.truck.name}
-          <Button.Group basic>
+          <Button.Group basic size="tiny">
             <Modal
               onClose={() => setOpen(false)}
               onOpen={() => setOpen(true)}
@@ -88,16 +84,17 @@ const TruckCard = (props) => {
                       <input
                         type="text"
                         name="name"
-                        placeholder="ex. Vietnamese"
+                        placeholder="Name of Truck"
                         value={truckToEdit.name}
                         onChange={handleChange}
                       />
                     </Form.Field>
                     <Form.Field>
-                      <label>Select Truck Image</label>
+                      <label>Image URL</label>
                       <input
                         type="text"
                         name="imageOfTruck"
+                        placeholder="Enter Image URL"
                         value={truckToEdit.imageOfTruck}
                         onChange={handleChange}
                       />
@@ -117,7 +114,7 @@ const TruckCard = (props) => {
                       <input
                         type="text"
                         name="currentLocation"
-                        placeholder=""
+                        placeholder="Truck's Location"
                         value={truckToEdit.currentLocation}
                         onChange={handleChange}
                       />
@@ -145,11 +142,11 @@ const TruckCard = (props) => {
           </Button.Group>
         </Header>
 
-        <Card fluid>
+        <Card>
           <Image
             src={props.truck.imageOfTruck}
             alt={`${props.truck.cuisineType} food truck`}
-            fluid
+            size="medium"
           />
           <Card.Content>
             <Card.Header></Card.Header>
