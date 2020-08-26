@@ -20,6 +20,7 @@ import {
 
 import Food from "./images/undraw_Hamburger_8ge6.svg";
 import FoodTruck from "./images/undraw_street_food_hm5i.svg";
+import RegisterForm from './components/RegisterForm';
 
 const App = () => {
   return (
@@ -76,6 +77,7 @@ const App = () => {
       <Switch>
         <Route exact path="/diner" component={DinerLogin} />
         <Route exact path="/operator" component={OperatorLogin} />
+        <Route exact path='/register' component={RegisterForm} />
         <PrivateRoute exact path="/diner/home" component={DinerDashboard} />
         <PrivateRoute
           exact

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import * as yup from "yup";
 import "semantic-ui-css/semantic.min.css";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Form,
   Button,
@@ -78,7 +78,6 @@ const Login = () => {
 
   const submitLogin = (e) => {
     e.preventDefault();
-
     axiosWithAuth()
       .post("/api/auth/login", {
         username: user.username,
@@ -145,7 +144,9 @@ const Login = () => {
             </Form>
           </Grid.Column>
           <Grid.Column verticalAlign="middle">
-            <Button content="Sign up" icon="signup" size="big" onClick={() => push('/register')} />
+            <Link to='/register'>
+            <Button content="Sign up" icon="signup" size="big" onClick={() => push(`/register`)} />
+            </Link>
           </Grid.Column>
         </Grid>
         <Divider vertical>Or</Divider>

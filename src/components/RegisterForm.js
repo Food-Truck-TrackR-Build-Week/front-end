@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as yup from 'yup';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Container, Input } from "semantic-ui-react";
@@ -66,10 +67,10 @@ const handleSubmit = (e) => {
   e.preventDefault();
   e.persist();
   if (newUser.isDiner === true) {
-    console.log('username', newUser.username,
-    'email', newUser.email,
-    'password', newUser.password,
-    'location', newUser.location)
+    // console.log('username', newUser.username,
+    // 'email', newUser.email,
+    // 'password', newUser.password,
+    // 'location', newUser.location)
 
     axiosWithAuth()
     .post('/api/auth/register/diner', {
@@ -85,18 +86,17 @@ const handleSubmit = (e) => {
       .post("/api/auth/login", {
         username: newUser.username,
         password: newUser.password,
-      }) .then((re) => {
-      setDinerId(re.data.diner.dinerId);
-      localStorage.setItem('dinerId', re.data.diner.dinerId);
-      localStorage.setItem('Token', re.data.token);
-      // const dID = localStorage.getItem('dinerId')
-      push(`/home`);
-    })
+      }) .then((res) => {
+            setDinerId(res.data.diner.dinerId);
+            localStorage.setItem('dinerId', res.data.diner.dinerId);
+            localStorage.setItem('Token', res.data.token);
+            push(`/home`);
+          })
     }) .catch((err) => {
-        setErrors({
-          ...errors,
-          [e.target.name]: err.errors[0]
-        })
+          setErrors({
+            ...errors,
+            [e.target.name]: err.errors[0]
+          })
     })
   } 
   else if (newUser.isOperator === true) {
@@ -114,17 +114,16 @@ const handleSubmit = (e) => {
       .post("/api/auth/login", {
         username: newUser.username,
         password: newUser.password,
-      }) .then((re) => {
-      setOperatorId(re.data.operator.operatorId);
-      localStorage.setItem('operatorId', re.data.operator.operatorId);
-      localStorage.setItem('Token', re.data.token);
-      // const dID = localStorage.getItem('dinerId')
-      push(`/operator/dashboard`);
-    })
+      }) .then((res) => {
+            setOperatorId(res.data.operator.operatorId);
+            localStorage.setItem('operatorId', res.data.operator.operatorId);
+            localStorage.setItem('Token', res.data.token);
+            push(`/operator/dashboard`);
+      })
     }) .catch((err) => {
-      setErrors({
-        ...errors,
-        [e.target.name]: err.errors[0]
+          setErrors({
+            ...errors,
+            [e.target.name]: err.errors[0]
       })
     })
   }
