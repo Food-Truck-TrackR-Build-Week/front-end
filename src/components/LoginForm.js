@@ -13,9 +13,6 @@ import {
 } from "semantic-ui-react";
 import {axiosWithAuth} from "../utils/axiosWithAuth";
 import Header from './Header';
-import RegisterForm from './RegisterForm';
-
-// TODO: Complete routing in onSubmit function using history.push
 
 const Login = () => {
   // Setting state for diner / operator
@@ -90,19 +87,19 @@ const Login = () => {
       .then((res) => {
         console.log("submitted", res);
         if (res.data.type === 'operator') {
-        setOperatorId(res.data.operator.id);
-        localStorage.setItem('operatorId', res.data.operator.id);
+        setOperatorId(res.data.operator.operatorId);
+        localStorage.setItem('operatorId', res.data.operator.operatorId);
         localStorage.setItem('Token', res.data.token)
-        const oID = localStorage.getItem('operatorId')
-        push(`/dashboard-operator/${oID}`);
+        // const oID = localStorage.getItem('operatorId')
+        push(`/operator/dashboard`);
         } 
         else if (res.data.type === 'diner') {
-            setDinerId(res.data.diner.id);
-            localStorage.setItem('dinerId', res.data.diner.id);
+            setDinerId(res.data.diner.dinerId);
+            localStorage.setItem('dinerId', res.data.diner.dinerId);
             localStorage.setItem('Token', res.data.token)
-            const dID = localStorage.getItem('dinerId')
+            // const dID = localStorage.getItem('dinerId')
             console.log(res.data.token)
-            push(`/dashboard-diner/${dID}`);
+            push(`/home`);
         }
       });
   };

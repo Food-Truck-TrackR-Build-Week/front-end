@@ -80,11 +80,18 @@ const handleSubmit = (e) => {
     })
     .then((res) => {
       console.log('New Diner Created', res);
-      setDinerId(res.data.diner.userId);
-      localStorage.setItem('dinerId', res.data.diner.userId);
-      localStorage.setItem('Token', res.data.token);
-      const dID = localStorage.getItem('dinerId')
-      push(`/dashboard-diner/${dID}`);
+
+      axiosWithAuth()
+      .post("/api/auth/login", {
+        username: newUser.username,
+        password: newUser.password,
+      }) .then((re) => {
+      setDinerId(re.data.diner.dinerId);
+      localStorage.setItem('dinerId', re.data.diner.dinerId);
+      localStorage.setItem('Token', re.data.token);
+      // const dID = localStorage.getItem('dinerId')
+      push(`/home`);
+    })
     }) .catch((err) => {
         setErrors({
           ...errors,
@@ -102,11 +109,18 @@ const handleSubmit = (e) => {
     })
     .then((res) => {
       console.log('New Operator Created', res);
-      setOperatorId(res.data.userId);
-      localStorage.setItem('operatorId', res.data.userId);
-      localStorage.setItem('Token', res.data.token);
-      const oID = localStorage.getItem('operatorId')
-      push(`/dashboard-operator/${oID}`);
+
+      axiosWithAuth()
+      .post("/api/auth/login", {
+        username: newUser.username,
+        password: newUser.password,
+      }) .then((re) => {
+      setOperatorId(re.data.operator.operatorId);
+      localStorage.setItem('operatorId', re.data.operator.operatorId);
+      localStorage.setItem('Token', re.data.token);
+      // const dID = localStorage.getItem('dinerId')
+      push(`/operator/dashboard`);
+    })
     }) .catch((err) => {
       setErrors({
         ...errors,
