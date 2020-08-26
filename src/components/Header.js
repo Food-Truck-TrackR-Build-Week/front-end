@@ -17,7 +17,7 @@ const Header = () => {
         style={{
           borderRadius: 0,
           position: "absolute",
-          top: "-1rem",
+          top: "-.0125rem",
           left: 0,
           width: "100vw",
           height: "auto",
