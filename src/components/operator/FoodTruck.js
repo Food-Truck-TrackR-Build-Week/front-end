@@ -49,7 +49,7 @@ const FoodTruck = (props) => {
             <Grid.Row>
               <Grid.Column>
                 <Segment vertical textAlign="right">
-                  <AddMenuForm />
+                  <AddMenuForm truck={truck} />
                 </Segment>
 
                 <Segment vertical>
