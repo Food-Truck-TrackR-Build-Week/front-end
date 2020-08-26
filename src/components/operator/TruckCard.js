@@ -1,11 +1,149 @@
-import React from "react";
-import {Card, Icon, Image, Header, Rating} from "semantic-ui-react";
+import React, {useState} from "react";
+import {axiosWithAuth} from "../../utils/axiosWithAuth";
+import {truckState} from "../../utils/initialTruckState";
+import {
+  Card,
+  Icon,
+  Image,
+  Header,
+  Rating,
+  Button,
+  Modal,
+  Form,
+} from "semantic-ui-react";
 
 const TruckCard = (props) => {
+  const [open, setOpen] = useState(false);
+  // const [truck, setTruck] = useState({});
+  const [truckToEdit, setTruckToEdit] = useState(props.truck);
+
+  const updateTruck = () => {
+    axiosWithAuth()
+      .put(`/api/trucks/${truckToEdit.id}`, {
+        operatorId: 100001,
+        name: truckToEdit.name,
+        imageOfTruck: truckToEdit.imageOfTruck,
+        cuisineType: truckToEdit.cuisineType,
+        currentLocation: truckToEdit.currentLocation,
+      })
+      .then((res) => {
+        console.log("SR: UpdateTruckForm.js: submit sucess: res: ", res.data);
+        setTruckToEdit(truckToEdit);
+      })
+      .catch((err) => {
+        console.error(
+          "SR: UpdateTruckForm.js: submit failed: err ",
+          err.message
+        );
+      });
+  };
+
+  const handleDeleteTruck = (truckToEdit) => {
+    axiosWithAuth()
+      .delete(`/api/trucks/${truckToEdit.id}`, truckToEdit)
+      .then((res) => {
+        props.truck.filter((item) => item.id !== truckToEdit.id);
+      })
+      .catch((err) => console.error(err.message));
+  };
+
+  const handleChange = (e) => {
+    e.persist();
+    setTruckToEdit({
+      ...truckToEdit,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    updateTruck();
+
+    setOpen(false);
+  };
+
   return (
     <>
       <div>
-        <Header size="large">{props.truck.name}</Header>
+        <Header size="large">
+          {props.truck.name}
+          <Button.Group basic>
+            <Modal
+              onClose={() => setOpen(false)}
+              onOpen={() => setOpen(true)}
+              open={open}
+              trigger={
+                <Button>
+                  <Icon name="pencil" /> Edit
+                </Button>
+              }
+            >
+              <Modal.Header>Add Food Truck</Modal.Header>
+              <Modal.Content>
+                <Modal.Description>
+                  <Form onSubmit={handleSubmit}>
+                    <Form.Field>
+                      <label>Truck Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="ex. Vietnamese"
+                        value={truckToEdit.name}
+                        onChange={handleChange}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Select Truck Image</label>
+                      <input
+                        type="text"
+                        name="imageOfTruck"
+                        value={truckToEdit.imageOfTruck}
+                        onChange={handleChange}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Cuisine</label>
+                      <input
+                        type="text"
+                        name="cuisineType"
+                        placeholder="ex. Vietnamese"
+                        value={truckToEdit.cuisineType}
+                        onChange={handleChange}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Location</label>
+                      <input
+                        type="text"
+                        name="currentLocation"
+                        placeholder=""
+                        value={truckToEdit.currentLocation}
+                        onChange={handleChange}
+                      />
+                    </Form.Field>
+                    {/* <Form.Field>
+                      <label>Departure Time</label>
+                      <input
+                        type="time"
+                        name="departureTime"
+                        placeholder=""
+                        value={truckToEdit.departureTime}
+                        onChange={handleChange}
+                      />
+                    </Form.Field> */}
+                    <Button type="submit">
+                      <Icon name="add" /> Update Truck
+                    </Button>
+                  </Form>
+                </Modal.Description>
+              </Modal.Content>
+            </Modal>
+            <Button onClick={handleDeleteTruck}>
+              <Icon name="delete" /> Delete
+            </Button>
+          </Button.Group>
+        </Header>
 
         <Card fluid>
           <Image
