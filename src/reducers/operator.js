@@ -2,6 +2,12 @@ import {
   FETCHING_TRUCKS_START,
   FETCHING_TRUCKS_SUCCESS,
   FETCHING_TRUCKS_ERROR,
+  ADD_TRUCK,
+  UPDATE_TRUCK,
+  REMOVE_TRUCK,
+  ADD_MENUITEM,
+  UPDATE_MENUITEM,
+  REMOVE_MENUITEM,
 } from "../actions";
 
 const initialState = {
@@ -15,7 +21,7 @@ const initialState = {
     {
       id: Date.now(),
       operatorId: Date.now(),
-      name: "Kitchenette Karts",
+      truckName: "Kitchenette Karts",
       imageOfTruck:
         "https://images.unsplash.com/photo-1567129937968-cdad8f07e2f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=945&q=80",
       cuisineType: "Vietnamese",
@@ -85,6 +91,18 @@ export const operator = (state = initialState, action) => {
         ...state,
         isFetching: false,
         error: action.payload,
+      };
+
+    case ADD_TRUCK:
+      return {
+        ...state,
+        trucksOwned: [...state.trucksOwned, action.payload],
+      };
+
+    case UPDATE_TRUCK:
+      return {
+        ...state,
+        trucksOwned: action.payload,
       };
 
     default:

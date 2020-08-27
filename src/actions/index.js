@@ -21,3 +21,28 @@ export const fetchOperatorData = () => (dispatch) => {
       dispatch({type: FETCHING_TRUCKS_ERROR, payload: err.message});
     });
 };
+
+// ---------------------------------------------------------------------------
+
+export const SETTING_DINER_INFO = "SETTING_DINER_INFO";
+
+export const settingDinerInfo = (info) => (dispatch) => {
+  dispatch({type: SETTING_DINER_INFO, payload: info});
+};
+
+export const fetchTruckData = () => (dispatch) => {
+  dispatch({type: FETCHING_TRUCKS_START});
+  axiosWithAuth()
+    .get("/api/trucks")
+    .then((res) => {
+      console.log("SR: actions/index.js: fetchOperatorData: axios.then: ", res);
+      dispatch({
+        type: FETCHING_TRUCKS_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log("error", err);
+      dispatch({type: FETCHING_TRUCKS_ERROR, payload: err.message});
+    });
+};
