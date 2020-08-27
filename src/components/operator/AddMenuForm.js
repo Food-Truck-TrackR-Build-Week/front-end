@@ -1,13 +1,11 @@
 import React, {useState} from "react";
 import {axiosWithAuth} from "../../utils/axiosWithAuth";
-import {useParams} from "react-router-dom";
 import {menuState} from "../../utils/initialMenuState";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
-const AddMenuForm = () => {
+const AddMenuForm = (props) => {
   const [open, setOpen] = useState(false);
   const [menuItem, setMenuItem] = useState(menuState);
-  const {id} = useParams();
 
   const handleChange = (e) => {
     setMenuItem({
@@ -20,7 +18,12 @@ const AddMenuForm = () => {
     e.preventDefault();
 
     axiosWithAuth()
-      .post(`/api/menus/${id}`, menuItem)
+      .post(`/api/trucks/${props.truck.id}/menu`, {
+        itemName: menuItem.itemName,
+        itemDescription: menuItem.itemDescription,
+        itemPrice: menuItem.itemPrice,
+        itemPhotos: menuItem.itemPhotos,
+      })
       .then((res) => {
         console.log(res.data);
         setMenuItem(menuItem);
@@ -62,7 +65,7 @@ const AddMenuForm = () => {
                 <label>Description</label>
                 <input
                   name="itemDescription"
-                  placeholder=""
+                  placeholder="Describe Menu Item"
                   value={menuItem.itemDescription}
                   onChange={handleChange}
                 />
@@ -72,15 +75,17 @@ const AddMenuForm = () => {
                 <input
                   name="itemPrice"
                   type="number"
+                  placeholder="0.00"
                   value={menuItem.itemPrice}
                   onChange={handleChange}
                 />
               </Form.Field>
               <Form.Field>
-                <label>Photos</label>
+                <label>Item Photos</label>
                 <input
                   name="itemPhotos"
                   type="text"
+                  placeholder="Enter Image URL's"
                   value={menuItem.itemPhotos}
                   onChange={handleChange}
                 />
