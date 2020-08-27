@@ -24,7 +24,7 @@ const FoodTruck = (props) => {
           <Grid key={truck.id}>
             <Grid.Row>
               <Grid.Column computer={6} tablet={16}>
-                <TruckCard truck={truck} />
+                <TruckCard truck={truck} operatorId={props.operatorId} />
               </Grid.Column>
               <Grid.Column computer={10} tablet={16}>
                 <Grid columns="equal">
@@ -64,7 +64,7 @@ const FoodTruck = (props) => {
 };
 const mapStateToProps = (state) => {
   return {
-    trucks: state.operator.trucksOwned,
+    trucks: state.operator.operatorInfo.trucksowned,
   };
 };
 

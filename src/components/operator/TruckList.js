@@ -1,37 +1,26 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {connect} from "react-redux";
-import {fetchOperatorData} from "../../actions";
-import {Header, Segment} from "semantic-ui-react";
+import {Segment} from "semantic-ui-react";
 
 import AddTruckForm from "./AddTruckForm";
+import Truck from "./Truck";
 
 const TruckList = (props) => {
-  useEffect(() => {
-    props.fetchOperatorData();
-  }, []);
-
   console.log(props.trucks);
 
   return (
     <>
       <Segment vertical textAlign="center">
-        <AddTruckForm trucks={props.trucks} />
+        <AddTruckForm operatorId={props.operatorId} />
       </Segment>
-      <h3>Food Trucks</h3>
-      {console.log(props.trucks)}
+      {props.trucks.length === 0 ? null : <h3>Food Trucks</h3>}
+
       {props.trucks.map((truck) => (
-        <Segment key={truck.id} vertical>
-          <Header
-            size="large"
-            onClick={() => {
-              props.setShowTruckById(truck.id);
-            }}
-            style={{cursor: "pointer"}}
-          >
-            {truck.name}
-          </Header>
-          <p>Cuisine: {truck.cuisineType}</p>
-        </Segment>
+        <Truck
+          setShowTruckById={props.setShowTruckById}
+          key={truck.id}
+          truck={truck}
+        />
       ))}
     </>
   );
@@ -39,8 +28,8 @@ const TruckList = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    trucks: state.operator.trucksOwned,
+    trucks: state.operator.operatorInfo.trucksowned,
   };
 };
 
-export default connect(mapStateToProps, {fetchOperatorData})(TruckList);
+export default connect(mapStateToProps)(TruckList);

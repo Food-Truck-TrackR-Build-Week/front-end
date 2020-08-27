@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {addTruck} from "../../actions";
+// import LocationFinder from "./LocationFinder";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
 const AddTruckForm = (props) => {
   const [open, setOpen] = useState(false);
   const [addTruck, setAddTruck] = useState({
-    operatorId: 100001,
+    operatorId: props.operatorId,
     name: "",
     imageOfTruck: "",
     cuisineType: "",
@@ -25,6 +26,13 @@ const AddTruckForm = (props) => {
 
     props.addTruck(addTruck);
 
+    setAddTruck({
+      name: "",
+      imageOfTruck: "",
+      cuisineType: "",
+      currentLocation: "",
+    });
+
     setOpen(false);
   };
 
@@ -35,7 +43,10 @@ const AddTruckForm = (props) => {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button color="orange" style={{marginBottom: "1rem"}}>
+          <Button
+            color="orange"
+            style={{marginTop: ".5rem", marginBottom: ".75rem"}}
+          >
             <Icon name="add" />
             Add Food Truck
           </Button>
@@ -84,6 +95,11 @@ const AddTruckForm = (props) => {
                   value={addTruck.currentLocation}
                   onChange={handleChange}
                 />
+                {/* <LocationFinder
+                  name="currentLocation"
+                  value={addTruck.currentLocation}
+                  onChange={handleChange}
+                /> */}
               </Form.Field>
               {/* <Form.Field>
                 <label>Departure Time</label>

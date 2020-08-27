@@ -1,36 +1,37 @@
 import React, {useState} from "react";
-import {axiosWithAuth} from "../../utils/axiosWithAuth";
-import {menuState} from "../../utils/initialMenuState";
+import {connect} from "react-redux";
+import {addMenuItem} from "../../actions";
+// import {menuState} from "../../utils/initialMenuState";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
 const AddMenuForm = (props) => {
   const [open, setOpen] = useState(false);
-  const [menuItem, setMenuItem] = useState(menuState);
+  const [menuItem, setMenuItem] = useState({
+    itemName: "",
+    itemDescription: "",
+    itemPrice: "",
+    itemPhotos: [],
+  });
 
   const handleChange = (e) => {
     setMenuItem({
       ...menuItem,
       [e.target.name]: e.target.value,
     });
+    console.log("SR : addMenuItem : ", menuItem);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("SR : addMenuItem : ", props.addMenuItem(menuItem));
+    props.addMenuItem(props.truck.id, menuItem);
 
-    axiosWithAuth()
-      .post(`/api/trucks/${props.truck.id}/menu`, {
-        itemName: menuItem.itemName,
-        itemDescription: menuItem.itemDescription,
-        itemPrice: menuItem.itemPrice,
-        itemPhotos: menuItem.itemPhotos,
-      })
-      .then((res) => {
-        console.log(res.data);
-        setMenuItem(menuItem);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    setMenuItem({
+      itemName: "",
+      itemDescription: "",
+      itemPrice: "",
+      itemPhotos: [],
+    });
 
     setOpen(false);
   };
@@ -101,4 +102,4 @@ const AddMenuForm = (props) => {
   );
 };
 
-export default AddMenuForm;
+export default connect(null, {addMenuItem})(AddMenuForm);

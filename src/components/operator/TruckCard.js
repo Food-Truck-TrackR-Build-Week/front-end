@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {updateTruck} from "../../actions";
+import {updateTruck, removeTruck} from "../../actions";
 import {
   Card,
   Icon,
@@ -15,38 +15,16 @@ import {
 const TruckCard = (props) => {
   const [open, setOpen] = useState(false);
   const [truckToEdit, setTruckToEdit] = useState({
-    operatorId: 100001,
+    operatorId: props.operatorId,
     name: props.truck.name,
     imageOfTruck: props.truck.imageOfTruck,
     cuisineType: props.truck.cuisineType,
     currentLocation: props.truck.currentLocation,
   });
 
-  // const updateTruck = () => {
-  //   axiosWithAuth()
-  //     .put(`/api/trucks/${truckToEdit.id}`, {
-  //       operatorId: 100001,
-  //       name: truckToEdit.name,
-  //       imageOfTruck: truckToEdit.imageOfTruck,
-  //       cuisineType: truckToEdit.cuisineType,
-  //       currentLocation: truckToEdit.currentLocation,
-  //     })
-  //     .then((res) => {
-  //       console.log("SR: UpdateTruckForm.js: submit sucess: res: ", res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.error(
-  //         "SR: UpdateTruckForm.js: submit failed: err ",
-  //         err.message
-  //       );
-  //     });
-  // };
-
-  const handleDeleteTruck = (truckToEdit) => {
-    //   axiosWithAuth()
-    //     .delete(`/api/trucks/${props.truck.id}`, truckToEdit)
-    //     .then((res) => {})
-    //     .catch((err) => console.error(err.message));
+  const handleDeleteTruck = () => {
+    props.removeTruck(props.truck.id, truckToEdit);
+    window.location.reload();
   };
 
   const handleChange = (e) => {
@@ -59,7 +37,7 @@ const TruckCard = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.updateTruck(truckToEdit.id);
+    props.updateTruck(props.truck.id, truckToEdit);
     console.log("SR : updateTruck", props.updateTruck(truckToEdit.id));
 
     setOpen(false);
@@ -160,16 +138,16 @@ const TruckCard = (props) => {
             <Card.Meta>
               <span className="date">
                 <Icon name="clock" />
-                Departure Time: {props.truck.departureTime}
+                {props.truck.departureTime}
               </span>
             </Card.Meta>
             <Card.Description>
               <Icon name="food" />
-              Cuisine: {props.truck.cuisineType}
+              {props.truck.cuisineType}
             </Card.Description>
             <Card.Description>
               <Icon name="map pin" />
-              Location: {props.truck.currentLocation}
+              {props.truck.currentLocation}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
@@ -190,4 +168,4 @@ const TruckCard = (props) => {
   );
 };
 
-export default connect(null, {updateTruck})(TruckCard);
+export default connect(null, {updateTruck, removeTruck})(TruckCard);

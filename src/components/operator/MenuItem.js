@@ -15,20 +15,20 @@ const MenuItem = (props) => {
   };
 
   const updateMenuItem = () => {
-    axiosWithAuth()
-      .put(`/api/trucks/${props.truck.id}/menu/${itemToEdit.id}`, {
-        itemName: itemToEdit.itemName,
-        itemDescription: itemToEdit.itemDescription,
-        itemPrice: itemToEdit.itemPrice,
-        itemPhotos: itemToEdit.itemPhotos,
-      })
-      .then((res) => {
-        console.log("SR: UpdateMenuItem: res", res.data);
-        setItemToEdit(itemToEdit);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    // axiosWithAuth()
+    //   .put(`/api/trucks/${props.truck.id}/menu/${itemToEdit.id}`, {
+    //     itemName: itemToEdit.itemName,
+    //     itemDescription: itemToEdit.itemDescription,
+    //     itemPrice: itemToEdit.itemPrice,
+    //     itemPhotos: itemToEdit.itemPhotos,
+    //   })
+    //   .then((res) => {
+    //     console.log("SR: UpdateMenuItem: res", res.data);
+    //     setItemToEdit(itemToEdit);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
   };
 
   const handleDelete = () => {
