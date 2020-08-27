@@ -31,19 +31,44 @@ const DinerDashboard = (props) => {
     })
 
     const [destination, setDestination] = useState(null)
-
+    const [milesRadius, setMilesRadius] = useState(1)
+    const [mapCenter, setMapCenter] = useState({})
+    const [myLocation, setMyLocation] = useState('')
     useEffect(() => {
       props.fetchTruckData()
     },[])
+
+    const RecenterMap = () => {
+      setMapCenter(myLocation)
+    }
 
   return (
     <>
       <Menu inverted size="massive" style={{borderRadius: 0, marginBottom: 0, position: "fixed", zIndex: 100, left: 0, right: 0}}>
         <Menu.Item header>Food Truck TrackR</Menu.Item>
       </Menu>
-      <ClearRoute destination={destination} setDestination={setDestination}/>
-      <SideBar infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination} setDestination={setDestination} trucks={props.trucks}/>
-      <MapContainer infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination} trucks={props.trucks}/>
+      <ClearRoute destination={destination} setDestination={setDestination} RecenterMap={RecenterMap}/>
+      <SideBar 
+        infoWindow={infoWindow}
+        setInfoWindow={setInfoWindow}
+        destination={destination}
+        setDestination={setDestination}
+        trucks={props.trucks}
+        milesRadius={milesRadius}
+        setMilesRadius={setMilesRadius}
+        RecenterMap={RecenterMap}
+      />
+      <MapContainer 
+        infoWindow={infoWindow}
+        setInfoWindow={setInfoWindow}
+        destination={destination}
+        trucks={props.trucks}
+        milesRadius={milesRadius}
+        mapCenter={mapCenter}
+        setMapCenter={setMapCenter}
+        myLocation={myLocation}
+        setMyLocation={setMyLocation}
+      />
     </>
       
   );
