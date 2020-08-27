@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Segment, Input, Container, List, Image, Header, Button, Icon } from 'semantic-ui-react';
 
@@ -10,7 +10,8 @@ const SideBarStyle = {
   width: 350,
   bottom: 10,
   zIndex: 100,
-  
+  display: 'flex',
+  flexDirection: 'column',
 }
 
 const listImageStyle = {
@@ -18,47 +19,65 @@ const listImageStyle = {
   height: 60
 }
 
-const listStyle = {
-  "& :hover": {
-    backgroundColor: 'red !important' ,
-  }
+const milesRadiusSegmentStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  borderLeft: 'none',
+  borderRight: 'none',
+  borderBottom: 'none',
+  boxShadow: 'none',
+  marginBottom: -10,
+  paddingLeft: 5,
+  paddingRight: 5
 }
 
 
 
 function SideBar(props) {
 
+  const [searchValue, setSearchValue] = useState('')
+  
+
+  const handleOnSearch = (e) => {
+    setSearchValue(e.target.value)
+  }
+  const handleMilesRadiusChange = (e) => {
+    props.setMilesRadius(e.target.value)
+  }
 
     return(
       <>
         
         <Segment style={SideBarStyle}>
-          <Input action='Search' placeholder='Search...' style={{width: "100%"}} action={{color:'red', content: 'Search',}}/>
-          <Container>
+          <Input  placeholder='Search...' style={{width: "100%"}} onChange={handleOnSearch} value={searchValue}/>
+          <Container style={{overflow: 'auto', flexGrow: '1',}}>
 
-
-            <Button onClick={() => {props.setDestination(null)}}>clear</Button>
-            <List selection verticalAlign='middle' size="large"  >
+            <List selection verticalAlign='middle' size="large" >
               {
-                props.trucks.map((t, index) => (
-                  <List.Item key={index} onClick={(e) => {
+                props.trucks.filter(filtertruck => {
+                  return filtertruck.name.includes(searchValue) || filtertruck.cuisineType.includes(searchValue)
+                }).map((t, index) => {
+                  let coordinates = t.currentLocation.split(', ')
+                  return(<List.Item key={index} onClick={(e) => {
                     props.setInfoWindow({
                       visible: true,
-                      position: {lat: t.currentLocation.lat, lng: t.currentLocation.lng},
+                      position: {lat: coordinates[0], lng: coordinates[1]},
                       currentTruck: t
                     })
-                  }} style={listStyle}>
+                  }}>
                     <List.Content floated='right'>
-                      <Button icon onClick={(e) => {
+                      <Button icon color='green' onClick={(e) => {
                         e.stopPropagation()
                         props.setDestination({
                           location: {
-                            lat: t.currentLocation.lat, 
-                            lng: t.currentLocation.lng
+                            lat: parseFloat(coordinates[0]), 
+                            lng: parseFloat(coordinates[1])
                           },
                           truckName: t.truckName
                         })
-                      }}><Icon name="location arrow" color='black'/></Button>
+                      }}><Icon name="location arrow"/></Button>
                     </List.Content>
                     <Image src={t.imageOfTruck} style={listImageStyle}/>
                     <List.Content>
@@ -70,12 +89,23 @@ function SideBar(props) {
                         {t.currentLocation}
                       </Header>
                     </List.Content>
-                  </List.Item>
-                ))
+                  </List.Item>)
+                })
               }
               
             </List>
+            
           </Container>
+          <Segment style={milesRadiusSegmentStyle}>
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10}}>
+              <Header as='h5' style={{margin: 0}}>
+                Search Radius: {props.milesRadius} Miles
+              </Header>
+              <input type="range" min="1" max='30' onChange={handleMilesRadiusChange} value={props.milesRadius}/>
+            </div>
+            
+            <Button onClick={props.RecenterMap} primary>Go to My Location</Button>
+          </Segment>
         </Segment>
       </>
     )
