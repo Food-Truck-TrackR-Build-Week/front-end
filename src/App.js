@@ -26,9 +26,12 @@ const App = () => {
   return (
     <Router>
 
+      <Menu inverted size="massive" style={{borderRadius: 0}}>
+        <Menu.Item header>Food Truck TrackR</Menu.Item>
+      </Menu>
       <Switch>
-        <Route exact path="/diner/home/noPrivate" component={DinerDashboard} />
-        <PrivateRoute exact path="/diner/home" component={DinerDashboard} />
+        <PrivateRoute exact path="/home" component={DinerDashboard} />
+
         <Route exact path="/diner" component={DinerLogin} />
         <PrivateRoute
           exact
@@ -38,6 +41,7 @@ const App = () => {
         <Route exact path="/operator" component={OperatorLogin} />
         <Route exact path="/image-editor" component={ImageEditor} />
         <Route exact path="/location-finder" component={LocationFinder} />
+
         <Route exact path="/">
           <Segment basic>
             <Grid
@@ -61,18 +65,20 @@ const App = () => {
                 </Header>
               </Grid.Row>
               <Grid.Row verticalAlign="middle">
-                <Grid.Column>
+
+                <Grid.Column width={4}>
                   <Image src={Food} size="medium" centered />
-                  <Label as="a" pointing size="huge" color="yellow">
+                  <Label pointing size="huge" color="yellow">
+
                     <Link to="/diner" style={{opacity: 1}}>
                       Diner
                     </Link>
                   </Label>
                 </Grid.Column>
 
-                <Grid.Column>
+                <Grid.Column width={4}>
                   <Image src={FoodTruck} size="medium" centered />
-                  <Label as="a" pointing size="huge" color="blue">
+                  <Label pointing size="huge" color="blue">
                     <Link to="/operator" style={{opacity: 1}}>
                       Operator
                     </Link>
