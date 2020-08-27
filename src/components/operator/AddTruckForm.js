@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+
 import {axiosWithAuth} from "../../utils/axiosWithAuth";
 import {truckState} from "../../utils/initialTruckState";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
@@ -6,6 +7,7 @@ import {Button, Modal, Icon, Form} from "semantic-ui-react";
 const AddTruckForm = () => {
   const [open, setOpen] = useState(false);
   const [addTruck, setAddTruck] = useState(truckState);
+  // const [operator, setOperator] = usetState();
 
   const handleChange = (e) => {
     setAddTruck({
@@ -18,7 +20,13 @@ const AddTruckForm = () => {
     e.preventDefault();
 
     axiosWithAuth()
-      .post("/api/trucks", addTruck)
+      .post("/api/trucks", {
+        operatorId: 100001,
+        name: addTruck.name,
+        imageOfTruck: addTruck.imageOfTruck,
+        cuisineType: addTruck.cuisineType,
+        currentLocation: addTruck.currentLocation,
+      })
       .then((res) => {
         console.log(res.data);
         setAddTruck(addTruck);
@@ -37,7 +45,7 @@ const AddTruckForm = () => {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button>
+          <Button color="orange" style={{marginBottom: "1rem"}}>
             <Icon name="add" />
             Add Food Truck
           </Button>
@@ -52,16 +60,17 @@ const AddTruckForm = () => {
                 <input
                   type="text"
                   name="name"
-                  placeholder="ex. Vietnamese"
+                  placeholder="Name of Truck"
                   value={addTruck.name}
                   onChange={handleChange}
                 />
               </Form.Field>
               <Form.Field>
-                <label>Select Truck Image</label>
+                <label>Image URL</label>
                 <input
                   type="text"
                   name="imageOfTruck"
+                  placeholder="Enter Image URL"
                   value={addTruck.imageOfTruck}
                   onChange={handleChange}
                 />
@@ -81,12 +90,12 @@ const AddTruckForm = () => {
                 <input
                   type="text"
                   name="currentLocation"
-                  placeholder=""
+                  placeholder="Truck's Location"
                   value={addTruck.currentLocation}
                   onChange={handleChange}
                 />
               </Form.Field>
-              <Form.Field>
+              {/* <Form.Field>
                 <label>Departure Time</label>
                 <input
                   type="time"
@@ -95,7 +104,7 @@ const AddTruckForm = () => {
                   value={addTruck.departureTime}
                   onChange={handleChange}
                 />
-              </Form.Field>
+              </Form.Field> */}
               <Button type="submit">
                 <Icon name="add" /> Add Truck
               </Button>

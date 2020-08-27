@@ -1,9 +1,8 @@
 export const truckState = {
-  id: Date.now(),
-  operatorId: Date.now(),
+  id: "",
+  operatorId: "",
   name: "",
   imageOfTruck: "",
   cuisineType: "",
   currentLocation: "",
-  departureTime: "",
 };

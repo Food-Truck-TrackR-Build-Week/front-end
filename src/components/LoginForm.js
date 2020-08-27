@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import * as yup from "yup";
 import "semantic-ui-css/semantic.min.css";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {
   Form,
   Button,
@@ -11,14 +12,14 @@ import {
   Divider,
 } from "semantic-ui-react";
 import {axiosWithAuth} from "../utils/axiosWithAuth";
+import Header from './Header';
+import RegisterForm from './RegisterForm';
 
 // TODO: Complete routing in onSubmit function using history.push
 
 const Login = () => {
   // Setting state for diner / operator
-  // const [isDiner, setIsDiner] = useState(false);
-
-  // const [isOperator, setIsOperator] = useState(false);
+  const [dinerId, setDinerId] = useState();
 
   const [operatorId, setOperatorId] = useState();
   const {push} = useHistory();
@@ -78,23 +79,6 @@ const Login = () => {
     validateChange(evt);
   };
 
-  // const submitLogin = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .post("https://food-truck-trackr-api.herokuapp.com/api/auth/login", {
-  //       username: user.username,
-  //       password: user.password,
-  //     })
-  //     .then((res) => {
-  //       console.log("submitted", res);
-  //       // const pushRoute = () => {
-  //       //   if (res.data.isDiner == true) {
-  //       //     history.push({DinerDashboard}, pushRoute)
-  //       //   }
-  //       // }
-  //     });
-  // };
-
   const submitLogin = (e) => {
     e.preventDefault();
 
@@ -105,18 +89,28 @@ const Login = () => {
       })
       .then((res) => {
         console.log("submitted", res);
-
-        setOperatorId(res.data.id);
-
-        localStorage.setItem(operatorId, res.data.id);
-
-        push("/dashboard-operator");
+        if (res.data.type === 'operator') {
+        setOperatorId(res.data.operator.id);
+        localStorage.setItem('operatorId', res.data.operator.id);
+        localStorage.setItem('Token', res.data.token)
+        const oID = localStorage.getItem('operatorId')
+        push(`/dashboard-operator/${oID}`);
+        } 
+        else if (res.data.type === 'diner') {
+            setDinerId(res.data.diner.id);
+            localStorage.setItem('dinerId', res.data.diner.id);
+            localStorage.setItem('Token', res.data.token)
+            const dID = localStorage.getItem('dinerId')
+            console.log(res.data.token)
+            push(`/dashboard-diner/${dID}`);
+        }
       });
   };
 
   return (
     <Container textalign="center">
-      <h1>Welcome to FoodTruckFindr</h1>
+      <Header />
+      <h1>Welcome to Food Truck TrackR</h1>
       <Segment placeholder>
         <Grid columns={2} relaxed="very" stackable>
           <Grid.Column>
@@ -154,7 +148,7 @@ const Login = () => {
             </Form>
           </Grid.Column>
           <Grid.Column verticalAlign="middle">
-            <Button content="Sign up" icon="signup" size="big" />
+            <Button content="Sign up" icon="signup" size="big" onClick={() => push('/register')} />
           </Grid.Column>
         </Grid>
         <Divider vertical>Or</Divider>
