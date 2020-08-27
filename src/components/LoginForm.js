@@ -89,14 +89,12 @@ const Login = () => {
         setOperatorId(res.data.operator.operatorId);
         localStorage.setItem('operatorId', res.data.operator.operatorId);
         localStorage.setItem('Token', res.data.token)
-        // const oID = localStorage.getItem('operatorId')
         push(`/operator/dashboard`);
         } 
         else if (res.data.type === 'diner') {
             setDinerId(res.data.diner.dinerId);
             localStorage.setItem('dinerId', res.data.diner.dinerId);
             localStorage.setItem('Token', res.data.token)
-            // const dID = localStorage.getItem('dinerId')
             console.log(res.data.token)
             push(`/home`);
         }

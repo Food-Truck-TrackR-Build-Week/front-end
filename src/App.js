@@ -36,6 +36,7 @@ const App = () => {
           path="/operator/dashboard"
           component={OperatorDashboard}
         />
+        <Route exact path='/register' component={RegisterForm} />
         <Route exact path="/operator" component={OperatorLogin} />
         <Route exact path="/image-editor" component={ImageEditor} />
         <Route exact path="/">

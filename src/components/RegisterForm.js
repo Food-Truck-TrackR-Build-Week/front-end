@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as yup from 'yup';
 import 'semantic-ui-css/semantic.min.css';
 import { Form, Button, Container, Input } from "semantic-ui-react";
@@ -12,12 +11,11 @@ const Register = () => {
     username: '',
     email: '',
     password: '',
-    location: '',
     isDiner: null,
     isOperator: null
   })
 
-const push = useHistory();
+const {push} = useHistory();
 const [dinerId, setDinerId] = useState();
 const [operatorId, setOperatorId] = useState();
 
@@ -25,14 +23,12 @@ const [errors, setErrors] = useState({
   username: '',
   email:'',
   password: '',
-  location: ''
 })
 
 const formSchema = yup.object().shape({
   username: yup.string().required('Username is a required field').min(6, 'Username must be at least 6 characters'),
   email: yup.string().email().required('Email is a required field'),
   password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is a required field'),
-  location: yup.string().required('Location is a required field')
 })
 
 const handleValidation = (e) => {
@@ -67,17 +63,15 @@ const handleSubmit = (e) => {
   e.preventDefault();
   e.persist();
   if (newUser.isDiner === true) {
-    // console.log('username', newUser.username,
-    // 'email', newUser.email,
-    // 'password', newUser.password,
-    // 'location', newUser.location)
+    console.log('username', newUser.username,
+    'email', newUser.email,
+    'password', newUser.password)
 
     axiosWithAuth()
     .post('/api/auth/register/diner', {
       username: newUser.username,
       email: newUser.email,
       password: newUser.password,
-      location: newUser.location
     })
     .then((res) => {
       console.log('New Diner Created', res);
@@ -105,7 +99,6 @@ const handleSubmit = (e) => {
       username: newUser.username,
       email: newUser.email,
       password: newUser.password,
-      location: newUser.location
     })
     .then((res) => {
       console.log('New Operator Created', res);
@@ -174,16 +167,6 @@ const handleSubmit = (e) => {
           name='password' 
           type='password' 
           value={newUser.password} 
-          onChange={inputChange} 
-          />
-          <br />
-          <br />
-          <Input 
-          size='small' 
-          placeholder='Location:' 
-          name='location' 
-          type='location' 
-          value={newUser.location} 
           onChange={inputChange} 
           />
         </Form.Field>
