@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import * as yup from 'yup';
 import 'semantic-ui-css/semantic.min.css';
-import { Form, Button, Container, Input } from "semantic-ui-react";
+import { 
+  Form, 
+  Button, 
+  Container, 
+  Input } from "semantic-ui-react";
 import Header from './Header';
 import { useHistory } from "react-router-dom";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
@@ -11,12 +15,11 @@ const Register = () => {
     username: '',
     email: '',
     password: '',
-    location: '',
     isDiner: null,
     isOperator: null
   })
 
-const push = useHistory();
+const {push} = useHistory();
 const [dinerId, setDinerId] = useState();
 const [operatorId, setOperatorId] = useState();
 
@@ -24,14 +27,12 @@ const [errors, setErrors] = useState({
   username: '',
   email:'',
   password: '',
-  location: ''
 })
 
 const formSchema = yup.object().shape({
   username: yup.string().required('Username is a required field').min(6, 'Username must be at least 6 characters'),
   email: yup.string().email().required('Email is a required field'),
   password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is a required field'),
-  location: yup.string().required('Location is a required field')
 })
 
 const handleValidation = (e) => {
@@ -56,7 +57,7 @@ const inputChange = (e) => {
   e.persist();
   setNewUser({
     ...newUser,
-    [e.target.name]: e.target.value,
+    [e.target.name]: e.target.value
   })
   handleValidation(e);
 }
@@ -68,28 +69,32 @@ const handleSubmit = (e) => {
   if (newUser.isDiner === true) {
     console.log('username', newUser.username,
     'email', newUser.email,
-    'password', newUser.password,
-    'location', newUser.location)
+    'password', newUser.password)
 
     axiosWithAuth()
     .post('/api/auth/register/diner', {
       username: newUser.username,
       email: newUser.email,
       password: newUser.password,
-      location: newUser.location
     })
     .then((res) => {
       console.log('New Diner Created', res);
-      setDinerId(res.data.diner.userId);
-      localStorage.setItem('dinerId', res.data.diner.userId);
-      localStorage.setItem('Token', res.data.token);
-      const dID = localStorage.getItem('dinerId')
-      push(`/dashboard-diner/${dID}`);
+
+      axiosWithAuth()
+      .post("/api/auth/login", {
+        username: newUser.username,
+        password: newUser.password,
+      }) .then((res) => {
+            setDinerId(res.data.diner.dinerId);
+            localStorage.setItem('dinerId', res.data.diner.dinerId);
+            localStorage.setItem('Token', res.data.token);
+            push(`/home`);
+          })
     }) .catch((err) => {
-        setErrors({
-          ...errors,
-          [e.target.name]: err.errors[0]
-        })
+          setErrors({
+            ...errors,
+            [e.target.name]: err.errors[0]
+          })
     })
   } 
   else if (newUser.isOperator === true) {
@@ -98,19 +103,24 @@ const handleSubmit = (e) => {
       username: newUser.username,
       email: newUser.email,
       password: newUser.password,
-      location: newUser.location
     })
     .then((res) => {
       console.log('New Operator Created', res);
-      setOperatorId(res.data.userId);
-      localStorage.setItem('operatorId', res.data.userId);
-      localStorage.setItem('Token', res.data.token);
-      const oID = localStorage.getItem('operatorId')
-      push(`/dashboard-operator/${oID}`);
+
+      axiosWithAuth()
+      .post("/api/auth/login", {
+        username: newUser.username,
+        password: newUser.password,
+      }) .then((res) => {
+            setOperatorId(res.data.operator.operatorId);
+            localStorage.setItem('operatorId', res.data.operator.operatorId);
+            localStorage.setItem('Token', res.data.token);
+            push(`/operator/dashboard`);
+      })
     }) .catch((err) => {
-      setErrors({
-        ...errors,
-        [e.target.name]: err.errors[0]
+          setErrors({
+            ...errors,
+            [e.target.name]: err.errors[0]
       })
     })
   }
@@ -161,16 +171,6 @@ const handleSubmit = (e) => {
           name='password' 
           type='password' 
           value={newUser.password} 
-          onChange={inputChange} 
-          />
-          <br />
-          <br />
-          <Input 
-          size='small' 
-          placeholder='Location:' 
-          name='location' 
-          type='location' 
-          value={newUser.location} 
           onChange={inputChange} 
           />
         </Form.Field>
