@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MapContainer from "./MapContainer";
+import {connect} from "react-redux";
 import SideBar from "./SideBar";
-import DinerNavBar from "./DinerNavBar";
+import {fetchTruckData} from "../../actions";
 import ClearRoute from "./ClearRoute";
+import { Menu } from "semantic-ui-react";
 
-const DinerDashboard = () => {
+const DinerDashboard = (props) => {
   const [infoWindow, setInfoWindow] = useState({
       visible: false,
       position: {},
@@ -30,15 +32,28 @@ const DinerDashboard = () => {
 
     const [destination, setDestination] = useState(null)
 
+    useEffect(() => {
+      props.fetchTruckData()
+    },[])
+
   return (
     <>
+      <Menu inverted size="massive" style={{borderRadius: 0, marginBottom: 0, position: "fixed", zIndex: 100, left: 0, right: 0}}>
+        <Menu.Item header>Food Truck TrackR</Menu.Item>
+      </Menu>
       <ClearRoute destination={destination} setDestination={setDestination}/>
-      <DinerNavBar />
-      <SideBar infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination} setDestination={setDestination}/>
-      <MapContainer infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination}/>
+      <SideBar infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination} setDestination={setDestination} trucks={props.trucks}/>
+      <MapContainer infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination} trucks={props.trucks}/>
     </>
       
   );
 };
 
-export default DinerDashboard;
+const mapStateToProps = (state) => {
+  return {
+    trucks: state.diner.trucks,
+  };
+};
+
+
+export default connect(mapStateToProps, {fetchTruckData})(DinerDashboard)

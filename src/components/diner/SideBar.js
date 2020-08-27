@@ -32,15 +32,15 @@ function SideBar(props) {
     return(
       <>
         
-        <Segment style={SideBarStyle} inverted>
+        <Segment style={SideBarStyle}>
           <Input action='Search' placeholder='Search...' style={{width: "100%"}} action={{color:'red', content: 'Search',}}/>
           <Container>
 
 
             <Button onClick={() => {props.setDestination(null)}}>clear</Button>
-            <List selection verticalAlign='middle' size="large" inverted >
+            <List selection verticalAlign='middle' size="large"  >
               {
-                props.truck.map((t, index) => (
+                props.trucks.map((t, index) => (
                   <List.Item key={index} onClick={(e) => {
                     props.setInfoWindow({
                       visible: true,
@@ -62,12 +62,12 @@ function SideBar(props) {
                     </List.Content>
                     <Image src={t.imageOfTruck} style={listImageStyle}/>
                     <List.Content>
-                      <List.Header>{t.truckName}</List.Header>
+                      <List.Header>{t.name}</List.Header>
                       <Header as='h5' disabled>
-                        {t.currentLocation.location}
+                        {t.cuisineType}
                       </Header>
                       <Header as='h5' disabled>
-                        Disabled Header
+                        {t.currentLocation}
                       </Header>
                     </List.Content>
                   </List.Item>
@@ -81,11 +81,6 @@ function SideBar(props) {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-      truck: state.operator.truck,
-    };
-  };
   
 
-export default connect(mapStateToProps)(SideBar)
+export default SideBar

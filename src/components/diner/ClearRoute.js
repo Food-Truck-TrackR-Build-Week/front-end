@@ -13,10 +13,10 @@ const ClearRouteSegmentStyle = {
 function ClearRoute(props) {
     return ( 
         props.destination !== null ? (
-            <Segment style={ClearRouteSegmentStyle} inverted>
+            <Segment style={ClearRouteSegmentStyle}>
             <Icon name='location arrow' size='big' />
             <div>
-                <Header inverted as='h3' style={{marginLeft: 20, marginRight: 20}}>
+                <Header as='h3' style={{marginLeft: 20, marginRight: 20}}>
                     Right now you are following a Route
                     <Header.Subheader>
                         Route from Current Location to {props.destination.truckName}

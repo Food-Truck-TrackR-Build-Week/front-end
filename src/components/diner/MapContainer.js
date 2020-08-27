@@ -42,7 +42,7 @@ function MapContainer(props) {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 })
-                console.log("got position");
+                console.log(position);
                 if(myLocation !== '' && !mapCenterHasBeingSet) {
                     setMapCenter(myLocation)
                     setMapCenterHasBeingSet(true)
@@ -101,12 +101,12 @@ function MapContainer(props) {
                   }}
             />
             {
-                props.truck.map((t, index) => {
+                props.trucks.map((t, index) => {
                     return <Marker 
                         key={index}
                         name={'current Location'} 
-                        position={{lat: t.currentLocation.lat,
-                            lng: t.currentLocation.lng}}
+                        position={{lat: 25.598361600000004 + (index+1)/1000,
+                            lng: -80.4159488}}
                         data_truck={t}
                         onClick={handleClick}/>
                 })
@@ -121,20 +121,17 @@ function MapContainer(props) {
                             style={{width: 222, height: 277}}
                             />
                             <Card.Content>
-                            <Card.Header>{props.infoWindow.currentTruck.truckName}</Card.Header>
+                            <Card.Header>{props.infoWindow.currentTruck.name}</Card.Header>
 
                             <Card.Meta>
                                 <span className="date">
-                                Date: {props.infoWindow.currentTruck.currentLocation.departureTime.date}
+                                Date: {props.infoWindow.currentTruck.departureTime}
                                 </span>
                                 <span className="date">
-                                Time: {props.infoWindow.currentTruck.currentLocation.departureTime.time}
+                                Time: {props.infoWindow.currentTruck.departureTime}
                                 </span>
                             </Card.Meta>
                             <Card.Description>Cuisine: {props.infoWindow.currentTruck.cuisineType}</Card.Description>
-                            <Card.Description>
-                                Current Location: {props.infoWindow.currentTruck.currentLocation.location}
-                            </Card.Description>
                             </Card.Content>
                             <Card.Content extra>
                             <Icon name="star" />
@@ -151,18 +148,18 @@ function MapContainer(props) {
                                 {
                                 props.infoWindow.currentTruck.menu.map((menu, index) => (
                                     <List.Item key={index} style={{ paddingTop: 10}}>
-                                        <Image src={menu.image} style={{width: 50, height: 50}}/>
+                                        <Image src={menu.Photos} style={{width: 50, height: 50}}/>
                                         <List.Content style={{width: 265}}>
                                             <List.Header style={{position: 'relative'}}>
-                                                {menu.name}
-                                                <span style={{position: "absolute", right: 0}}>{menu.price}</span>
+                                                {menu.itemName}
+                                                <span style={{position: "absolute", right: 0}}>{menu.itemPrice}</span>
                                             </List.Header>
                                             <List.Description>
-                                                {menu.description}
+                                                {menu.itemDescription}
                                             </List.Description>
                                         </List.Content>
                                         <List.Content floated="left" style={{paddingTop: 5}}>
-                                            <Rating defaultRating={menu.ratings} maxRating={5} />
+                                            <Rating defaultRating={menu.customerRatingsAvg} maxRating={5} />
                                         </List.Content>
                                     </List.Item>
                                         
@@ -179,13 +176,7 @@ function MapContainer(props) {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-      truck: state.operator.truck,
-    };
-  };
-  
 
-export default connect(mapStateToProps)( GoogleApiWrapper({
+export default  GoogleApiWrapper({
     apiKey: 'AIzaSyAKgYAy4mmkRtFlnYenEWKjuZPZ2c-JbMs'
-})(MapContainer))
+})(MapContainer)

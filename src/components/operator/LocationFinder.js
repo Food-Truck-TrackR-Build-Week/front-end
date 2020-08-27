@@ -7,7 +7,7 @@ function LocationFinder(props) {
     return( 
         <Autocomplete
             apiKey={'AIzaSyAKgYAy4mmkRtFlnYenEWKjuZPZ2c-JbMs'}
-            style={{width: '90%'}}
+            style={{width: '90%', marginTop: 100}}
             onPlaceSelected={(place) => {
             console.log(place);
             }}
