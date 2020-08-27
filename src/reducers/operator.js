@@ -21,7 +21,7 @@ const initialState = {
     {
       id: Date.now(),
       operatorId: Date.now(),
-      name: "Kitchenette Karts",
+      truckName: "Kitchenette Karts",
       imageOfTruck:
         "https://images.unsplash.com/photo-1567129937968-cdad8f07e2f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=945&q=80",
       cuisineType: "Vietnamese",

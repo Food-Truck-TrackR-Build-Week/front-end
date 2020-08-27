@@ -20,15 +20,18 @@ import {
 
 import Food from "./images/undraw_Hamburger_8ge6.svg";
 import FoodTruck from "./images/undraw_street_food_hm5i.svg";
+import LocationFinder from "./components/operator/LocationFinder";
 
 const App = () => {
   return (
     <Router>
+
       <Menu inverted size="massive" style={{borderRadius: 0}}>
         <Menu.Item header>Food Truck TrackR</Menu.Item>
       </Menu>
       <Switch>
         <PrivateRoute exact path="/home" component={DinerDashboard} />
+
         <Route exact path="/diner" component={DinerLogin} />
         <PrivateRoute
           exact
@@ -37,6 +40,8 @@ const App = () => {
         />
         <Route exact path="/operator" component={OperatorLogin} />
         <Route exact path="/image-editor" component={ImageEditor} />
+        <Route exact path="/location-finder" component={LocationFinder} />
+
         <Route exact path="/">
           <Segment basic>
             <Grid
@@ -60,14 +65,17 @@ const App = () => {
                 </Header>
               </Grid.Row>
               <Grid.Row verticalAlign="middle">
+
                 <Grid.Column width={4}>
                   <Image src={Food} size="medium" centered />
                   <Label pointing size="huge" color="yellow">
+
                     <Link to="/diner" style={{opacity: 1}}>
                       Diner
                     </Link>
                   </Label>
                 </Grid.Column>
+
                 <Grid.Column width={4}>
                   <Image src={FoodTruck} size="medium" centered />
                   <Label pointing size="huge" color="blue">
