@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import * as yup from 'yup';
 import 'semantic-ui-css/semantic.min.css';
-import { Form, Button, Container, Input } from "semantic-ui-react";
+import { 
+  Form, 
+  Button, 
+  Container, 
+  Input } from "semantic-ui-react";
 import Header from './Header';
 import { useHistory } from "react-router-dom";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
@@ -53,7 +57,7 @@ const inputChange = (e) => {
   e.persist();
   setNewUser({
     ...newUser,
-    [e.target.name]: e.target.value,
+    [e.target.name]: e.target.value
   })
   handleValidation(e);
 }
