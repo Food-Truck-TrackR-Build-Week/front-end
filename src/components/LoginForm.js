@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import * as yup from "yup";
 import "semantic-ui-css/semantic.min.css";
-import { Link } from 'react-router-dom';
+import {Link} from "react-router-dom";
 import {
   Form,
   Button,
@@ -12,7 +12,7 @@ import {
   Divider,
 } from "semantic-ui-react";
 import {axiosWithAuth} from "../utils/axiosWithAuth";
-import Header from './Header';
+import Header from "./Header";
 
 const Login = () => {
   // Setting state for diner / operator
@@ -85,25 +85,23 @@ const Login = () => {
       })
       .then((res) => {
         console.log("submitted", res);
-        if (res.data.type === 'operator') {
-        setOperatorId(res.data.operator.operatorId);
-        localStorage.setItem('operatorId', res.data.operator.operatorId);
-        localStorage.setItem('Token', res.data.token)
-        push(`/operator/dashboard`);
-        } 
-        else if (res.data.type === 'diner') {
-            setDinerId(res.data.diner.dinerId);
-            localStorage.setItem('dinerId', res.data.diner.dinerId);
-            localStorage.setItem('Token', res.data.token)
-            console.log(res.data.token)
-            push(`/home`);
+        if (res.data.type === "operator") {
+          setOperatorId(res.data.operator.operatorId);
+          localStorage.setItem("operatorId", res.data.operator.operatorId);
+          localStorage.setItem("Token", res.data.token);
+          push(`/operator/dashboard`);
+        } else if (res.data.type === "diner") {
+          setDinerId(res.data.diner.dinerId);
+          localStorage.setItem("dinerId", res.data.diner.dinerId);
+          localStorage.setItem("Token", res.data.token);
+          console.log(res.data.token);
+          push(`/home`);
         }
       });
   };
 
   return (
     <Container textalign="center">
-      <Header />
       <h1>Welcome to Food Truck TrackR</h1>
       <Segment placeholder>
         <Grid columns={2} relaxed="very" stackable>
@@ -142,8 +140,13 @@ const Login = () => {
             </Form>
           </Grid.Column>
           <Grid.Column verticalAlign="middle">
-            <Link to='/register'>
-            <Button content="Sign up" icon="signup" size="big" onClick={() => push(`/register`)} />
+            <Link to="/register">
+              <Button
+                content="Sign up"
+                icon="signup"
+                size="big"
+                onClick={() => push(`/register`)}
+              />
             </Link>
           </Grid.Column>
         </Grid>
