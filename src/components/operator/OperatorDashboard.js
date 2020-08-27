@@ -18,8 +18,8 @@ const OperatorDashboard = () => {
           <Grid.Column computer={4} tablet={6} mobile={16}>
             <Segment raised>
               <TruckList
-                setShowTruckById={setShowTruckById}
                 showTruckById={showTruckById}
+                setShowTruckById={setShowTruckById}
               />
             </Segment>
           </Grid.Column>

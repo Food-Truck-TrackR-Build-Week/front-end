@@ -1,6 +1,4 @@
 import React, {useEffect} from "react";
-import {axiosWithAuth} from "../../utils/axiosWithAuth";
-import {menuState} from "../../utils/initialMenuState";
 import {connect} from "react-redux";
 import {fetchOperatorData} from "../../actions";
 import {Header, Segment} from "semantic-ui-react";
@@ -17,7 +15,7 @@ const TruckList = (props) => {
   return (
     <>
       <Segment vertical textAlign="center">
-        <AddTruckForm />
+        <AddTruckForm trucks={props.trucks} />
       </Segment>
       <h3>Food Trucks</h3>
       {console.log(props.trucks)}

@@ -1,13 +1,17 @@
 import React, {useState} from "react";
-
-import {axiosWithAuth} from "../../utils/axiosWithAuth";
-import {truckState} from "../../utils/initialTruckState";
+import {connect} from "react-redux";
+import {addTruck} from "../../actions";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
-const AddTruckForm = () => {
+const AddTruckForm = (props) => {
   const [open, setOpen] = useState(false);
-  const [addTruck, setAddTruck] = useState(truckState);
-  // const [operator, setOperator] = usetState();
+  const [addTruck, setAddTruck] = useState({
+    operatorId: 100001,
+    name: "",
+    imageOfTruck: "",
+    cuisineType: "",
+    currentLocation: "",
+  });
 
   const handleChange = (e) => {
     setAddTruck({
@@ -19,21 +23,7 @@ const AddTruckForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axiosWithAuth()
-      .post("/api/trucks", {
-        operatorId: 100001,
-        name: addTruck.name,
-        imageOfTruck: addTruck.imageOfTruck,
-        cuisineType: addTruck.cuisineType,
-        currentLocation: addTruck.currentLocation,
-      })
-      .then((res) => {
-        console.log(res.data);
-        setAddTruck(addTruck);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    props.addTruck(addTruck);
 
     setOpen(false);
   };
@@ -116,4 +106,4 @@ const AddTruckForm = () => {
   );
 };
 
-export default AddTruckForm;
+export default connect(null, {addTruck})(AddTruckForm);
