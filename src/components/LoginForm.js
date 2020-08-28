@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import {axiosWithAuth} from "../utils/axiosWithAuth";
 import {useHistory} from "react-router-dom";
 import * as yup from "yup";
 import "semantic-ui-css/semantic.min.css";
@@ -10,8 +11,8 @@ import {
   Segment,
   Grid,
   Divider,
+  Header,
 } from "semantic-ui-react";
-import {axiosWithAuth} from "../utils/axiosWithAuth";
 
 // Yup validation schema
 const formSchema = yup.object().shape({
@@ -102,10 +103,14 @@ const Login = () => {
   };
 
   return (
-    <Container textalign="center">
-      <h1>Welcome to Food Truck TrackR</h1>
+    <Container textalign="center" style={{marginTop: "10rem"}}>
+      <Header size="medium" textAlign="center" style={{marginBottom: "2rem"}}>
+        Welcome to Food Truck TrackR
+      </Header>
       <Segment placeholder>
-        <Grid columns={2} relaxed="very" stackable style={{}}>
+        <Grid columns={2} stackable>
+          <Divider vertical>Or</Divider>
+
           <Grid.Column>
             <Form onSubmit={submitLogin}>
               <Form.Input
@@ -151,7 +156,7 @@ const Login = () => {
             </Link>
           </Grid.Column>
         </Grid>
-        <Divider vertical>Or</Divider>
+        {/* <Divider vertical>Or</Divider> */}
       </Segment>
     </Container>
   );
