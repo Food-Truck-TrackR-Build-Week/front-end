@@ -13,7 +13,6 @@ import {
 
 const initialState = {
   isFetching: false,
-  isOnline: false,
   error: "",
   operatorInfo: {
     operatorId: localStorage.getItem("operatorId"),
