@@ -26,7 +26,6 @@ const TruckCard = (props) => {
 
   const handleDeleteTruck = () => {
     props.removeTruck(props.truck.id, selectTruck);
-    props.fetchOperatorData(selectTruck.operatorId);
   };
 
   const handleChange = (e) => {
@@ -50,7 +49,6 @@ const TruckCard = (props) => {
 
     setOpen(false);
 
-    props.fetchOperatorData(selectTruck.operatorId);
   };
 
   return (

@@ -15,8 +15,7 @@ const MenuItem = (props) => {
   };
 
   const handleDelete = () => {
-    props.removeMenuItem(props.truck.id, props.selectItem.id);
-    props.fetchOperatorData(localStorage.getItem("operatorId"));
+    props.removeMenuItem(props.truck.id, selectItem.id);
   };
 
   const handleSubmit = (e) => {
