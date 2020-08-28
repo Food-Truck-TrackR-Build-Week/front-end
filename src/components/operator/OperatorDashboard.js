@@ -21,7 +21,6 @@ const OperatorDashboard = ({
   operatorInfo,
   fetchOperatorData,
   isOnline,
-  trucks,
 }) => {
   const [showTruckById, setShowTruckById] = useState(null);
 
@@ -49,7 +48,7 @@ const OperatorDashboard = ({
                   operatorId={operatorInfo.operatorId}
                   showTruckById={showTruckById}
                   setShowTruckById={setShowTruckById}
-                  trucks={trucks}
+                  trucks={operatorInfo.trucksOwned}
                   isOnline={isOnline}
                 />
               </Segment>
@@ -85,7 +84,7 @@ const OperatorDashboard = ({
                 <FoodTruck
                   operatorId={operatorInfo.operatorId}
                   showTruckById={showTruckById}
-                  trucks={trucks}
+                  trucks={operatorInfo.trucksOwned}
                 />
               )}
             </Grid.Column>
@@ -97,11 +96,11 @@ const OperatorDashboard = ({
 };
 
 const mapStateToProps = (state) => {
+  console.log(state.operator.operatorInfo);
   return {
     operatorInfo: state.operator.operatorInfo,
     isFetching: state.operator.isFetching,
     isOnline: state.operator.isOnline,
-    trucks: state.operator.operatorInfo.trucksOwned,
   };
 };
 

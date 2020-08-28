@@ -10,15 +10,17 @@ const TruckList = (props) => {
       <Segment vertical textAlign="center">
         <AddTruckForm operatorId={props.operatorId} />
       </Segment>
-      {props.trucks.length ? null : <h3>Food Trucks</h3>}
+      {props.trucks.length === 0 ? null : <h3>Food Trucks</h3>}
 
       {props.trucks.map((truck) => (
-        <Truck
-          setShowTruckById={props.setShowTruckById}
-          key={truck.id}
-          truck={truck}
-          isOnline={props.isOnline}
-        />
+        <div key={truck.id}>
+          {console.log("SR : truck object", truck.id)}
+          <Truck
+            setShowTruckById={props.setShowTruckById}
+            truck={truck}
+            isOnline={props.isOnline}
+          />
+        </div>
       ))}
     </>
   );

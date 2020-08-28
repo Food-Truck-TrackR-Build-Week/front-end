@@ -2,12 +2,12 @@ import {
   FETCHING_OPERATORS_START,
   FETCHING_OPERATORS_SUCCESS,
   FETCHING_OPERATORS_ERROR,
-  SET_OPERATOR_INFO,
+  // SET_OPERATOR_INFO,
   ADD_TRUCK,
   UPDATE_TRUCK,
   REMOVE_TRUCK,
   ADD_MENUITEM,
-  UPDATE_MENUITEM,
+  // UPDATE_MENUITEM,
   REMOVE_MENUITEM,
 } from "../actions";
 
@@ -19,7 +19,7 @@ const initialState = {
     operatorId: localStorage.getItem("operatorId"),
     username: "",
     email: "",
-    trucksOwned: [],
+    trucksOwned: [{customerRatings: [2, 3, 4]}],
   },
 };
 
@@ -44,28 +44,38 @@ export const operator = (state = initialState, action) => {
         error: action.payload,
       };
 
-    case SET_OPERATOR_INFO:
-      return {
-        ...state,
-        operatorInfo: action.payload,
-      };
+    // case SET_OPERATOR_INFO:
+    //   return {
+    //     ...state,
+    //     operatorInfo: action.payload,
+    //   };
 
     case ADD_TRUCK:
       return {
         ...state,
-        trucksOwned: [...state.trucksOwned, action.payload],
+        trucksOwned: [...state.operatorInfo.trucksOwned, action.payload],
       };
 
     case UPDATE_TRUCK:
       return {
         ...state,
-        trucksOwned: [action.payload],
+        operatorInfo: {
+          ...state.operatorInfo,
+          trucksOwned: action.payload,
+        },
+        // trucksOwned: state.operatorInfo.trucksOwned.map((truck, i) => i === 1 ? {
+        //   {...truck, truck: action.payload} : truck-
+        // }),
       };
 
     case REMOVE_TRUCK:
       return {
         ...state,
-        trucksOwned: action.payload,
+        trucksOwned: [
+          ...state.operator.trucksOwned.filter(
+            (truck) => truck !== action.payload
+          ),
+        ],
       };
 
     case ADD_MENUITEM:
@@ -74,21 +84,24 @@ export const operator = (state = initialState, action) => {
         trucksOwned: [
           {
             ...state,
-            menu: [...state.trucksOwned.menu, action.menuItem],
+            menu: [...state.operatorInfo.trucksOwned.menu, action.payload],
           },
         ],
-      };
-
-    case UPDATE_MENUITEM:
-      return {
-        ...state,
-        menu: [action.payload],
       };
 
     case REMOVE_MENUITEM:
       return {
         ...state,
-        menu: [action.payload],
+        trucksOwned: [
+          {
+            ...state,
+            menu: [
+              ...state.operatorInfo.trucksOwned.id.menu.filter(
+                (item) => item !== action.payload
+              ),
+            ],
+          },
+        ],
       };
 
     default:

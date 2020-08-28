@@ -4,23 +4,12 @@ import DinerLogin from "./components/diner/DinerLogin";
 import OperatorLogin from "./components/operator/OperatorLogin";
 import DinerDashboard from "./components/diner/DinerDashboard";
 import OperatorDashboard from "./components/operator/OperatorDashboard";
-import ImageEditor from "./components/operator/ImageEditor";
 import PrivateRoute from "./components/PrivateRoute";
-import {
-  Header,
-  Menu,
-  Image,
-  Segment,
-  Grid,
-  Divider,
-  Button,
-  Search,
-  Label,
-} from "semantic-ui-react";
+import Register from "./components/RegisterForm";
+import {Header, Menu, Image, Segment, Grid, Label} from "semantic-ui-react";
 
 import Food from "./images/undraw_Hamburger_8ge6.svg";
 import FoodTruck from "./images/undraw_street_food_hm5i.svg";
-import LocationFinder from "./components/operator/LocationFinder";
 import Footer from "./components/Footer";
 
 const App = () => {
@@ -31,7 +20,7 @@ const App = () => {
       </Menu>
       <Switch>
         <PrivateRoute exact path="/home" component={DinerDashboard} />
-
+        <Route exact path="/register" component={Register} />
         <Route exact path="/diner" component={DinerLogin} />
         <PrivateRoute
           exact
@@ -39,8 +28,6 @@ const App = () => {
           component={OperatorDashboard}
         />
         <Route exact path="/operator" component={OperatorLogin} />
-        <Route exact path="/image-editor" component={ImageEditor} />
-        <Route exact path="/location-finder" component={LocationFinder} />
 
         <Route exact path="/">
           <Segment basic>

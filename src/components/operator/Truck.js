@@ -36,7 +36,7 @@ const Truck = (props) => {
 
             {props.truck.cuisineType}
           </p>
-          <Radio slider label="Online" prechecked onChange={handleChange} />
+          <Radio slider label="Online" onChange={handleChange} />
         </div>
       </Segment>
     </>

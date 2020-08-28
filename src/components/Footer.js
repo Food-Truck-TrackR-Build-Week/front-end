@@ -1,11 +1,9 @@
 import React from "react";
-import {Menu} from "semantic-ui-react";
 
 const Footer = () => {
   return (
     <>
       <div
-        inverted
         size="large"
         style={{
           position: "fixed",

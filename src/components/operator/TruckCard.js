@@ -15,7 +15,8 @@ import {
 
 const TruckCard = (props) => {
   const [open, setOpen] = useState(false);
-  const [truckToEdit, setTruckToEdit] = useState({
+  const [selectTruck, setSelectTruck] = useState({
+    id: props.truck.id,
     operatorId: props.operatorId,
     name: props.truck.name,
     imageOfTruck: props.truck.imageOfTruck,
@@ -24,20 +25,20 @@ const TruckCard = (props) => {
   });
 
   const handleDeleteTruck = () => {
-    props.removeTruck(props.truck.id, truckToEdit);
-    props.fetchOperatorData(truckToEdit.operatorId);
+    props.removeTruck(props.truck.id, selectTruck);
+    props.fetchOperatorData(selectTruck.operatorId);
   };
 
   const handleChange = (e) => {
-    setTruckToEdit({
-      ...truckToEdit,
+    setSelectTruck({
+      ...selectTruck,
       [e.target.name]: e.target.value,
     });
   };
 
   const handlePlaceSelector = (placeData) => {
-    setTruckToEdit({
-      ...truckToEdit,
+    setSelectTruck({
+      ...selectTruck,
       currentLocation: placeData,
     });
   };
@@ -45,11 +46,11 @@ const TruckCard = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.updateTruck(props.truck.id, truckToEdit);
+    props.updateTruck(props.truck.id, selectTruck);
 
     setOpen(false);
 
-    props.fetchOperatorData(truckToEdit.operatorId);
+    props.fetchOperatorData(selectTruck.operatorId);
   };
 
   return (
@@ -62,11 +63,11 @@ const TruckCard = (props) => {
             <Modal
               onClose={() => {
                 setOpen(false);
-                setTruckToEdit({
-                  name: truckToEdit.name,
-                  imageOfTruck: truckToEdit.imageOfTruck,
-                  cuisineType: truckToEdit.cuisineType,
-                  currentLocation: truckToEdit.currentLocation,
+                setSelectTruck({
+                  name: selectTruck.name,
+                  imageOfTruck: selectTruck.imageOfTruck,
+                  cuisineType: selectTruck.cuisineType,
+                  currentLocation: selectTruck.currentLocation,
                 });
               }}
               onOpen={() => setOpen(true)}
@@ -87,7 +88,7 @@ const TruckCard = (props) => {
                         type="text"
                         name="name"
                         placeholder="Name of Truck"
-                        value={truckToEdit.name}
+                        value={selectTruck.name}
                         onChange={handleChange}
                       />
                     </Form.Field>
@@ -97,7 +98,7 @@ const TruckCard = (props) => {
                         type="text"
                         name="imageOfTruck"
                         placeholder="Enter Image URL"
-                        value={truckToEdit.imageOfTruck}
+                        value={selectTruck.imageOfTruck}
                         onChange={handleChange}
                       />
                     </Form.Field>
@@ -107,7 +108,7 @@ const TruckCard = (props) => {
                         type="text"
                         name="cuisineType"
                         placeholder="ex. Vietnamese"
-                        value={truckToEdit.cuisineType}
+                        value={selectTruck.cuisineType}
                         onChange={handleChange}
                       />
                     </Form.Field>
@@ -169,7 +170,7 @@ const TruckCard = (props) => {
             <br />
             <Rating
               maxRating={5}
-              defaultRating={props.truck.customerRatingAvg}
+              defaultRating={props.truck.customerRatingsAvg}
               icon="star"
               disabled
               size="huge"

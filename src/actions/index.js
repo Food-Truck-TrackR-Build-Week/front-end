@@ -20,10 +20,6 @@ export const fetchOperatorData = (id) => (dispatch) => {
   axiosWithAuth()
     .get(`/api/operators/${id}`)
     .then((res) => {
-      console.log(
-        "SR: actions/index.js: fetchOperatorData: axios.then: ",
-        res.data
-      );
       dispatch({
         type: FETCHING_OPERATORS_SUCCESS,
         payload: res.data,
@@ -54,13 +50,30 @@ export const addTruck = (addTruck) => (dispatch) => {
     });
 };
 
-export const updateTruck = (id, truckToEdit) => (dispatch) => {
+// export const updateMenuItem = (truckId, menuItemId, selectItem) => (
+//   dispatch
+// ) => {
+//   axiosWithAuth()
+//     .put(`/api/trucks/${truckId}/menu/${menuItemId}`, selectItem)
+//     .then((res) => {
+//       dispatch({
+//         type: UPDATE_MENUITEM,
+//         payload: res.data,
+//       });
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//     });
+// };
+
+export const updateTruck = (truckId, selectTruck) => (dispatch) => {
   axiosWithAuth()
-    .put(`/api/trucks/${id}`, truckToEdit)
+    .put(`/api/trucks/${truckId}`, selectTruck)
     .then((res) => {
       console.log("SR: UpdateTruckForm.js: submit sucess: res: ", res.data);
+
       dispatch({
-        type: UPDATE_TRUCK,
+        type: FETCHING_OPERATORS_SUCCESS,
         payload: res.data,
       });
     })
@@ -69,9 +82,9 @@ export const updateTruck = (id, truckToEdit) => (dispatch) => {
     });
 };
 
-export const removeTruck = (id, truckToEdit) => (dispatch) => {
+export const removeTruck = (id, selectTruck) => (dispatch) => {
   axiosWithAuth()
-    .delete(`/api/trucks/${id}`, truckToEdit)
+    .delete(`/api/trucks/${id}`, selectTruck)
     .then((res) => {
       dispatch({
         type: REMOVE_TRUCK,
@@ -96,11 +109,12 @@ export const addMenuItem = (id, menuItem) => (dispatch) => {
     });
 };
 
-export const updateMenuItem = (id, menuItemId, itemToEdit) => (dispatch) => {
+export const updateMenuItem = (truckId, menuItemId, selectItem) => (
+  dispatch
+) => {
   axiosWithAuth()
-    .put(`/api/trucks/${id}/menu/${menuItemId}`, itemToEdit)
+    .put(`/api/trucks/${truckId}/menu/${menuItemId}`, selectItem)
     .then((res) => {
-      console.log("SR: UpdateMenuItem: res", res.data);
       dispatch({
         type: UPDATE_MENUITEM,
         payload: res.data,
@@ -111,9 +125,9 @@ export const updateMenuItem = (id, menuItemId, itemToEdit) => (dispatch) => {
     });
 };
 
-export const deleteMenuItem = (id, menuItemId, itemToEdit) => (dispatch) => {
+export const removeMenuItem = (truckId, menuItemId) => (dispatch) => {
   axiosWithAuth()
-    .delete(`/api/trucks/${id}/menu/${menuItemId}`, itemToEdit)
+    .delete(`/api/trucks/${truckId}/menu/${menuItemId}`)
     .then((res) => {
       dispatch({
         type: REMOVE_MENUITEM,

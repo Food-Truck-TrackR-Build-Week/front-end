@@ -17,13 +17,10 @@ const AddMenuForm = (props) => {
       ...menuItem,
       [e.target.name]: e.target.value,
     });
-
-    console.log("SR : addMenuItem : ", menuItem);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("SR : addMenuItem : ", props.addMenuItem(menuItem));
     const itemPhotoArr = menuItem.itemPhotos.split(" ");
     props.addMenuItem(props.truck.id, {
       ...menuItem,

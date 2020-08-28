@@ -12,10 +12,14 @@ import {
   Divider,
 } from "semantic-ui-react";
 import {axiosWithAuth} from "../utils/axiosWithAuth";
-import Header from "./Header";
-import {findByTestId} from "@testing-library/react";
 
-const Login = ({fetchOperatorData}) => {
+// Yup validation schema
+const formSchema = yup.object().shape({
+  username: yup.string().required("Username is a required field"),
+  password: yup.string().required("Password is a required field"),
+});
+
+const Login = () => {
   // Setting state for diner / operator
   const [dinerId, setDinerId] = useState();
 
@@ -42,12 +46,6 @@ const Login = ({fetchOperatorData}) => {
       setBtnDisabled(!valid);
     });
   }, [user]);
-
-  // Yup validation schema
-  const formSchema = yup.object().shape({
-    username: yup.string().required("Username is a required field"),
-    password: yup.string().required("Password is a required field"),
-  });
 
   // Form validation to display errors
   const validateChange = (e) => {
@@ -107,7 +105,7 @@ const Login = ({fetchOperatorData}) => {
     <Container textalign="center">
       <h1>Welcome to Food Truck TrackR</h1>
       <Segment placeholder>
-        <Grid columns={2} relaxed="very" stackable>
+        <Grid columns={2} relaxed="very" stackable style={{}}>
           <Grid.Column>
             <Form onSubmit={submitLogin}>
               <Form.Input

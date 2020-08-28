@@ -1,29 +1,34 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {updateMenuItem, deleteMenuItem, fetchOperatorData} from "../../actions";
+import {updateMenuItem, removeMenuItem, fetchOperatorData} from "../../actions";
 import {Icon, Button, Item, Modal, Form, Grid} from "semantic-ui-react";
 
 const MenuItem = (props) => {
   const [open, setOpen] = useState(false);
-  const [itemToEdit, setItemToEdit] = useState(props.menuItem);
+  const [selectItem, setSelectItem] = useState(props.menuItem);
 
-  console.log("SR : itemToEdit", itemToEdit);
   const handleChange = (e) => {
-    setItemToEdit({
-      ...itemToEdit,
+    setSelectItem({
+      ...selectItem,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleDelete = () => {
-    props.deleteMenuItem(props.truck.id, props.menuItem.id);
+    props.removeMenuItem(props.truck.id, props.selectItem.id);
     props.fetchOperatorData(localStorage.getItem("operatorId"));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    updateMenuItem(props.truck.id, props.menuItem.id, itemToEdit);
+    const {itemName, itemDescription, itemPrice} = selectItem;
+
+    props.updateMenuItem(props.truck.id, selectItem.id, {
+      itemName,
+      itemDescription,
+      itemPrice,
+    });
 
     setOpen(false);
 
@@ -60,7 +65,7 @@ const MenuItem = (props) => {
                         <input
                           name="itemName"
                           placeholder="ex. French Fries"
-                          value={itemToEdit.itemName}
+                          value={selectItem.itemName}
                           onChange={handleChange}
                         />
                       </Form.Field>
@@ -69,7 +74,7 @@ const MenuItem = (props) => {
                         <input
                           name="itemDescription"
                           placeholder="Describe Menu Item"
-                          value={itemToEdit.itemDescription}
+                          value={selectItem.itemDescription}
                           onChange={handleChange}
                         />
                       </Form.Field>
@@ -79,7 +84,7 @@ const MenuItem = (props) => {
                           name="itemPrice"
                           type="number"
                           placeholder="0.00"
-                          value={itemToEdit.itemPrice}
+                          value={selectItem.itemPrice}
                           onChange={handleChange}
                         />
                       </Form.Field>
@@ -113,6 +118,6 @@ const MenuItem = (props) => {
 
 export default connect(null, {
   updateMenuItem,
-  deleteMenuItem,
+  removeMenuItem,
   fetchOperatorData,
 })(MenuItem);
