@@ -41,8 +41,6 @@ const AddTruckForm = (props) => {
     });
 
     setOpen(false);
-
-    props.fetchOperatorData(addTruck.operatorId);
   };
 
   return (

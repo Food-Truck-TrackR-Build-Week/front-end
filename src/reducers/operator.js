@@ -7,7 +7,7 @@ import {
   UPDATE_TRUCK,
   REMOVE_TRUCK,
   ADD_MENUITEM,
-  // UPDATE_MENUITEM,
+  UPDATE_MENUITEM,
   REMOVE_MENUITEM,
 } from "../actions";
 
@@ -53,7 +53,10 @@ export const operator = (state = initialState, action) => {
     case ADD_TRUCK:
       return {
         ...state,
-        trucksOwned: [...state.operatorInfo.trucksOwned, action.payload],
+        operatorInfo: {
+          ...state.operatorId,
+          trucksOwned: [...state.operatorInfo.trucksOwned, action.payload]
+        }
       };
 
     case UPDATE_TRUCK:
@@ -61,47 +64,53 @@ export const operator = (state = initialState, action) => {
         ...state,
         operatorInfo: {
           ...state.operatorInfo,
-          trucksOwned: action.payload,
+          trucksOwned: state.operatorInfo.trucksOwned.map( truck => {
+            return truck.id === action.payload.id ? action.payload : truck
+          })
         },
-        // trucksOwned: state.operatorInfo.trucksOwned.map((truck, i) => i === 1 ? {
-        //   {...truck, truck: action.payload} : truck-
-        // }),
       };
 
     case REMOVE_TRUCK:
       return {
         ...state,
-        trucksOwned: [
-          ...state.operator.trucksOwned.filter(
-            (truck) => truck !== action.payload
-          ),
-        ],
+        operatorInfo: {
+          ...state.operatorInfo,
+          trucksOwned: state.operatorInfo.trucksOwned.filter( truck => {
+            return truck.id !== action.payload
+          })
+        }
       };
 
     case ADD_MENUITEM:
       return {
         ...state,
-        trucksOwned: [
-          {
-            ...state,
-            menu: [...state.operatorInfo.trucksOwned.menu, action.payload],
-          },
-        ],
+        operatorInfo: {
+          ...state.operatorInfo,
+          trucksOwned: state.operatorInfo.trucksOwned.map(truck => {
+            let temp = truck
+            console.log("im here");
+            
+            return temp
+          })
+        }
       };
 
     case REMOVE_MENUITEM:
       return {
         ...state,
-        trucksOwned: [
-          {
-            ...state,
-            menu: [
-              ...state.operatorInfo.trucksOwned.id.menu.filter(
-                (item) => item !== action.payload
-              ),
-            ],
-          },
-        ],
+        operatorInfo: {
+          ...state.operatorInfo,
+          trucksOwned: state.operatorInfo.trucksOwned.map(truck => {
+            let temp = truck
+            if(truck.id === action.payload.truckId) {
+              temp.menu = truck.menu.filter(menu => {
+                return menu.id !== action.payload.menuItemId
+              })
+            }
+            return temp
+          })
+        }
+        
       };
 
     default:

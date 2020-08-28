@@ -31,7 +31,7 @@ const OperatorDashboard = ({
   return (
     <>
       <Header />
-      <Container fluid style={{padding: "2rem"}}>
+      <Container fluid style={{padding: "2rem", marginTop: 20}}>
         {isFetching ? (
           <div>
             <Dimmer active inverted size="medium">

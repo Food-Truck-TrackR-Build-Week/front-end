@@ -36,7 +36,7 @@ const AddMenuForm = (props) => {
 
     setOpen(false);
 
-    props.fetchOperatorData(localStorage.getItem("operatorId"));
+   
   };
 
   return (
@@ -112,4 +112,4 @@ const AddMenuForm = (props) => {
   );
 };
 
-export default connect(null, {addMenuItem, fetchOperatorData})(AddMenuForm);
+export default connect(null, {addMenuItem})(AddMenuForm);

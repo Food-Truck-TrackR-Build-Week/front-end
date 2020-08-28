@@ -10,9 +10,9 @@ const TruckList = (props) => {
       <Segment vertical textAlign="center">
         <AddTruckForm operatorId={props.operatorId} />
       </Segment>
-      {props.trucks.length === 0 ? null : <h3>Food Trucks</h3>}
+      {props.trucks === undefined ? null : props.trucks.length === 0 ? null : <h3>Food Trucks</h3>}
 
-      {props.trucks.map((truck) => (
+      {props.trucks === undefined ? null : props.trucks.map((truck) => (
         <div key={truck.id}>
           {console.log("SR : truck object", truck.id)}
           <Truck

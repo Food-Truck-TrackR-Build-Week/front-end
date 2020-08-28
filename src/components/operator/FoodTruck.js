@@ -9,7 +9,11 @@ import Chart from "react-apexcharts";
 //Operator should be able to edit, delete, add menu items, see ratings
 const FoodTruck = (props) => {
   const [chart, setChart] = useState({
-    options: {},
+    options: {
+      chart: {
+        type: "donut",
+      },
+    },
     series: [44, 55, 41, 17, 15],
     labels: ["A", "B", "C", "D", "E"],
   });

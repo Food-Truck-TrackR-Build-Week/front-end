@@ -10,7 +10,7 @@ export const FETCHING_TRUCKS_ERROR = "FETCHING_TRUCKS_ERROR";
 export const ADD_TRUCK = "ADD_TRUCK";
 export const UPDATE_TRUCK = "UPDATE_TRUCK";
 export const REMOVE_TRUCK = "REMOVE_TRUCK";
-export const ADD_MENUITEM = "ADD_TRUCK";
+export const ADD_MENUITEM = "ADD_MENUITEM";
 export const UPDATE_MENUITEM = "UPDATE_MENUITEM";
 export const REMOVE_MENUITEM = "REMOVE_MENUITEM";
 
@@ -73,7 +73,7 @@ export const updateTruck = (truckId, selectTruck) => (dispatch) => {
       console.log("SR: UpdateTruckForm.js: submit sucess: res: ", res.data);
 
       dispatch({
-        type: FETCHING_OPERATORS_SUCCESS,
+        type: UPDATE_TRUCK,
         payload: res.data,
       });
     })
@@ -88,7 +88,7 @@ export const removeTruck = (id, selectTruck) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: REMOVE_TRUCK,
-        payload: res.data,
+        payload: id,
       });
     })
     .catch((err) => console.error(err.message));
@@ -98,10 +98,10 @@ export const addMenuItem = (id, menuItem) => (dispatch) => {
   axiosWithAuth()
     .post(`/api/trucks/${id}/menu`, menuItem)
     .then((res) => {
-      console.log(res.data);
+      console.log('asdasdasd', res.data);
       dispatch({
         type: ADD_MENUITEM,
-        payload: res.data,
+        payload: {data: res.data, truckId: id},
       });
     })
     .catch((err) => {
@@ -131,7 +131,7 @@ export const removeMenuItem = (truckId, menuItemId) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: REMOVE_MENUITEM,
-        payload: res.data,
+        payload: {truckId: truckId, menuItemId: menuItemId}
       });
     })
     .catch((err) => console.error(err.message));
