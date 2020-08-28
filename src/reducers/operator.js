@@ -13,9 +13,10 @@ import {
 
 const initialState = {
   isFetching: false,
+  isOnline: false,
   error: "",
   operatorInfo: {
-    operatorId: "",
+    operatorId: localStorage.getItem("operatorId"),
     username: "",
     email: "",
     trucksOwned: [],
@@ -64,7 +65,7 @@ export const operator = (state = initialState, action) => {
     case REMOVE_TRUCK:
       return {
         ...state,
-        trucksOwned: [action.payload],
+        trucksOwned: action.payload,
       };
 
     case ADD_MENUITEM:
