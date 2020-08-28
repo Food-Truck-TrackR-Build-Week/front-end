@@ -1,7 +1,8 @@
 import {
-  FETCHING_TRUCKS_START,
-  FETCHING_TRUCKS_SUCCESS,
-  FETCHING_TRUCKS_ERROR,
+  FETCHING_OPERATORS_START,
+  FETCHING_OPERATORS_SUCCESS,
+  FETCHING_OPERATORS_ERROR,
+  // SET_OPERATOR_INFO,
   ADD_TRUCK,
   UPDATE_TRUCK,
   REMOVE_TRUCK,
@@ -12,97 +13,104 @@ import {
 
 const initialState = {
   isFetching: false,
+  isOnline: false,
   error: "",
-  username: "",
-  email: "",
-  password: "",
-
-  trucksOwned: [
-    {
-      id: Date.now(),
-      operatorId: Date.now(),
-      truckName: "Kitchenette Karts",
-      imageOfTruck:
-        "https://images.unsplash.com/photo-1567129937968-cdad8f07e2f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=945&q=80",
-      cuisineType: "Vietnamese",
-
-      customerRatings: [3, 4, 2, 4],
-      customerRatingAvg: 4,
-      menu: [
-        {
-          id: "",
-          menuItemId: "",
-          itemName: "",
-          itemDescription: "",
-          itemPrice: "",
-          itemPhotos: [],
-          customerRatings: [],
-          customerRatingAvg: "",
-        },
-      ],
-
-      currentLocation: "",
-      departureTime: "",
-    },
-    {
-      id: Date.now() + 1,
-      operatorId: Date.now() + 1,
-      name: "The Big Daddy",
-      imageOfTruck:
-        "https://images.unsplash.com/photo-1576595879571-5402d294c407?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2002&q=80",
-      cuisineType: "Latin Cuisine",
-      customerRatings: [3, 4, 2, 4],
-      customerRatingAvg: 5,
-      menu: [
-        {
-          id: "",
-          menuItemId: "",
-          itemName: "",
-          itemDescription: "",
-          itemPrice: "",
-          itemPhotos: [],
-          customerRatings: [],
-          customerRatingAvg: "",
-        },
-      ],
-
-      currentLocation: "",
-      departureTime: "",
-    },
-  ],
+  operatorInfo: {
+    operatorId: localStorage.getItem("operatorId"),
+    username: "",
+    email: "",
+    trucksOwned: [{customerRatings: [2, 3, 4]}],
+  },
 };
 
 export const operator = (state = initialState, action) => {
   switch (action.type) {
-    case FETCHING_TRUCKS_START:
+    case FETCHING_OPERATORS_START:
       return {
         ...state,
         isFetching: true,
       };
-    case FETCHING_TRUCKS_SUCCESS:
+    case FETCHING_OPERATORS_SUCCESS:
       return {
         ...state,
         isFetching: false,
-        trucksOwned: action.payload,
+        operatorInfo: action.payload,
         error: "",
       };
-    case FETCHING_TRUCKS_ERROR:
+    case FETCHING_OPERATORS_ERROR:
       return {
         ...state,
         isFetching: false,
         error: action.payload,
       };
 
+    // case SET_OPERATOR_INFO:
+    //   return {
+    //     ...state,
+    //     operatorInfo: action.payload,
+    //   };
+
     case ADD_TRUCK:
       return {
         ...state,
-        trucksOwned: [...state.trucksOwned, action.payload],
+        operatorInfo: {
+          ...state.operatorId,
+          trucksOwned: [...state.operatorInfo.trucksOwned, action.payload]
+        }
       };
 
     case UPDATE_TRUCK:
       return {
         ...state,
-        trucksOwned: action.payload,
+        operatorInfo: {
+          ...state.operatorInfo,
+          trucksOwned: state.operatorInfo.trucksOwned.map( truck => {
+            return truck.id === action.payload.id ? action.payload : truck
+          })
+        },
+      };
+
+    case REMOVE_TRUCK:
+      return {
+        ...state,
+        operatorInfo: {
+          ...state.operatorInfo,
+          trucksOwned: state.operatorInfo.trucksOwned.filter( truck => {
+            return truck.id !== action.payload
+          })
+        }
+      };
+
+    case ADD_MENUITEM:
+      return {
+        ...state,
+        operatorInfo: {
+          ...state.operatorInfo,
+          trucksOwned: state.operatorInfo.trucksOwned.map(truck => {
+            let temp = truck
+            console.log("im here");
+            
+            return temp
+          })
+        }
+      };
+
+    case REMOVE_MENUITEM:
+      return {
+        ...state,
+        operatorInfo: {
+          ...state.operatorInfo,
+          trucksOwned: state.operatorInfo.trucksOwned.map(truck => {
+            let temp = truck
+            if(truck.id === action.payload.truckId) {
+              temp.menu = truck.menu.filter(menu => {
+                return menu.id !== action.payload.menuItemId
+              })
+            }
+            return temp
+          })
+        }
+        
       };
 
     default:

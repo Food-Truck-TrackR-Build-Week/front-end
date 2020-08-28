@@ -1,49 +1,37 @@
 import React, {useState} from "react";
-import {axiosWithAuth} from "../../utils/axiosWithAuth";
-import {Icon, Button, Item, Modal, Form} from "semantic-ui-react";
+import {connect} from "react-redux";
+import {updateMenuItem, removeMenuItem, fetchOperatorData} from "../../actions";
+import {Icon, Button, Item, Modal, Form, Grid} from "semantic-ui-react";
 
 const MenuItem = (props) => {
   const [open, setOpen] = useState(false);
-  const [itemToEdit, setItemToEdit] = useState(props.menuItem);
+  const [selectItem, setSelectItem] = useState(props.menuItem);
 
-  console.log("SR : itemToEdit", itemToEdit);
   const handleChange = (e) => {
-    setItemToEdit({
-      ...itemToEdit,
+    setSelectItem({
+      ...selectItem,
       [e.target.name]: e.target.value,
     });
   };
 
-  const updateMenuItem = () => {
-    axiosWithAuth()
-      .put(`/api/trucks/${props.truck.id}/menu/${itemToEdit.id}`, {
-        itemName: itemToEdit.itemName,
-        itemDescription: itemToEdit.itemDescription,
-        itemPrice: itemToEdit.itemPrice,
-        itemPhotos: itemToEdit.itemPhotos,
-      })
-      .then((res) => {
-        console.log("SR: UpdateMenuItem: res", res.data);
-        setItemToEdit(itemToEdit);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
   const handleDelete = () => {
-    axiosWithAuth()
-      .delete(`/api/trucks/${props.truck.id}/menu/${itemToEdit.id}`, itemToEdit)
-      .then((res) => {})
-      .catch((err) => console.error(err.message));
+    props.removeMenuItem(props.truck.id, selectItem.id);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    updateMenuItem();
+    const {itemName, itemDescription, itemPrice} = selectItem;
+
+    props.updateMenuItem(props.truck.id, selectItem.id, {
+      itemName,
+      itemDescription,
+      itemPrice,
+    });
 
     setOpen(false);
+
+    props.fetchOperatorData(localStorage.getItem("operatorId"));
   };
 
   return (
@@ -52,7 +40,7 @@ const MenuItem = (props) => {
         <Item.Content>
           <Item.Header as="h3">{props.menuItem.itemName}</Item.Header>
           <Item.Meta as="h4">
-            <Icon name="dollar sign" /> {props.menuItem.itemPrice}
+            <Icon name="dollar sign" /> {props.menuItem.itemPrice} .OO
           </Item.Meta>
           <Item.Description>{props.menuItem.itemDescription}</Item.Description>
           <Item.Extra>
@@ -76,7 +64,7 @@ const MenuItem = (props) => {
                         <input
                           name="itemName"
                           placeholder="ex. French Fries"
-                          value={itemToEdit.itemName}
+                          value={selectItem.itemName}
                           onChange={handleChange}
                         />
                       </Form.Field>
@@ -85,7 +73,7 @@ const MenuItem = (props) => {
                         <input
                           name="itemDescription"
                           placeholder="Describe Menu Item"
-                          value={itemToEdit.itemDescription}
+                          value={selectItem.itemDescription}
                           onChange={handleChange}
                         />
                       </Form.Field>
@@ -95,17 +83,7 @@ const MenuItem = (props) => {
                           name="itemPrice"
                           type="number"
                           placeholder="0.00"
-                          value={itemToEdit.itemPrice}
-                          onChange={handleChange}
-                        />
-                      </Form.Field>
-                      <Form.Field>
-                        <label>Item Photos</label>
-                        <input
-                          name="itemPhotos"
-                          type="text"
-                          placeholder="Enter Image URL's"
-                          value={itemToEdit.itemPhotos}
+                          value={selectItem.itemPrice}
                           onChange={handleChange}
                         />
                       </Form.Field>
@@ -123,12 +101,22 @@ const MenuItem = (props) => {
             </Button.Group>
           </Item.Extra>
         </Item.Content>
-        {props.menuItem.itemPhotos.map((image) => (
-          <Item.Image key={image} src={image} size="tiny" />
-        ))}
+        <Grid columns="equal">
+          <Grid.Row floated="right">
+            {props.menuItem.itemPhotos.map((image) => (
+              <Grid.Column key={image}>
+                <Item.Image key={image} src={image} size="small" />
+              </Grid.Column>
+            ))}
+          </Grid.Row>
+        </Grid>
       </Item>
     </>
   );
 };
 
-export default MenuItem;
+export default connect(null, {
+  updateMenuItem,
+  removeMenuItem,
+  fetchOperatorData,
+})(MenuItem);
