@@ -74,16 +74,27 @@ export const operator = (state = initialState, action) => {
         trucksOwned: [
           {
             ...state,
-            menu: [...state.trucksOwned.menu, action.menuItem]
+            menu: [...state.operatorInfo.trucksOwned.menu, action.payload]
           }
         ]
       };
 
-    case UPDATE_MENUITEM:
-      return {
-        ...state,
-        menu: [action.payload]
-      };
+    // case UPDATE_MENUITEM:
+    //   return {
+    //     ...state,
+    //     trucksOwned: [
+    //       {
+    //         ...state,
+    //         menu: state.operatorInfo.trucksOwned.menu.map((menuItem) => {
+    //           if (menuItem.id === action.paylaod.id) {
+    //             return action.payload;
+    //           } else {
+    //             return menuItem;
+    //           }
+    //         })
+    //       }
+    //     ]
+    //   };
 
     case REMOVE_MENUITEM:
       return {

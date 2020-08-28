@@ -1,16 +1,17 @@
-import React from "react";
-import {Segment} from "semantic-ui-react";
+import React from 'react';
+import { Segment } from 'semantic-ui-react';
 
-import AddTruckForm from "./AddTruckForm";
-import Truck from "./Truck";
+import AddTruckForm from './AddTruckForm';
+import Truck from './Truck';
 
 const TruckList = (props) => {
+  console.log('props', props);
   return (
     <>
-      <Segment vertical textAlign="center">
+      <Segment vertical textAlign='center'>
         <AddTruckForm operatorId={props.operatorId} />
       </Segment>
-      {props.trucks.length ? null : <h3>Food Trucks</h3>}
+      {props.trucks ? null : <h3>Food Trucks</h3>}
 
       {props.trucks.map((truck) => (
         <Truck

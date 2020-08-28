@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
   updateMenuItem,
-  deleteMenuItem,
+  removeMenuItem,
   fetchOperatorData
 } from '../../actions';
 import { Icon, Button, Item, Modal, Form } from 'semantic-ui-react';
@@ -11,7 +11,6 @@ const MenuItem = (props) => {
   const [open, setOpen] = useState(false);
   const [itemToEdit, setItemToEdit] = useState(props.menuItem);
 
-  console.log('SR : itemToEdit', itemToEdit);
   const handleChange = (e) => {
     setItemToEdit({
       ...itemToEdit,
@@ -37,14 +36,20 @@ const MenuItem = (props) => {
   };
 
   const handleDelete = () => {
-    props.removeMenuItem(localStorage.getItem('operatorId'), itemToEdit);
+    props.removeMenuItem(props.truck.Id, itemToEdit.id);
     props.fetchOperatorData(localStorage.getItem('operatorId'));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    updateMenuItem();
+    const { itemName, itemDescription, itemPrice } = itemToEdit;
+
+    props.updateMenuItem(props.truck.id, itemToEdit.id, {
+      itemName,
+      itemDescription,
+      itemPrice
+    });
 
     setOpen(false);
 
@@ -74,7 +79,7 @@ const MenuItem = (props) => {
                   </Button>
                 }
               >
-                <Modal.Header>Add Menu Item</Modal.Header>
+                <Modal.Header>Update Menu Item</Modal.Header>
                 <Modal.Content>
                   <Modal.Description>
                     <Form onSubmit={handleSubmit}>
@@ -106,16 +111,6 @@ const MenuItem = (props) => {
                           onChange={handleChange}
                         />
                       </Form.Field>
-                      <Form.Field>
-                        <label>Item Photos</label>
-                        <input
-                          name='itemPhotos'
-                          type='text'
-                          placeholder="Enter Image URL's"
-                          value={itemToEdit.itemPhotos}
-                          onChange={handleChange}
-                        />
-                      </Form.Field>
                       <Button type='submit'>
                         <Icon name='add' /> Update Item
                       </Button>
@@ -140,6 +135,6 @@ const MenuItem = (props) => {
 
 export default connect(null, {
   updateMenuItem,
-  deleteMenuItem,
+  removeMenuItem,
   fetchOperatorData
 })(MenuItem);

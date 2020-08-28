@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from "react";
-import {connect} from "react-redux";
-import {fetchOperatorData} from "../../actions";
-import Header from "../../components/Header";
-import TruckList from "./TruckList";
-import FoodTruck from "./FoodTruck";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchOperatorData } from '../../actions';
+import Header from '../../components/Header';
+import TruckList from './TruckList';
+import FoodTruck from './FoodTruck';
 
 import {
   Container,
@@ -12,33 +12,33 @@ import {
   Image,
   Message,
   Dimmer,
-  Loader,
-} from "semantic-ui-react";
-import FoodTruckImg from "../../images/undraw_street_food_hm5i.svg";
+  Loader
+} from 'semantic-ui-react';
+import FoodTruckImg from '../../images/undraw_street_food_hm5i.svg';
 
 const OperatorDashboard = ({
   isFetching,
   operatorInfo,
   fetchOperatorData,
-  isOnline,
+  isOnline
 }) => {
   const [showTruckById, setShowTruckById] = useState(null);
 
   useEffect(() => {
-    fetchOperatorData(localStorage.getItem("operatorId"));
+    fetchOperatorData(localStorage.getItem('operatorId'));
   }, []);
 
   return (
     <>
       <Header />
-      <Container fluid style={{padding: "2rem"}}>
+      <Container fluid style={{ padding: '2rem' }}>
         {isFetching ? (
           <div>
-            <Dimmer active inverted size="medium">
+            <Dimmer active inverted size='medium'>
               <Loader inverted>Loading</Loader>
             </Dimmer>
 
-            <Image src="/images/wireframe/short-paragraph.png" />
+            <Image src='/images/wireframe/short-paragraph.png' />
           </div>
         ) : (
           <Grid columns={2}>
@@ -60,24 +60,24 @@ const OperatorDashboard = ({
                   {operatorInfo.trucksOwned.length === 0 ? (
                     <Message
                       floating
-                      content="Add a food truck to get started"
+                      content='Add a food truck to get started'
                       info
-                      size="large"
+                      size='large'
                     />
                   ) : (
                     <Message
                       floating
-                      content="Click on then food truck name to show more details"
+                      content='Click on then food truck name to show more details'
                       info
-                      size="large"
+                      size='large'
                     />
                   )}
 
                   <Image
                     src={FoodTruckImg}
-                    size="huge"
+                    size='huge'
                     centered
-                    style={{opacity: 0.4}}
+                    style={{ opacity: 0.4 }}
                   />
                 </Segment>
               ) : (
@@ -99,10 +99,10 @@ const mapStateToProps = (state) => {
   return {
     operatorInfo: state.operator.operatorInfo,
     isFetching: state.operator.isFetching,
-    isOnline: state.operator.isOnline,
+    isOnline: state.operator.isOnline
   };
 };
 
 export default connect(mapStateToProps, {
-  fetchOperatorData,
+  fetchOperatorData
 })(OperatorDashboard);

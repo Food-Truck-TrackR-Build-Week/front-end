@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {connect} from "react-redux";
-import {fetchOperatorData, updateTruck, removeTruck} from "../../actions";
-import LocationFinder from "./LocationFinder";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { fetchOperatorData, updateTruck, removeTruck } from '../../actions';
+import LocationFinder from './LocationFinder';
 import {
   Card,
   Icon,
@@ -10,17 +10,18 @@ import {
   Rating,
   Button,
   Modal,
-  Form,
-} from "semantic-ui-react";
+  Form
+} from 'semantic-ui-react';
 
 const TruckCard = (props) => {
   const [open, setOpen] = useState(false);
   const [truckToEdit, setTruckToEdit] = useState({
-    operatorId: props.operatorId,
+    id: props.truck.id,
+    operatorId: props.truck.operatorId,
     name: props.truck.name,
     imageOfTruck: props.truck.imageOfTruck,
     cuisineType: props.truck.cuisineType,
-    currentLocation: props.truck.currentLocation,
+    currentLocation: props.truck.currentLocation
   });
 
   const handleDeleteTruck = () => {
@@ -31,21 +32,21 @@ const TruckCard = (props) => {
   const handleChange = (e) => {
     setTruckToEdit({
       ...truckToEdit,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
   const handlePlaceSelector = (placeData) => {
     setTruckToEdit({
       ...truckToEdit,
-      currentLocation: placeData,
+      currentLocation: placeData
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.updateTruck(props.truck.id, truckToEdit);
+    props.updateTruck(truckToEdit);
 
     setOpen(false);
 
@@ -55,9 +56,9 @@ const TruckCard = (props) => {
   return (
     <>
       <div>
-        <Header size="large">
+        <Header size='large'>
           {props.truck.name}
-          <Button.Group basic size="tiny">
+          <Button.Group basic size='tiny'>
             <Modal
               onClose={() => {
                 setOpen(false);
@@ -65,14 +66,14 @@ const TruckCard = (props) => {
                   name: truckToEdit.name,
                   imageOfTruck: truckToEdit.imageOfTruck,
                   cuisineType: truckToEdit.cuisineType,
-                  currentLocation: truckToEdit.currentLocation,
+                  currentLocation: truckToEdit.currentLocation
                 });
               }}
               onOpen={() => setOpen(true)}
               open={open}
               trigger={
                 <Button>
-                  <Icon name="pencil" /> Edit
+                  <Icon name='pencil' /> Edit
                 </Button>
               }
             >
@@ -83,9 +84,9 @@ const TruckCard = (props) => {
                     <Form.Field>
                       <label>Truck Name</label>
                       <input
-                        type="text"
-                        name="name"
-                        placeholder="Name of Truck"
+                        type='text'
+                        name='name'
+                        placeholder='Name of Truck'
                         value={truckToEdit.name}
                         onChange={handleChange}
                       />
@@ -93,9 +94,9 @@ const TruckCard = (props) => {
                     <Form.Field>
                       <label>Image URL</label>
                       <input
-                        type="text"
-                        name="imageOfTruck"
-                        placeholder="Enter Image URL"
+                        type='text'
+                        name='imageOfTruck'
+                        placeholder='Enter Image URL'
                         value={truckToEdit.imageOfTruck}
                         onChange={handleChange}
                       />
@@ -103,9 +104,9 @@ const TruckCard = (props) => {
                     <Form.Field>
                       <label>Cuisine</label>
                       <input
-                        type="text"
-                        name="cuisineType"
-                        placeholder="ex. Vietnamese"
+                        type='text'
+                        name='cuisineType'
+                        placeholder='ex. Vietnamese'
                         value={truckToEdit.cuisineType}
                         onChange={handleChange}
                       />
@@ -126,15 +127,15 @@ const TruckCard = (props) => {
                         onChange={handleChange}
                       />
                     </Form.Field> */}
-                    <Button type="submit">
-                      <Icon name="add" /> Update Truck
+                    <Button type='submit'>
+                      <Icon name='add' /> Update Truck
                     </Button>
                   </Form>
                 </Modal.Description>
               </Modal.Content>
             </Modal>
             <Button onClick={handleDeleteTruck}>
-              <Icon name="delete" /> Delete
+              <Icon name='delete' /> Delete
             </Button>
           </Button.Group>
         </Header>
@@ -143,23 +144,23 @@ const TruckCard = (props) => {
           <Image
             src={props.truck.imageOfTruck}
             alt={`${props.truck.cuisineType} food truck`}
-            size="medium"
+            size='medium'
           />
           <Card.Content>
             <Card.Header></Card.Header>
 
             <Card.Meta>
-              <span className="date">
-                <Icon name="clock" />
+              <span className='date'>
+                <Icon name='clock' />
                 {props.truck.departureTime}
               </span>
             </Card.Meta>
             <Card.Description>
-              <Icon name="food" />
+              <Icon name='food' />
               {props.truck.cuisineType}
             </Card.Description>
             <Card.Description>
-              <Icon name="map pin" />
+              <Icon name='map pin' />
               {props.truck.currentLocation}
             </Card.Description>
           </Card.Content>
@@ -169,10 +170,10 @@ const TruckCard = (props) => {
             <Rating
               maxRating={5}
               defaultRating={props.truck.customerRatingAvg}
-              icon="star"
+              icon='star'
               disabled
-              size="large"
-              style={{marginTop: ".75rem"}}
+              size='large'
+              style={{ marginTop: '.75rem' }}
             />
           </Card.Content>
         </Card>
@@ -181,6 +182,6 @@ const TruckCard = (props) => {
   );
 };
 
-export default connect(null, {fetchOperatorData, updateTruck, removeTruck})(
+export default connect(null, { fetchOperatorData, updateTruck, removeTruck })(
   TruckCard
 );
