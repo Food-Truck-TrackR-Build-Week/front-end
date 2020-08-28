@@ -32,3 +32,7 @@ code {
 .gm-style-iw-d {
   overflow: hidden !important;
 }
+
+.favoriteIcon:hover {
+  cursor: pointer;
+}

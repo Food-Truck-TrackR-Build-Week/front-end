@@ -2,9 +2,17 @@ import React, { useState, useEffect } from "react";
 import MapContainer from "./MapContainer";
 import {connect} from "react-redux";
 import SideBar from "./SideBar";
-import {fetchTruckData} from "../../actions";
+import {
+  fetchTruckData,
+  fetchDinerInfo,
+  addFavoriteTruck,
+  deleteFavoriteTruck,
+  addTruckRating,
+  addMenuRating
+} from "../../actions";
 import ClearRoute from "./ClearRoute";
 import { Menu } from "semantic-ui-react";
+import Header from "../Header";
 
 const DinerDashboard = (props) => {
   const [infoWindow, setInfoWindow] = useState({
@@ -18,32 +26,69 @@ const DinerDashboard = (props) => {
         customerRatings: [3, 4, 2, 4],
         customerRatingAvg: 4,
         menu: [],
-        currentLocation: {
-          lat: -1.2884,
-          lng: 36.8233,
-          location: "Soho, NYC",
-          departureTime: {
-            date: "08/20/20",
-            time: "12:48AM",
-          },
-        }
+        currentLocation: ""
       }
     })
 
     const [destination, setDestination] = useState(null)
-
+    const [milesRadius, setMilesRadius] = useState(1)
+    const [mapCenter, setMapCenter] = useState({})
+    const [myLocation, setMyLocation] = useState('')
     useEffect(() => {
       props.fetchTruckData()
+      props.fetchDinerInfo(localStorage.getItem('dinerId'))
     },[])
+
+    useEffect(() => {
+      if(infoWindow.visible) {
+        let temp = props.trucks.filter(truck => {
+          return truck.id === infoWindow.currentTruck.id
+        })
+        setInfoWindow({
+          ...infoWindow,
+          currentTruck: temp[0]
+        })
+        console.log(infoWindow);
+      }
+    }, [props.trucks])
+
+
+    const RecenterMap = (location) => {
+      setMapCenter(location)
+    }
 
   return (
     <>
-      <Menu inverted size="massive" style={{borderRadius: 0, marginBottom: 0, position: "fixed", zIndex: 100, left: 0, right: 0}}>
-        <Menu.Item header>Food Truck TrackR</Menu.Item>
-      </Menu>
-      <ClearRoute destination={destination} setDestination={setDestination}/>
-      <SideBar infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination} setDestination={setDestination} trucks={props.trucks}/>
-      <MapContainer infoWindow={infoWindow} setInfoWindow={setInfoWindow} destination={destination} trucks={props.trucks}/>
+      <Header />
+      <ClearRoute destination={destination} setDestination={setDestination} RecenterMap={RecenterMap} myLocation={myLocation}/>
+      <SideBar 
+        infoWindow={infoWindow}
+        setInfoWindow={setInfoWindow}
+        destination={destination}
+        setDestination={setDestination}
+        trucks={props.trucks}
+        userInfo={props.userInfo}
+        milesRadius={milesRadius}
+        setMilesRadius={setMilesRadius}
+        RecenterMap={RecenterMap}
+        myLocation={myLocation}
+        addFavoriteTruck={props.addFavoriteTruck}
+        deleteFavoriteTruck={props.deleteFavoriteTruck}
+        addTruckRating={props.addTruckRating}
+        addMenuRating={props.addMenuRating}
+      />
+      <MapContainer 
+        infoWindow={infoWindow}
+        setInfoWindow={setInfoWindow}
+        destination={destination}
+        trucks={props.trucks}
+        userInfo={props.userInfo}
+        milesRadius={milesRadius}
+        mapCenter={mapCenter}
+        setMapCenter={setMapCenter}
+        myLocation={myLocation}
+        setMyLocation={setMyLocation}
+      />
     </>
       
   );
@@ -51,9 +96,17 @@ const DinerDashboard = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    userInfo: state.diner.userInfo,
     trucks: state.diner.trucks,
   };
 };
 
 
-export default connect(mapStateToProps, {fetchTruckData})(DinerDashboard)
+export default connect(mapStateToProps, {
+  fetchTruckData,
+  fetchDinerInfo,
+  addFavoriteTruck,
+  deleteFavoriteTruck,
+  addTruckRating,
+  addMenuRating
+})(DinerDashboard)

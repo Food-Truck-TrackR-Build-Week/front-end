@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Segment, Input, Container, List, Image, Header, Button, Icon } from 'semantic-ui-react';
+import TruckListSideBar from './TruckListSideBar';
+import TruckInfoSideBar from './TruckInfoSideBar';
 
 
 const SideBarStyle = {
@@ -10,74 +12,52 @@ const SideBarStyle = {
   width: 350,
   bottom: 10,
   zIndex: 100,
-  
+  display: 'flex',
+  flexDirection: 'column',
 }
 
-const listImageStyle = {
-  width: 60,
-  height: 60
-}
 
-const listStyle = {
-  "& :hover": {
-    backgroundColor: 'red !important' ,
-  }
-}
+
+
 
 
 
 function SideBar(props) {
 
+  const [searchValue, setSearchValue] = useState('')
+  const handleMilesRadiusChange = (e) => {
+    props.setMilesRadius(e.target.value)
+  }
 
     return(
-      <>
+      <Segment style={SideBarStyle}>
+        {
+          props.infoWindow.visible ? 
+            <TruckInfoSideBar 
+              infoWindow={props.infoWindow}
+              setInfoWindow={props.setInfoWindow}
+              addFavoriteTruck={props.addFavoriteTruck}
+              deleteFavoriteTruck={props.deleteFavoriteTruck}
+              addTruckRating={props.addTruckRating}
+              addMenuRating={props.addMenuRating}
+              userInfo={props.userInfo}
+            />
+          :
+            <TruckListSideBar
+              handleMilesRadiusChange={handleMilesRadiusChange}
+              trucks={props.trucks}
+              setDestination={props.setDestination}
+              setInfoWindow={props.setInfoWindow}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              RecenterMap={props.RecenterMap}
+              myLocation={props.myLocation}
+              milesRadius={props.milesRadius}
+            />
+        }
         
-        <Segment style={SideBarStyle}>
-          <Input action='Search' placeholder='Search...' style={{width: "100%"}} action={{color:'red', content: 'Search',}}/>
-          <Container>
-
-
-            <Button onClick={() => {props.setDestination(null)}}>clear</Button>
-            <List selection verticalAlign='middle' size="large"  >
-              {
-                props.trucks.map((t, index) => (
-                  <List.Item key={index} onClick={(e) => {
-                    props.setInfoWindow({
-                      visible: true,
-                      position: {lat: t.currentLocation.lat, lng: t.currentLocation.lng},
-                      currentTruck: t
-                    })
-                  }} style={listStyle}>
-                    <List.Content floated='right'>
-                      <Button icon onClick={(e) => {
-                        e.stopPropagation()
-                        props.setDestination({
-                          location: {
-                            lat: t.currentLocation.lat, 
-                            lng: t.currentLocation.lng
-                          },
-                          truckName: t.truckName
-                        })
-                      }}><Icon name="location arrow" color='black'/></Button>
-                    </List.Content>
-                    <Image src={t.imageOfTruck} style={listImageStyle}/>
-                    <List.Content>
-                      <List.Header>{t.name}</List.Header>
-                      <Header as='h5' disabled>
-                        {t.cuisineType}
-                      </Header>
-                      <Header as='h5' disabled>
-                        {t.currentLocation}
-                      </Header>
-                    </List.Content>
-                  </List.Item>
-                ))
-              }
-              
-            </List>
-          </Container>
-        </Segment>
-      </>
+        
+      </Segment>
     )
 }
 

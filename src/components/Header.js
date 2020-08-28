@@ -19,8 +19,9 @@ const Header = () => {
           position: "absolute",
           top: "-1rem",
           left: 0,
-          width: "100vw",
+          right: 0,
           height: "auto",
+          zIndex: 1000,
         }}
       >
         <Menu.Item header>Food Truck TrackR</Menu.Item>
