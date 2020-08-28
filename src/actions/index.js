@@ -61,7 +61,7 @@ export const updateTruck = (id, truckToEdit) => (dispatch) => {
       console.log("SR: UpdateTruckForm.js: submit sucess: res: ", res.data);
       dispatch({
         type: UPDATE_TRUCK,
-        payload: truckToEdit,
+        payload: res.data,
       });
     })
     .catch((err) => {
@@ -75,7 +75,7 @@ export const removeTruck = (id, truckToEdit) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: REMOVE_TRUCK,
-        payload: truckToEdit,
+        payload: res.data,
       });
     })
     .catch((err) => console.error(err.message));
@@ -88,7 +88,7 @@ export const addMenuItem = (id, menuItem) => (dispatch) => {
       console.log(res.data);
       dispatch({
         type: ADD_MENUITEM,
-        payload: menuItem,
+        payload: res.data,
       });
     })
     .catch((err) => {
