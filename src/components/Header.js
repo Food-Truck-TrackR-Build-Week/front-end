@@ -1,4 +1,5 @@
 import React from "react";
+import {BrowserRouter as Router, Link} from "react-router-dom";
 import {useHistory} from "react-router-dom";
 import {Menu, Icon} from "semantic-ui-react";
 
@@ -10,14 +11,14 @@ const Header = () => {
   };
 
   return (
-    <>
+    <Router>
       <Menu
         inverted
         size="massive"
         style={{
           borderRadius: 0,
-          position: "fix",
-          top: 0,
+          position: "fixed",
+          top: "-1rem",
           left: 0,
           right: 0,
           height: "auto",
@@ -27,6 +28,15 @@ const Header = () => {
         <Menu.Item header>Food Truck TrackR</Menu.Item>
 
         <Menu.Menu position="right">
+          <Link
+            to={{
+              pathname:
+                "https://suspicious-golick-976a51.netlify.app/home.html",
+            }}
+            target="_blank"
+          >
+            <Menu.Item>Marketing Page</Menu.Item>
+          </Link>
           <Menu.Item>
             <Icon name="setting" />
           </Menu.Item>
@@ -39,7 +49,7 @@ const Header = () => {
           </Menu.Item>
         </Menu.Menu>
       </Menu>
-    </>
+    </Router>
   );
 };
 

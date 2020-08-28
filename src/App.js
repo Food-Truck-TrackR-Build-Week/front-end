@@ -17,6 +17,17 @@ const App = () => {
     <Router>
       <Menu inverted size="massive" style={{borderRadius: 0}}>
         <Menu.Item header>Food Truck TrackR</Menu.Item>
+        <Menu.Menu position="right">
+          <Link
+            to={{
+              pathname:
+                "https://suspicious-golick-976a51.netlify.app/home.html",
+            }}
+            target="_blank"
+          >
+            <Menu.Item>Marketing Page</Menu.Item>
+          </Link>
+        </Menu.Menu>
       </Menu>
       <Switch>
         <PrivateRoute exact path="/home" component={DinerDashboard} />
