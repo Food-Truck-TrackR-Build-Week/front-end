@@ -16,7 +16,7 @@ const Header = () => {
         size="massive"
         style={{
           borderRadius: 0,
-          position: "absolute",
+          position: "fixed",
           top: "-1rem",
           left: 0,
           right: 0,
