@@ -14,6 +14,7 @@ const FoodTruck = (props) => {
     series: [44, 55, 41, 17, 15],
     labels: ["A", "B", "C", "D", "E"],
   });
+
   return (
     <Container>
       {props.trucks
@@ -62,10 +63,5 @@ const FoodTruck = (props) => {
     </Container>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    trucks: state.operator.operatorInfo.trucksowned,
-  };
-};
 
-export default connect(mapStateToProps)(FoodTruck);
+export default FoodTruck;
