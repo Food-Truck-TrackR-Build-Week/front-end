@@ -15,10 +15,10 @@ import {axiosWithAuth} from "../utils/axiosWithAuth";
 import Header from './Header';
 
 const Login = () => {
-  // Setting state for diner / operator
+  // Setting state for diner / operator ID
   const [dinerId, setDinerId] = useState();
-
   const [operatorId, setOperatorId] = useState();
+  
   const {push} = useHistory();
 
   const [user, setUser] = useState({
