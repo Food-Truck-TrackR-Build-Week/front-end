@@ -2,6 +2,7 @@ import {
   FETCHING_OPERATORS_START,
   FETCHING_OPERATORS_SUCCESS,
   FETCHING_OPERATORS_ERROR,
+  SET_OPERATOR_INFO,
   ADD_TRUCK,
   UPDATE_TRUCK,
   REMOVE_TRUCK,
@@ -13,7 +14,12 @@ import {
 const initialState = {
   isFetching: false,
   error: "",
-  operatorInfo: localStorage.getItem("operator"),
+  operatorInfo: {
+    operatorId: "",
+    username: "",
+    email: "",
+    trucksOwned: [],
+  },
 };
 
 export const operator = (state = initialState, action) => {
@@ -35,6 +41,12 @@ export const operator = (state = initialState, action) => {
         ...state,
         isFetching: false,
         error: action.payload,
+      };
+
+    case SET_OPERATOR_INFO:
+      return {
+        ...state,
+        operatorInfo: action.payload,
       };
 
     case ADD_TRUCK:

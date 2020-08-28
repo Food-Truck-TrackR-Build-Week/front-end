@@ -13,8 +13,9 @@ import {
 } from "semantic-ui-react";
 import {axiosWithAuth} from "../utils/axiosWithAuth";
 import Header from "./Header";
+import {findByTestId} from "@testing-library/react";
 
-const Login = () => {
+const Login = ({fetchOperatorData}) => {
   // Setting state for diner / operator
   const [dinerId, setDinerId] = useState();
 
@@ -87,6 +88,7 @@ const Login = () => {
         console.log("submitted", res);
         if (res.data.type === "operator") {
           setOperatorId(res.data.operator.operatorId);
+
           localStorage.setItem("operatorId", res.data.operator.operatorId);
           localStorage.setItem("Token", res.data.token);
           push(`/operator/dashboard`);
@@ -97,7 +99,8 @@ const Login = () => {
           console.log(res.data.token);
           push(`/home`);
         }
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

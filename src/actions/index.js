@@ -3,6 +3,7 @@ import {axiosWithAuth} from "../utils/axiosWithAuth";
 export const FETCHING_OPERATORS_START = "FETCHING_OPERATORS_START";
 export const FETCHING_OPERATORS_SUCCESS = "FETCHING_OPERATORS_SUCCESS";
 export const FETCHING_OPERATORS_ERROR = "FETCHING_OPERATORS_ERROR";
+export const SET_OPERATOR_INFO = "SET_OPERATOR_INFO";
 export const FETCHING_TRUCKS_START = "FETCHING_TRUCKS_START";
 export const FETCHING_TRUCKS_SUCCESS = "FETCHING_TRUCKS_SUCCESS";
 export const FETCHING_TRUCKS_ERROR = "FETCHING_TRUCKS_ERROR";
@@ -19,7 +20,10 @@ export const fetchOperatorData = (id) => (dispatch) => {
   axiosWithAuth()
     .get(`/api/operators/${id}`)
     .then((res) => {
-      console.log("SR: actions/index.js: fetchOperatorData: axios.then: ", res);
+      console.log(
+        "SR: actions/index.js: fetchOperatorData: axios.then: ",
+        res.data
+      );
       dispatch({
         type: FETCHING_OPERATORS_SUCCESS,
         payload: res.data,
@@ -29,6 +33,10 @@ export const fetchOperatorData = (id) => (dispatch) => {
       console.log("error", err);
       dispatch({type: FETCHING_OPERATORS_ERROR, payload: err.message});
     });
+};
+
+export const setOperatorInfo = (info) => (dispatch) => {
+  dispatch({type: SET_OPERATOR_INFO, payload: info});
 };
 
 export const addTruck = (addTruck) => (dispatch) => {
@@ -88,7 +96,7 @@ export const addMenuItem = (id, menuItem) => (dispatch) => {
     });
 };
 
-export const updateMenutItem = (id, menuItemId, itemToEdit) => (dispatch) => {
+export const updateMenuItem = (id, menuItemId, itemToEdit) => (dispatch) => {
   axiosWithAuth()
     .put(`/api/trucks/${id}/menu/${menuItemId}`, itemToEdit)
     .then((res) => {

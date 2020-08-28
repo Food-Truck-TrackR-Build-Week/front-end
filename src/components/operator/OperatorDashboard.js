@@ -8,12 +8,12 @@ import FoodTruck from "./FoodTruck";
 import {Container, Grid, Segment, Image, Message} from "semantic-ui-react";
 import FoodTruckImg from "../../images/undraw_street_food_hm5i.svg";
 
-const OperatorDashboard = (props) => {
+const OperatorDashboard = ({isFetching, operatorInfo, fetchOperatorData}) => {
   const [showTruckById, setShowTruckById] = useState(null);
 
-  // useEffect(() => {
-  //   props.fetchOperatorData(props.operatorId);
-  // }, []);
+  useEffect(() => {
+    fetchOperatorData(localStorage.getItem("operatorId"));
+  }, []);
 
   return (
     <>
@@ -23,7 +23,7 @@ const OperatorDashboard = (props) => {
           <Grid.Column computer={4} tablet={6} mobile={16}>
             <Segment raised>
               <TruckList
-                operatorId={props.operatorId}
+                operatorId={operatorInfo.operatorId}
                 showTruckById={showTruckById}
                 setShowTruckById={setShowTruckById}
               />
@@ -33,8 +33,7 @@ const OperatorDashboard = (props) => {
           <Grid.Column computer={12} tablet={10} mobile={16}>
             {showTruckById === null ? (
               <Segment basic>
-                {console.log("SR : Trucks", props.trucks)}
-                {props.trucks.length === 0 ? (
+                {operatorInfo.trucksOwned.length === 0 ? (
                   <Message
                     floating
                     content="Add a food truck to get started"
@@ -59,7 +58,7 @@ const OperatorDashboard = (props) => {
               </Segment>
             ) : (
               <FoodTruck
-                operatorId={props.operatorId}
+                operatorId={operatorInfo.operatorId}
                 showTruckById={showTruckById}
               />
             )}
@@ -71,10 +70,13 @@ const OperatorDashboard = (props) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log(state.operatorInfo);
   return {
-    // operatorId: state.operator.operatorInfo.id,
-    trucks: state.operator.operatorInfo.trucksOwned,
+    operatorInfo: state.operatorInfo,
+    isFetching: state.isFetching,
   };
 };
 
-export default connect(mapStateToProps, {fetchOperatorData})(OperatorDashboard);
+export default connect(mapStateToProps, {
+  fetchOperatorData,
+})(OperatorDashboard);

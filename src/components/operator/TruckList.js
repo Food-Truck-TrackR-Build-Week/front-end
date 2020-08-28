@@ -10,10 +10,10 @@ const TruckList = (props) => {
 
   return (
     <>
-      <Segment vertical textAlign="center">
+      {/* <Segment vertical textAlign="center">
         <AddTruckForm operatorId={props.operatorId} />
       </Segment>
-      {props.trucks.length === 0 ? null : <h3>Food Trucks</h3>}
+      {props.trucks ? null : <h3>Food Trucks</h3>}
 
       {props.trucks.map((truck) => (
         <Truck
@@ -21,7 +21,7 @@ const TruckList = (props) => {
           key={truck.id}
           truck={truck}
         />
-      ))}
+      ))} */}
     </>
   );
 };
