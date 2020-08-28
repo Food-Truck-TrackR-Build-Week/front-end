@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import { Map, GoogleApiWrapper, Marker, InfoWindow, Circle} from 'google-maps-react'
 import {mapStyles} from "../../utils/mapStyles"
 
-import { Card, Icon, Image, Grid, Header, List, Rating } from "semantic-ui-react";
+import { Card, Icon, Image, Grid, Header, List, Rating, Button } from "semantic-ui-react";
 
 
 const mapStyle = {
@@ -11,10 +11,7 @@ const mapStyle = {
     height: '100%'
   };
 
-const menuHeaderStyle = {
-    marginTop: "10px",
-    marginBottom: "20px"
-}
+
 
 
 function MapContainer(props) {
@@ -28,11 +25,18 @@ function MapContainer(props) {
     
     const [mapCenterHasBeingSet, setMapCenterHasBeingSet] = useState(false)
 
-    const handleClick = (propsMarker) => {
+    const handleClickMarker = (propsMarker) => {
         props.setInfoWindow({
             visible: true,
             position: propsMarker.position,
             currentTruck: propsMarker.data_truck
+        })
+    }
+
+    const handleInfoWindowClose = () => {
+        props.setInfoWindow({
+            ...props.infoWindow,
+            visible: false
         })
     }
 
@@ -122,77 +126,52 @@ function MapContainer(props) {
             {
                 props.trucks.map((t, index) => {
                     let coordinates = t.currentLocation.split(", ")
-                    return <Marker 
-                        key={index}
-                        name={'current Location'} 
-                        position={{lat: coordinates[0],
-                            lng: coordinates[1]}}
-                        data_truck={t}
-                        onClick={handleClick}/>
+                    if(t.departureTime > Date.now()) {
+                        return <Marker 
+                                key={index}
+                                name={'current Location'} 
+                                position={{lat: coordinates[0],
+                                    lng: coordinates[1]}}
+                                data_truck={t}
+                                onClick={handleClickMarker}
+                            />
+                    }
+                    
                 })
             }
-            <InfoWindow visible={props.infoWindow.visible} position={props.infoWindow.position} style={{top: -60}}>
-                <Grid columns={2}>
-                    <Grid.Column style={{width: '250px'}}>
+            
+            <InfoWindow visible={props.infoWindow.visible} position={props.infoWindow.position} style={{top: -60}} onClose={handleInfoWindowClose}>
+                <Grid columns={1}>
+                    <Grid.Column>
                         <Card>
                             <Image
-                            src={props.infoWindow.currentTruck.imageOfTruck}
-                            alt={`${props.infoWindow.currentTruck.cuisineType} food truck`}
-                            style={{width: 222, height: 277}}
+                                src={props.infoWindow.currentTruck.imageOfTruck}
+                                alt={`${props.infoWindow.currentTruck.cuisineType} food truck`}
+                                style={{width: 290, height: 277}}
                             />
                             <Card.Content>
-                            <Card.Header>{props.infoWindow.currentTruck.name}</Card.Header>
-
+                            <Card.Header>
+                                {props.infoWindow.currentTruck.name}
+                            </Card.Header>
                             <Card.Meta>
-                                <span className="date">
-                                Date: {props.infoWindow.currentTruck.departureTime}
-                                </span>
-                                <span className="date">
-                                Time: {props.infoWindow.currentTruck.departureTime}
-                                </span>
+                                Cuisine: {props.infoWindow.currentTruck.cuisineType}
                             </Card.Meta>
-                            <Card.Description>Cuisine: {props.infoWindow.currentTruck.cuisineType}</Card.Description>
+                            <Card.Description>
+                                In Location Until: {new Date(props.infoWindow.currentTruck.departureTime).toLocaleTimeString()}
+                            </Card.Description>
                             </Card.Content>
                             <Card.Content extra>
                             <Icon name="star" />
-                            Average Rating: {props.infoWindow.currentTruck.customerRatingsAvg}
+                                Average Rating: {`${props.infoWindow.currentTruck.customerRatingsAvg} (${props.infoWindow.currentTruck.customerRatings.length})`}
                             </Card.Content>
                         </Card>
-                    </Grid.Column>
-                    <Grid.Column style={{width: '365px'}}>
-                        <Header as='h2' textAlign='center' style={menuHeaderStyle}>
-                            <Header.Content>Menu</Header.Content>
-                        </Header>
-                        <div style={{overflow: 'auto', maxHeight: 350, paddingRight: 10}}>
-                            <List divided verticalAlign='middle' size="large">
-                                {
-                                props.infoWindow.currentTruck.menu.map((menu, index) => (
-                                    <List.Item key={index} style={{ paddingTop: 10}}>
-                                        <Image src={menu.itemPhotos[0]} style={{width: 50, height: 50}}/>
-                                        <List.Content style={{width: 265}}>
-                                            <List.Header style={{position: 'relative'}}>
-                                                {menu.itemName}
-                                                <span style={{position: "absolute", right: 0}}>{menu.itemPrice}</span>
-                                            </List.Header>
-                                            <List.Description>
-                                                {menu.itemDescription}
-                                            </List.Description>
-                                        </List.Content>
-                                        <List.Content floated="left" style={{paddingTop: 5}}>
-                                            <Rating defaultRating={menu.customerRatingsAvg} maxRating={5} />
-                                        </List.Content>
-                                    </List.Item>
-                                        
-                                ))
-                                } 
-                            </List>
-                        </div>
                     </Grid.Column>
                 </Grid>
             </InfoWindow>
     
             
         </Map>
+        
     )
 }
 

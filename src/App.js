@@ -20,18 +20,13 @@ import {
 
 import Food from "./images/undraw_Hamburger_8ge6.svg";
 import FoodTruck from "./images/undraw_street_food_hm5i.svg";
-<<<<<<< HEAD
+
 import RegisterForm from './components/RegisterForm';
-=======
-import LocationFinder from "./components/operator/LocationFinder";
->>>>>>> a0fef0a7fbcb37c2fb417784a2eb3c5c0ca2b2d4
+
 
 const App = () => {
   return (
     <Router>
-      <Menu inverted size="massive" style={{borderRadius: 0}}>
-        <Menu.Item header>Food Truck TrackR</Menu.Item>
-      </Menu>
       <Switch>
         <PrivateRoute exact path="/home" component={DinerDashboard} />
 
@@ -41,11 +36,9 @@ const App = () => {
           path="/operator/dashboard"
           component={OperatorDashboard}
         />
-<<<<<<< HEAD
-        <Route exact path='/register' component={RegisterForm} />
-=======
 
->>>>>>> a0fef0a7fbcb37c2fb417784a2eb3c5c0ca2b2d4
+        <Route exact path='/register' component={RegisterForm} />
+
         <Route exact path="/operator" component={OperatorLogin} />
         <Route exact path="/image-editor" component={ImageEditor} />
         <Route exact path="/location-finder" component={LocationFinder} />
