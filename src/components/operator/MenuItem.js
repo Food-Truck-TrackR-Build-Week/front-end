@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {updateMenuItem, deleteMenuItem, fetchOperatorData} from "../../actions";
-import {Icon, Button, Item, Modal, Form} from "semantic-ui-react";
+import {Icon, Button, Item, Modal, Form, Grid} from "semantic-ui-react";
 
 const MenuItem = (props) => {
   const [open, setOpen] = useState(false);
@@ -15,39 +15,20 @@ const MenuItem = (props) => {
     });
   };
 
-  const updateMenuItem = () => {
-    // axiosWithAuth()
-    //   .put(`/api/trucks/${props.truck.id}/menu/${itemToEdit.id}`, {
-    //     itemName: itemToEdit.itemName,
-    //     itemDescription: itemToEdit.itemDescription,
-    //     itemPrice: itemToEdit.itemPrice,
-    //     itemPhotos: itemToEdit.itemPhotos,
-    //   })
-    //   .then((res) => {
-    //     console.log("SR: UpdateMenuItem: res", res.data);
-    //     setItemToEdit(itemToEdit);
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
-  };
-
   const handleDelete = () => {
-    props.removeMenuItem(localStorage.getItem("operatorId"), itemToEdit);
+    props.deleteMenuItem(props.truck.id, props.menuItem.id);
     props.fetchOperatorData(localStorage.getItem("operatorId"));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    updateMenuItem();
+    updateMenuItem(props.truck.id, props.menuItem.id, itemToEdit);
 
     setOpen(false);
 
     props.fetchOperatorData(localStorage.getItem("operatorId"));
   };
-
-  // truck.id, menuItem.id, itemToEdit;
 
   return (
     <>
@@ -55,7 +36,7 @@ const MenuItem = (props) => {
         <Item.Content>
           <Item.Header as="h3">{props.menuItem.itemName}</Item.Header>
           <Item.Meta as="h4">
-            <Icon name="dollar sign" /> {props.menuItem.itemPrice}
+            <Icon name="dollar sign" /> {props.menuItem.itemPrice} .OO
           </Item.Meta>
           <Item.Description>{props.menuItem.itemDescription}</Item.Description>
           <Item.Extra>
@@ -102,16 +83,6 @@ const MenuItem = (props) => {
                           onChange={handleChange}
                         />
                       </Form.Field>
-                      <Form.Field>
-                        <label>Item Photos</label>
-                        <input
-                          name="itemPhotos"
-                          type="text"
-                          placeholder="Enter Image URL's"
-                          value={itemToEdit.itemPhotos}
-                          onChange={handleChange}
-                        />
-                      </Form.Field>
                       <Button type="submit">
                         <Icon name="add" /> Update Item
                       </Button>
@@ -126,9 +97,15 @@ const MenuItem = (props) => {
             </Button.Group>
           </Item.Extra>
         </Item.Content>
-        {props.menuItem.itemPhotos.map((image) => (
-          <Item.Image key={image} src={image} size="tiny" />
-        ))}
+        <Grid columns="equal">
+          <Grid.Row floated="right">
+            {props.menuItem.itemPhotos.map((image) => (
+              <Grid.Column key={image}>
+                <Item.Image key={image} src={image} size="small" />
+              </Grid.Column>
+            ))}
+          </Grid.Row>
+        </Grid>
       </Item>
     </>
   );

@@ -57,6 +57,7 @@ const TruckCard = (props) => {
       <div>
         <Header size="large">
           {props.truck.name}
+          <br />
           <Button.Group basic size="tiny">
             <Modal
               onClose={() => {
@@ -155,11 +156,11 @@ const TruckCard = (props) => {
               </span>
             </Card.Meta>
             <Card.Description>
-              <Icon name="food" />
+              <Icon name="food" color="yellow" />
               {props.truck.cuisineType}
             </Card.Description>
             <Card.Description>
-              <Icon name="map pin" />
+              <Icon name="map pin" color="red" />
               {props.truck.currentLocation}
             </Card.Description>
           </Card.Content>
@@ -171,7 +172,7 @@ const TruckCard = (props) => {
               defaultRating={props.truck.customerRatingAvg}
               icon="star"
               disabled
-              size="large"
+              size="huge"
               style={{marginTop: ".75rem"}}
             />
           </Card.Content>
