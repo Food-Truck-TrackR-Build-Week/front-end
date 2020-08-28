@@ -18,15 +18,20 @@ const App = () => {
       <Menu inverted size="massive" style={{borderRadius: 0}}>
         <Menu.Item header>Food Truck TrackR</Menu.Item>
         <Menu.Menu position="right">
-          <Link
-            to={{
-              pathname:
-                "https://suspicious-golick-976a51.netlify.app/home.html",
-            }}
-            target="_blank"
-          >
-            <Menu.Item>Marketing Page</Menu.Item>
-          </Link>
+          <Menu.Item>
+            <Link to="/">Home</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link
+              to={{
+                pathname:
+                  "https://suspicious-golick-976a51.netlify.app/home.html",
+              }}
+              target="_blank"
+            >
+              Marketing Page
+            </Link>
+          </Menu.Item>
         </Menu.Menu>
       </Menu>
       <Switch>
