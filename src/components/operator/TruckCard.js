@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {updateTruck, removeTruck} from "../../actions";
+import {fetchOperatorData, updateTruck, removeTruck} from "../../actions";
+import LocationFinder from "./LocationFinder";
 import {
   Card,
   Icon,
@@ -24,7 +25,7 @@ const TruckCard = (props) => {
 
   const handleDeleteTruck = () => {
     props.removeTruck(props.truck.id, truckToEdit);
-    window.location.reload();
+    props.fetchOperatorData(truckToEdit.operatorId);
   };
 
   const handleChange = (e) => {
@@ -34,13 +35,21 @@ const TruckCard = (props) => {
     });
   };
 
+  const handlePlaceSelector = (placeData) => {
+    setTruckToEdit({
+      ...truckToEdit,
+      currentLocation: placeData,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     props.updateTruck(props.truck.id, truckToEdit);
-    console.log("SR : updateTruck", props.updateTruck(truckToEdit.id));
 
     setOpen(false);
+
+    props.fetchOperatorData(truckToEdit.operatorId);
   };
 
   return (
@@ -50,7 +59,15 @@ const TruckCard = (props) => {
           {props.truck.name}
           <Button.Group basic size="tiny">
             <Modal
-              onClose={() => setOpen(false)}
+              onClose={() => {
+                setOpen(false);
+                setTruckToEdit({
+                  name: truckToEdit.name,
+                  imageOfTruck: truckToEdit.imageOfTruck,
+                  cuisineType: truckToEdit.cuisineType,
+                  currentLocation: truckToEdit.currentLocation,
+                });
+              }}
               onOpen={() => setOpen(true)}
               open={open}
               trigger={
@@ -59,7 +76,7 @@ const TruckCard = (props) => {
                 </Button>
               }
             >
-              <Modal.Header>Add Food Truck</Modal.Header>
+              <Modal.Header>Edit Food Truck</Modal.Header>
               <Modal.Content>
                 <Modal.Description>
                   <Form onSubmit={handleSubmit}>
@@ -95,12 +112,8 @@ const TruckCard = (props) => {
                     </Form.Field>
                     <Form.Field>
                       <label>Location</label>
-                      <input
-                        type="text"
-                        name="currentLocation"
-                        placeholder="Truck's Location"
-                        value={truckToEdit.currentLocation}
-                        onChange={handleChange}
+                      <LocationFinder
+                        handlePlaceSelector={handlePlaceSelector}
                       />
                     </Form.Field>
                     {/* <Form.Field>
@@ -168,4 +181,6 @@ const TruckCard = (props) => {
   );
 };
 
-export default connect(null, {updateTruck, removeTruck})(TruckCard);
+export default connect(null, {fetchOperatorData, updateTruck, removeTruck})(
+  TruckCard
+);

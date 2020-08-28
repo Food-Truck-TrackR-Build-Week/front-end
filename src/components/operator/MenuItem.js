@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import {axiosWithAuth} from "../../utils/axiosWithAuth";
+import {connect} from "react-redux";
+import {updateMenuItem, deleteMenuItem, fetchOperatorData} from "../../actions";
 import {Icon, Button, Item, Modal, Form} from "semantic-ui-react";
 
 const MenuItem = (props) => {
@@ -32,10 +33,8 @@ const MenuItem = (props) => {
   };
 
   const handleDelete = () => {
-    axiosWithAuth()
-      .delete(`/api/trucks/${props.truck.id}/menu/${itemToEdit.id}`, itemToEdit)
-      .then((res) => {})
-      .catch((err) => console.error(err.message));
+    props.removeMenuItem(localStorage.getItem("operatorId"), itemToEdit);
+    props.fetchOperatorData(localStorage.getItem("operatorId"));
   };
 
   const handleSubmit = (e) => {
@@ -44,7 +43,11 @@ const MenuItem = (props) => {
     updateMenuItem();
 
     setOpen(false);
+
+    props.fetchOperatorData(localStorage.getItem("operatorId"));
   };
+
+  // truck.id, menuItem.id, itemToEdit;
 
   return (
     <>
@@ -131,4 +134,8 @@ const MenuItem = (props) => {
   );
 };
 
-export default MenuItem;
+export default connect(null, {
+  updateMenuItem,
+  deleteMenuItem,
+  fetchOperatorData,
+})(MenuItem);

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {addTruck} from "../../actions";
-// import LocationFinder from "./LocationFinder";
+import {addTruck, fetchOperatorData} from "../../actions";
+import LocationFinder from "./LocationFinder";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
 const AddTruckForm = (props) => {
@@ -21,6 +21,13 @@ const AddTruckForm = (props) => {
     });
   };
 
+  const handlePlaceSelector = (placeData) => {
+    setAddTruck({
+      ...addTruck,
+      currentLocation: placeData,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -34,12 +41,22 @@ const AddTruckForm = (props) => {
     });
 
     setOpen(false);
+
+    props.fetchOperatorData(addTruck.operatorId);
   };
 
   return (
     <>
       <Modal
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setOpen(false);
+          setAddTruck({
+            name: "",
+            imageOfTruck: "",
+            cuisineType: "",
+            currentLocation: "",
+          });
+        }}
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
@@ -88,18 +105,7 @@ const AddTruckForm = (props) => {
               </Form.Field>
               <Form.Field>
                 <label>Location</label>
-                <input
-                  type="text"
-                  name="currentLocation"
-                  placeholder="Truck's Location"
-                  value={addTruck.currentLocation}
-                  onChange={handleChange}
-                />
-                {/* <LocationFinder
-                  name="currentLocation"
-                  value={addTruck.currentLocation}
-                  onChange={handleChange}
-                /> */}
+                <LocationFinder handlePlaceSelector={handlePlaceSelector} />
               </Form.Field>
               {/* <Form.Field>
                 <label>Departure Time</label>
@@ -122,4 +128,4 @@ const AddTruckForm = (props) => {
   );
 };
 
-export default connect(null, {addTruck})(AddTruckForm);
+export default connect(null, {addTruck, fetchOperatorData})(AddTruckForm);

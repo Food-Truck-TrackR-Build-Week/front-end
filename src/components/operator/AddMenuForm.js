@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {addMenuItem} from "../../actions";
-// import {menuState} from "../../utils/initialMenuState";
+import {addMenuItem, fetchOperatorData} from "../../actions";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
 const AddMenuForm = (props) => {
@@ -10,7 +9,7 @@ const AddMenuForm = (props) => {
     itemName: "",
     itemDescription: "",
     itemPrice: "",
-    itemPhotos: [],
+    itemPhotos: "",
   });
 
   const handleChange = (e) => {
@@ -18,28 +17,43 @@ const AddMenuForm = (props) => {
       ...menuItem,
       [e.target.name]: e.target.value,
     });
+
     console.log("SR : addMenuItem : ", menuItem);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("SR : addMenuItem : ", props.addMenuItem(menuItem));
-    props.addMenuItem(props.truck.id, menuItem);
+    const itemPhotoArr = menuItem.itemPhotos.split(" ");
+    props.addMenuItem(props.truck.id, {
+      ...menuItem,
+      itemPhotos: itemPhotoArr,
+    });
 
     setMenuItem({
       itemName: "",
       itemDescription: "",
       itemPrice: "",
-      itemPhotos: [],
+      itemPhotos: "",
     });
 
     setOpen(false);
+
+    props.fetchOperatorData(localStorage.getItem("operatorId"));
   };
 
   return (
     <>
       <Modal
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setOpen(false);
+          setMenuItem({
+            itemName: "",
+            itemDescription: "",
+            itemPrice: "",
+            itemPhotos: "",
+          });
+        }}
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
@@ -85,7 +99,6 @@ const AddMenuForm = (props) => {
                 <label>Item Photos</label>
                 <input
                   name="itemPhotos"
-                  type="text"
                   placeholder="Enter Image URL's"
                   value={menuItem.itemPhotos}
                   onChange={handleChange}
@@ -102,4 +115,4 @@ const AddMenuForm = (props) => {
   );
 };
 
-export default connect(null, {addMenuItem})(AddMenuForm);
+export default connect(null, {addMenuItem, fetchOperatorData})(AddMenuForm);
