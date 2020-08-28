@@ -25,10 +25,6 @@ import LocationFinder from "./components/operator/LocationFinder";
 const App = () => {
   return (
     <Router>
-
-      <Menu inverted size="massive" style={{borderRadius: 0}}>
-        <Menu.Item header>Food Truck TrackR</Menu.Item>
-      </Menu>
       <Switch>
         <PrivateRoute exact path="/home" component={DinerDashboard} />
 
