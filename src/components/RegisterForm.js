@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import * as yup from "yup";
 import "semantic-ui-css/semantic.min.css";
-import {Form, Button, Container, Input} from "semantic-ui-react";
-import Header from "./Header";
+import {Header, Form, Button, Container, Input} from "semantic-ui-react";
 import {useHistory} from "react-router-dom";
 import {axiosWithAuth} from "../utils/axiosWithAuth";
 
@@ -15,7 +14,7 @@ const Register = () => {
     isOperator: null,
   });
 
-  const {push} = useHistory();
+  const {push, goBack} = useHistory();
   const [dinerId, setDinerId] = useState();
   const [operatorId, setOperatorId] = useState();
 
@@ -137,9 +136,11 @@ const Register = () => {
   };
 
   return (
-    <Container textalign="center">
+    <Container textalign="center" style={{marginTop: "10rem"}}>
       <Form onSubmit={handleSubmit}>
-        <h1>Sign Up to Join Food Truck TrackR!</h1>
+        <Header size="medium" textAlign="center" style={{marginBottom: "2rem"}}>
+          Sign Up to Join Food Truck TrackR!
+        </Header>
         <Form.Field>
           <Button.Group>
             <Button
@@ -205,6 +206,9 @@ const Register = () => {
         </Form.Field>
         <Button color="teal" type="submit">
           Register
+        </Button>
+        <Button color="grey" type="submit" onClick={() => goBack()}>
+          Login
         </Button>
       </Form>
     </Container>

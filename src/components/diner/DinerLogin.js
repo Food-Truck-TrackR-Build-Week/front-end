@@ -7,8 +7,6 @@ import DinerDashboard from "./DinerDashboard";
 const Diner = () => {
   return (
     <>
-      <h1>Diner</h1>
-
       <LoginForm />
     </>
   );
