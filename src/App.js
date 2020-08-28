@@ -20,7 +20,9 @@ import {
 
 import Food from "./images/undraw_Hamburger_8ge6.svg";
 import FoodTruck from "./images/undraw_street_food_hm5i.svg";
-import LocationFinder from "./components/operator/LocationFinder";
+
+import RegisterForm from './components/RegisterForm';
+
 
 const App = () => {
   return (
@@ -34,6 +36,9 @@ const App = () => {
           path="/operator/dashboard"
           component={OperatorDashboard}
         />
+
+        <Route exact path='/register' component={RegisterForm} />
+
         <Route exact path="/operator" component={OperatorLogin} />
         <Route exact path="/image-editor" component={ImageEditor} />
         <Route exact path="/location-finder" component={LocationFinder} />
@@ -61,11 +66,9 @@ const App = () => {
                 </Header>
               </Grid.Row>
               <Grid.Row verticalAlign="middle">
-
                 <Grid.Column width={4}>
                   <Image src={Food} size="medium" centered />
                   <Label pointing size="huge" color="yellow">
-
                     <Link to="/diner" style={{opacity: 1}}>
                       Diner
                     </Link>

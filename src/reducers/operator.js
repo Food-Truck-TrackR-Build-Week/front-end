@@ -2,6 +2,12 @@ import {
   FETCHING_TRUCKS_START,
   FETCHING_TRUCKS_SUCCESS,
   FETCHING_TRUCKS_ERROR,
+  ADD_TRUCK,
+  UPDATE_TRUCK,
+  REMOVE_TRUCK,
+  ADD_MENUITEM,
+  UPDATE_MENUITEM,
+  REMOVE_MENUITEM,
 } from "../actions";
 
 const initialState = {
@@ -85,6 +91,18 @@ export const operator = (state = initialState, action) => {
         ...state,
         isFetching: false,
         error: action.payload,
+      };
+
+    case ADD_TRUCK:
+      return {
+        ...state,
+        trucksOwned: [...state.trucksOwned, action.payload],
+      };
+
+    case UPDATE_TRUCK:
+      return {
+        ...state,
+        trucksOwned: action.payload,
       };
 
     default:

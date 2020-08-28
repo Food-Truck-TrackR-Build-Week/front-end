@@ -22,10 +22,8 @@ export const fetchOperatorData = () => (dispatch) => {
     });
 };
 
-
-
-
 // ---------------------------------------------------------------------------
+
 
 
 export const FETCHING_DINER_INFO_START = "FETCHING_DINER_INFO_START"
@@ -61,6 +59,7 @@ export const fetchDinerInfo = (userId) => (dispatch) => {
       })
     })
 }
+
 
 export const fetchTruckData = () => (dispatch) => {
   dispatch({type: FETCHING_TRUCKS_START});
