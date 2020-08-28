@@ -1,17 +1,21 @@
-import React, {useState} from "react";
-import {connect} from "react-redux";
-import {updateMenuItem, deleteMenuItem, fetchOperatorData} from "../../actions";
-import {Icon, Button, Item, Modal, Form} from "semantic-ui-react";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import {
+  updateMenuItem,
+  deleteMenuItem,
+  fetchOperatorData
+} from '../../actions';
+import { Icon, Button, Item, Modal, Form } from 'semantic-ui-react';
 
 const MenuItem = (props) => {
   const [open, setOpen] = useState(false);
   const [itemToEdit, setItemToEdit] = useState(props.menuItem);
 
-  console.log("SR : itemToEdit", itemToEdit);
+  console.log('SR : itemToEdit', itemToEdit);
   const handleChange = (e) => {
     setItemToEdit({
       ...itemToEdit,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
@@ -33,8 +37,8 @@ const MenuItem = (props) => {
   };
 
   const handleDelete = () => {
-    props.removeMenuItem(localStorage.getItem("operatorId"), itemToEdit);
-    props.fetchOperatorData(localStorage.getItem("operatorId"));
+    props.removeMenuItem(localStorage.getItem('operatorId'), itemToEdit);
+    props.fetchOperatorData(localStorage.getItem('operatorId'));
   };
 
   const handleSubmit = (e) => {
@@ -44,7 +48,7 @@ const MenuItem = (props) => {
 
     setOpen(false);
 
-    props.fetchOperatorData(localStorage.getItem("operatorId"));
+    props.fetchOperatorData(localStorage.getItem('operatorId'));
   };
 
   // truck.id, menuItem.id, itemToEdit;
@@ -53,20 +57,20 @@ const MenuItem = (props) => {
     <>
       <Item>
         <Item.Content>
-          <Item.Header as="h3">{props.menuItem.itemName}</Item.Header>
-          <Item.Meta as="h4">
-            <Icon name="dollar sign" /> {props.menuItem.itemPrice}
+          <Item.Header as='h3'>{props.menuItem.itemName}</Item.Header>
+          <Item.Meta as='h4'>
+            <Icon name='dollar sign' /> {props.menuItem.itemPrice}.00
           </Item.Meta>
           <Item.Description>{props.menuItem.itemDescription}</Item.Description>
           <Item.Extra>
-            <Button.Group basic size="mini">
+            <Button.Group basic size='mini'>
               <Modal
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
                 trigger={
                   <Button>
-                    <Icon name="pencil" /> Edit
+                    <Icon name='pencil' /> Edit
                   </Button>
                 }
               >
@@ -77,8 +81,8 @@ const MenuItem = (props) => {
                       <Form.Field>
                         <label>Name</label>
                         <input
-                          name="itemName"
-                          placeholder="ex. French Fries"
+                          name='itemName'
+                          placeholder='ex. French Fries'
                           value={itemToEdit.itemName}
                           onChange={handleChange}
                         />
@@ -86,8 +90,8 @@ const MenuItem = (props) => {
                       <Form.Field>
                         <label>Description</label>
                         <input
-                          name="itemDescription"
-                          placeholder="Describe Menu Item"
+                          name='itemDescription'
+                          placeholder='Describe Menu Item'
                           value={itemToEdit.itemDescription}
                           onChange={handleChange}
                         />
@@ -95,9 +99,9 @@ const MenuItem = (props) => {
                       <Form.Field>
                         <label>Price</label>
                         <input
-                          name="itemPrice"
-                          type="number"
-                          placeholder="0.00"
+                          name='itemPrice'
+                          type='number'
+                          placeholder='0.00'
                           value={itemToEdit.itemPrice}
                           onChange={handleChange}
                         />
@@ -105,15 +109,15 @@ const MenuItem = (props) => {
                       <Form.Field>
                         <label>Item Photos</label>
                         <input
-                          name="itemPhotos"
-                          type="text"
+                          name='itemPhotos'
+                          type='text'
                           placeholder="Enter Image URL's"
                           value={itemToEdit.itemPhotos}
                           onChange={handleChange}
                         />
                       </Form.Field>
-                      <Button type="submit">
-                        <Icon name="add" /> Update Item
+                      <Button type='submit'>
+                        <Icon name='add' /> Update Item
                       </Button>
                     </Form>
                   </Modal.Description>
@@ -121,13 +125,13 @@ const MenuItem = (props) => {
               </Modal>
 
               <Button onClick={handleDelete}>
-                <Icon name="delete" /> Delete
+                <Icon name='delete' /> Delete
               </Button>
             </Button.Group>
           </Item.Extra>
         </Item.Content>
         {props.menuItem.itemPhotos.map((image) => (
-          <Item.Image key={image} src={image} size="tiny" />
+          <Item.Image key={image} src={image} size='tiny' />
         ))}
       </Item>
     </>
@@ -137,5 +141,5 @@ const MenuItem = (props) => {
 export default connect(null, {
   updateMenuItem,
   deleteMenuItem,
-  fetchOperatorData,
+  fetchOperatorData
 })(MenuItem);

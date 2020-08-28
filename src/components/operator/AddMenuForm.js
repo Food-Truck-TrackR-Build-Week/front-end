@@ -1,45 +1,42 @@
-import React, {useState} from "react";
-import {connect} from "react-redux";
-import {addMenuItem, fetchOperatorData} from "../../actions";
-import {Button, Modal, Icon, Form} from "semantic-ui-react";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { addMenuItem, fetchOperatorData } from '../../actions';
+import { Button, Modal, Icon, Form } from 'semantic-ui-react';
 
 const AddMenuForm = (props) => {
   const [open, setOpen] = useState(false);
   const [menuItem, setMenuItem] = useState({
-    itemName: "",
-    itemDescription: "",
-    itemPrice: "",
-    itemPhotos: "",
+    itemName: '',
+    itemDescription: '',
+    itemPrice: '',
+    itemPhotos: ''
   });
 
   const handleChange = (e) => {
     setMenuItem({
       ...menuItem,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
-
-    console.log("SR : addMenuItem : ", menuItem);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("SR : addMenuItem : ", props.addMenuItem(menuItem));
-    const itemPhotoArr = menuItem.itemPhotos.split(" ");
+    const itemPhotoArr = menuItem.itemPhotos.split(' ');
     props.addMenuItem(props.truck.id, {
       ...menuItem,
-      itemPhotos: itemPhotoArr,
+      itemPhotos: itemPhotoArr
     });
 
     setMenuItem({
-      itemName: "",
-      itemDescription: "",
-      itemPrice: "",
-      itemPhotos: "",
+      itemName: '',
+      itemDescription: '',
+      itemPrice: '',
+      itemPhotos: ''
     });
 
     setOpen(false);
 
-    props.fetchOperatorData(localStorage.getItem("operatorId"));
+    props.fetchOperatorData(localStorage.getItem('operatorId'));
   };
 
   return (
@@ -48,17 +45,17 @@ const AddMenuForm = (props) => {
         onClose={() => {
           setOpen(false);
           setMenuItem({
-            itemName: "",
-            itemDescription: "",
-            itemPrice: "",
-            itemPhotos: "",
+            itemName: '',
+            itemDescription: '',
+            itemPrice: '',
+            itemPhotos: ''
           });
         }}
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
           <Button>
-            <Icon name="add" />
+            <Icon name='add' />
             Add Menu Item
           </Button>
         }
@@ -70,8 +67,8 @@ const AddMenuForm = (props) => {
               <Form.Field>
                 <label>Name</label>
                 <input
-                  name="itemName"
-                  placeholder="ex. French Fries"
+                  name='itemName'
+                  placeholder='ex. French Fries'
                   value={menuItem.itemName}
                   onChange={handleChange}
                 />
@@ -79,8 +76,8 @@ const AddMenuForm = (props) => {
               <Form.Field>
                 <label>Description</label>
                 <input
-                  name="itemDescription"
-                  placeholder="Describe Menu Item"
+                  name='itemDescription'
+                  placeholder='Describe Menu Item'
                   value={menuItem.itemDescription}
                   onChange={handleChange}
                 />
@@ -88,9 +85,9 @@ const AddMenuForm = (props) => {
               <Form.Field>
                 <label>Price</label>
                 <input
-                  name="itemPrice"
-                  type="number"
-                  placeholder="0.00"
+                  name='itemPrice'
+                  type='number'
+                  placeholder='0.00'
                   value={menuItem.itemPrice}
                   onChange={handleChange}
                 />
@@ -98,14 +95,14 @@ const AddMenuForm = (props) => {
               <Form.Field>
                 <label>Item Photos</label>
                 <input
-                  name="itemPhotos"
+                  name='itemPhotos'
                   placeholder="Enter Image URL's"
                   value={menuItem.itemPhotos}
                   onChange={handleChange}
                 />
               </Form.Field>
-              <Button type="submit">
-                <Icon name="add" /> Add Item
+              <Button type='submit'>
+                <Icon name='add' /> Add Item
               </Button>
             </Form>
           </Modal.Description>
@@ -115,4 +112,4 @@ const AddMenuForm = (props) => {
   );
 };
 
-export default connect(null, {addMenuItem, fetchOperatorData})(AddMenuForm);
+export default connect(null, { addMenuItem, fetchOperatorData })(AddMenuForm);
