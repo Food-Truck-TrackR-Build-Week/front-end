@@ -21,6 +21,7 @@ import {
 import Food from "./images/undraw_Hamburger_8ge6.svg";
 import FoodTruck from "./images/undraw_street_food_hm5i.svg";
 import LocationFinder from "./components/operator/LocationFinder";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -86,6 +87,7 @@ const App = () => {
           </Segment>
         </Route>
       </Switch>
+      <Footer />
     </Router>
   );
 };
