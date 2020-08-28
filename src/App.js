@@ -6,7 +6,7 @@ import DinerDashboard from "./components/diner/DinerDashboard";
 import OperatorDashboard from "./components/operator/OperatorDashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import Register from "./components/RegisterForm";
-import {Header, Image, Segment, Grid, Label} from "semantic-ui-react";
+import {Header, Menu, Image, Segment, Grid, Label} from "semantic-ui-react";
 
 import Food from "./images/undraw_Hamburger_8ge6.svg";
 import FoodTruck from "./images/undraw_street_food_hm5i.svg";
@@ -15,6 +15,9 @@ import Footer from "./components/Footer";
 const App = () => {
   return (
     <Router>
+      <Menu inverted size="massive" style={{borderRadius: 0}}>
+        <Menu.Item header>Food Truck TrackR</Menu.Item>
+      </Menu>
       <Switch>
         <PrivateRoute exact path="/home" component={DinerDashboard} />
         <Route exact path="/register" component={Register} />
