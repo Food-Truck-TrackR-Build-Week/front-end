@@ -54,7 +54,7 @@ const Truck = (props) => {
     })
     setOpenOnlineModal(false)
   }
-
+  
   return (
     <>
     <Modal
@@ -98,7 +98,7 @@ const Truck = (props) => {
         <p>
           <Icon name="map pin" size="large" color="red" />
 
-          {props.truck.currentLocation}
+          {props.truck.currentLocation !== undefined ? `${props.truck.currentLocation.split(', ')[2]}, ${props.truck.currentLocation.split(', ')[3]}` : null}
         </p>
         <div>
           <p>
