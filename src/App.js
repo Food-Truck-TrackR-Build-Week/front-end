@@ -15,6 +15,25 @@ import Footer from "./components/Footer";
 const App = () => {
   return (
     <Router>
+      <Menu inverted size="massive" style={{borderRadius: 0}}>
+        <Menu.Item header>Food Truck TrackR</Menu.Item>
+        <Menu.Menu position="right">
+          <Menu.Item>
+            <Link to="/">Home</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link
+              to={{
+                pathname:
+                  "https://suspicious-golick-976a51.netlify.app/home.html",
+              }}
+              target="_blank"
+            >
+              Marketing Page
+            </Link>
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu>
       <Switch>
         <PrivateRoute exact path="/home" component={DinerDashboard} />
         <Route exact path="/register" component={Register} />
