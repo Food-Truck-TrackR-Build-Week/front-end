@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {addMenuItem, fetchOperatorData} from "../../actions";
+import {addMenuItem} from "../../actions";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
 const AddMenuForm = (props) => {
@@ -35,8 +35,6 @@ const AddMenuForm = (props) => {
     });
 
     setOpen(false);
-
-   
   };
 
   return (

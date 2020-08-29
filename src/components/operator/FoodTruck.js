@@ -10,27 +10,27 @@ import Chart from "react-apexcharts";
 const FoodTruck = (props) => {
   const [chart, setChart] = useState({
     options: {
-        labels: ['5 Stars', '4 Stars', '3 Stars', '2 Stars', '1 Star']
+      labels: ["5 Stars", "4 Stars", "3 Stars", "2 Stars", "1 Star"],
     },
-    series: [5,6,7,5,4],
-    
-    
+    series: [5, 6, 7, 5, 4],
   });
 
   useEffect(() => {
-    let newRatings = [0,0,0,0,0]
-    props.trucks.filter((t) => {
-      return t.id === props.showTruckById;
-    }).forEach(item => {
-      item.customerRatings.forEach(rating => {
-        newRatings[newRatings.length - rating] += 1
+    let newRatings = [0, 0, 0, 0, 0];
+    props.trucks
+      .filter((t) => {
+        return t.id === props.showTruckById;
       })
-    })
+      .forEach((item) => {
+        item.customerRatings.forEach((rating) => {
+          newRatings[newRatings.length - rating] += 1;
+        });
+      });
     setChart({
       ...chart,
-      series: newRatings
-    })
-  },[props.showTruckById])
+      series: newRatings,
+    });
+  }, [props.showTruckById]);
 
   return (
     <Container>
