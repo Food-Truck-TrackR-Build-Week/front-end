@@ -11,13 +11,14 @@ const Header = () => {
   };
 
   return (
+    <Router>
       <Menu
         inverted
         size="massive"
         style={{
           borderRadius: 0,
           position: "fixed",
-          top: 0,
+          top: "-1rem",
           left: 0,
           right: 0,
           height: "auto",
@@ -50,6 +51,7 @@ const Header = () => {
           </Menu.Item>
         </Menu.Menu>
       </Menu>
+    </Router>
   );
 };
 

@@ -87,7 +87,9 @@ export const operator = (state = initialState, action) => {
           ...state.operatorInfo,
           trucksOwned: state.operatorInfo.trucksOwned.map(truck => {
             let temp = truck
-            console.log("im here");
+            if(truck.id === action.payload.truckId) {
+              temp.menu = [...temp.menu, action.payload.data]
+            }
             
             return temp
           })
