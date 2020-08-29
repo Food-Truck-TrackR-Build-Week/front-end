@@ -98,7 +98,6 @@ export const addMenuItem = (id, menuItem) => (dispatch) => {
   axiosWithAuth()
     .post(`/api/trucks/${id}/menu`, menuItem)
     .then((res) => {
-      console.log('asdasdasd', res.data);
       dispatch({
         type: ADD_MENUITEM,
         payload: {data: res.data, truckId: id},
