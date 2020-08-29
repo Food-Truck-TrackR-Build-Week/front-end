@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {addTruck} from "../../actions";
+import {addTruck, fetchOperatorData} from "../../actions";
+import LocationFinder from "./LocationFinder";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
 const AddTruckForm = (props) => {
   const [open, setOpen] = useState(false);
   const [addTruck, setAddTruck] = useState({
-    operatorId: 100001,
+    operatorId: props.operatorId,
     name: "",
     imageOfTruck: "",
     cuisineType: "",
@@ -20,10 +21,24 @@ const AddTruckForm = (props) => {
     });
   };
 
+  const handlePlaceSelector = (placeData) => {
+    setAddTruck({
+      ...addTruck,
+      currentLocation: placeData,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     props.addTruck(addTruck);
+
+    setAddTruck({
+      name: "",
+      imageOfTruck: "",
+      cuisineType: "",
+      currentLocation: "",
+    });
 
     setOpen(false);
   };
@@ -31,11 +46,22 @@ const AddTruckForm = (props) => {
   return (
     <>
       <Modal
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setOpen(false);
+          setAddTruck({
+            name: "",
+            imageOfTruck: "",
+            cuisineType: "",
+            currentLocation: "",
+          });
+        }}
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button color="orange" style={{marginBottom: "1rem"}}>
+          <Button
+            color="orange"
+            style={{marginTop: ".5rem", marginBottom: ".75rem"}}
+          >
             <Icon name="add" />
             Add Food Truck
           </Button>
@@ -77,13 +103,7 @@ const AddTruckForm = (props) => {
               </Form.Field>
               <Form.Field>
                 <label>Location</label>
-                <input
-                  type="text"
-                  name="currentLocation"
-                  placeholder="Truck's Location"
-                  value={addTruck.currentLocation}
-                  onChange={handleChange}
-                />
+                <LocationFinder handlePlaceSelector={handlePlaceSelector} />
               </Form.Field>
               {/* <Form.Field>
                 <label>Departure Time</label>
@@ -106,4 +126,4 @@ const AddTruckForm = (props) => {
   );
 };
 
-export default connect(null, {addTruck})(AddTruckForm);
+export default connect(null, {addTruck, fetchOperatorData})(AddTruckForm);

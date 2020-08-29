@@ -8,7 +8,6 @@ const MenuList = (props) => {
       <h2>Menu</h2>
       <div>
         <Item.Group divided>
-          {console.log("SR: MenuList: Menu", props.truck.menu)}
           {props.truck.menu.map((menuItem) => (
             <MenuItem
               key={menuItem.id}

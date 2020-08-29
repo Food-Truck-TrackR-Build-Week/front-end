@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react";
+import {axiosWithAuth} from "../utils/axiosWithAuth";
 import {useHistory} from "react-router-dom";
 import * as yup from "yup";
 import "semantic-ui-css/semantic.min.css";
-import { Link } from 'react-router-dom';
+import {Link} from "react-router-dom";
 import {
   Form,
   Button,
@@ -10,9 +11,14 @@ import {
   Segment,
   Grid,
   Divider,
+  Header,
 } from "semantic-ui-react";
-import {axiosWithAuth} from "../utils/axiosWithAuth";
-import Header from './Header';
+
+// Yup validation schema
+const formSchema = yup.object().shape({
+  username: yup.string().required("Username is a required field"),
+  password: yup.string().required("Password is a required field"),
+});
 
 const Login = () => {
   // Setting state for diner / operator ID
@@ -41,12 +47,6 @@ const Login = () => {
       setBtnDisabled(!valid);
     });
   }, [user]);
-
-  // Yup validation schema
-  const formSchema = yup.object().shape({
-    username: yup.string().required("Username is a required field"),
-    password: yup.string().required("Password is a required field"),
-  });
 
   // Form validation to display errors
   const validateChange = (e) => {
@@ -85,28 +85,32 @@ const Login = () => {
       })
       .then((res) => {
         console.log("submitted", res);
-        if (res.data.type === 'operator') {
-        setOperatorId(res.data.operator.operatorId);
-        localStorage.setItem('operatorId', res.data.operator.operatorId);
-        localStorage.setItem('Token', res.data.token)
-        push(`/operator/dashboard`);
-        } 
-        else if (res.data.type === 'diner') {
-            setDinerId(res.data.diner.dinerId);
-            localStorage.setItem('dinerId', res.data.diner.dinerId);
-            localStorage.setItem('Token', res.data.token)
-            console.log(res.data.token)
-            push(`/home`);
+        if (res.data.type === "operator") {
+          setOperatorId(res.data.operator.operatorId);
+
+          localStorage.setItem("operatorId", res.data.operator.operatorId);
+          localStorage.setItem("Token", res.data.token);
+          push(`/operator/dashboard`);
+        } else if (res.data.type === "diner") {
+          setDinerId(res.data.diner.dinerId);
+          localStorage.setItem("dinerId", res.data.diner.dinerId);
+          localStorage.setItem("Token", res.data.token);
+          console.log(res.data.token);
+          push(`/home`);
         }
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <Container textalign="center">
-      <Header />
-      <h1>Welcome to Food Truck TrackR</h1>
+    <Container textalign="center" style={{marginTop: "10rem"}}>
+      <Header size="medium" textAlign="center" style={{marginBottom: "2rem"}}>
+        Welcome to Food Truck TrackR
+      </Header>
       <Segment placeholder>
-        <Grid columns={2} relaxed="very" stackable>
+        <Grid columns={2} stackable>
+          <Divider vertical>Or</Divider>
+
           <Grid.Column>
             <Form onSubmit={submitLogin}>
               <Form.Input
@@ -142,12 +146,17 @@ const Login = () => {
             </Form>
           </Grid.Column>
           <Grid.Column verticalAlign="middle">
-            <Link to='/register'>
-            <Button content="Sign up" icon="signup" size="big" onClick={() => push(`/register`)} />
+            <Link to="/register">
+              <Button
+                content="Sign up"
+                icon="signup"
+                size="big"
+                onClick={() => push(`/register`)}
+              />
             </Link>
           </Grid.Column>
         </Grid>
-        <Divider vertical>Or</Divider>
+        {/* <Divider vertical>Or</Divider> */}
       </Segment>
     </Container>
   );

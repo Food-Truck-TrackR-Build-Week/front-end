@@ -27,7 +27,7 @@ function ClearRoute(props) {
             <Button floated='right' color="red" size="big" 
                 onClick={() => { 
                     props.setDestination(null)
-                    props.RecenterMap()
+                    props.RecenterMap(props.myLocation)
                 }}>Clear Route</Button>
         </Segment>
         ) : null

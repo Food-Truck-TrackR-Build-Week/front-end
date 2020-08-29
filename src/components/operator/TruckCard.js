@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {updateTruck} from "../../actions";
+import {fetchOperatorData, updateTruck, removeTruck} from "../../actions";
+import LocationFinder from "./LocationFinder";
 import {
   Card,
   Icon,
@@ -14,55 +15,40 @@ import {
 
 const TruckCard = (props) => {
   const [open, setOpen] = useState(false);
-  const [truckToEdit, setTruckToEdit] = useState({
-    operatorId: 100001,
+  const [selectTruck, setSelectTruck] = useState({
+    id: props.truck.id,
+    operatorId: props.operatorId,
     name: props.truck.name,
     imageOfTruck: props.truck.imageOfTruck,
     cuisineType: props.truck.cuisineType,
     currentLocation: props.truck.currentLocation,
   });
 
-  // const updateTruck = () => {
-  //   axiosWithAuth()
-  //     .put(`/api/trucks/${truckToEdit.id}`, {
-  //       operatorId: 100001,
-  //       name: truckToEdit.name,
-  //       imageOfTruck: truckToEdit.imageOfTruck,
-  //       cuisineType: truckToEdit.cuisineType,
-  //       currentLocation: truckToEdit.currentLocation,
-  //     })
-  //     .then((res) => {
-  //       console.log("SR: UpdateTruckForm.js: submit sucess: res: ", res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.error(
-  //         "SR: UpdateTruckForm.js: submit failed: err ",
-  //         err.message
-  //       );
-  //     });
-  // };
-
-  const handleDeleteTruck = (truckToEdit) => {
-    //   axiosWithAuth()
-    //     .delete(`/api/trucks/${props.truck.id}`, truckToEdit)
-    //     .then((res) => {})
-    //     .catch((err) => console.error(err.message));
+  const handleDeleteTruck = () => {
+    props.removeTruck(props.truck.id, selectTruck);
   };
 
   const handleChange = (e) => {
-    setTruckToEdit({
-      ...truckToEdit,
+    setSelectTruck({
+      ...selectTruck,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handlePlaceSelector = (placeData) => {
+    setSelectTruck({
+      ...selectTruck,
+      currentLocation: placeData,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.updateTruck(truckToEdit.id);
-    console.log("SR : updateTruck", props.updateTruck(truckToEdit.id));
+    props.updateTruck(props.truck.id, selectTruck);
 
     setOpen(false);
+
   };
 
   return (
@@ -70,9 +56,18 @@ const TruckCard = (props) => {
       <div>
         <Header size="large">
           {props.truck.name}
+          <br />
           <Button.Group basic size="tiny">
             <Modal
-              onClose={() => setOpen(false)}
+              onClose={() => {
+                setOpen(false);
+                setSelectTruck({
+                  name: selectTruck.name,
+                  imageOfTruck: selectTruck.imageOfTruck,
+                  cuisineType: selectTruck.cuisineType,
+                  currentLocation: selectTruck.currentLocation,
+                });
+              }}
               onOpen={() => setOpen(true)}
               open={open}
               trigger={
@@ -81,7 +76,7 @@ const TruckCard = (props) => {
                 </Button>
               }
             >
-              <Modal.Header>Add Food Truck</Modal.Header>
+              <Modal.Header>Edit Food Truck</Modal.Header>
               <Modal.Content>
                 <Modal.Description>
                   <Form onSubmit={handleSubmit}>
@@ -91,7 +86,7 @@ const TruckCard = (props) => {
                         type="text"
                         name="name"
                         placeholder="Name of Truck"
-                        value={truckToEdit.name}
+                        value={selectTruck.name}
                         onChange={handleChange}
                       />
                     </Form.Field>
@@ -101,7 +96,7 @@ const TruckCard = (props) => {
                         type="text"
                         name="imageOfTruck"
                         placeholder="Enter Image URL"
-                        value={truckToEdit.imageOfTruck}
+                        value={selectTruck.imageOfTruck}
                         onChange={handleChange}
                       />
                     </Form.Field>
@@ -111,18 +106,14 @@ const TruckCard = (props) => {
                         type="text"
                         name="cuisineType"
                         placeholder="ex. Vietnamese"
-                        value={truckToEdit.cuisineType}
+                        value={selectTruck.cuisineType}
                         onChange={handleChange}
                       />
                     </Form.Field>
                     <Form.Field>
                       <label>Location</label>
-                      <input
-                        type="text"
-                        name="currentLocation"
-                        placeholder="Truck's Location"
-                        value={truckToEdit.currentLocation}
-                        onChange={handleChange}
+                      <LocationFinder
+                        handlePlaceSelector={handlePlaceSelector}
                       />
                     </Form.Field>
                     {/* <Form.Field>
@@ -160,16 +151,16 @@ const TruckCard = (props) => {
             <Card.Meta>
               <span className="date">
                 <Icon name="clock" />
-                Departure Time: {props.truck.departureTime}
+                {props.truck.departureTime}
               </span>
             </Card.Meta>
             <Card.Description>
-              <Icon name="food" />
-              Cuisine: {props.truck.cuisineType}
+              <Icon name="food" color="yellow" />
+              {props.truck.cuisineType}
             </Card.Description>
             <Card.Description>
-              <Icon name="map pin" />
-              Location: {props.truck.currentLocation}
+              <Icon name="map pin" color="red" />
+              {props.truck.currentLocation}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
@@ -177,10 +168,10 @@ const TruckCard = (props) => {
             <br />
             <Rating
               maxRating={5}
-              defaultRating={props.truck.customerRatingAvg}
+              defaultRating={props.truck.customerRatingsAvg}
               icon="star"
               disabled
-              size="large"
+              size="huge"
               style={{marginTop: ".75rem"}}
             />
           </Card.Content>
@@ -190,4 +181,6 @@ const TruckCard = (props) => {
   );
 };
 
-export default connect(null, {updateTruck})(TruckCard);
+export default connect(null, {fetchOperatorData, updateTruck, removeTruck})(
+  TruckCard
+);

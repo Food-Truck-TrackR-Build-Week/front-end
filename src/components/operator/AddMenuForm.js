@@ -1,11 +1,16 @@
 import React, {useState} from "react";
-import {axiosWithAuth} from "../../utils/axiosWithAuth";
-import {menuState} from "../../utils/initialMenuState";
+import {connect} from "react-redux";
+import {addMenuItem, fetchOperatorData} from "../../actions";
 import {Button, Modal, Icon, Form} from "semantic-ui-react";
 
 const AddMenuForm = (props) => {
   const [open, setOpen] = useState(false);
-  const [menuItem, setMenuItem] = useState(menuState);
+  const [menuItem, setMenuItem] = useState({
+    itemName: "",
+    itemDescription: "",
+    itemPrice: "",
+    itemPhotos: "",
+  });
 
   const handleChange = (e) => {
     setMenuItem({
@@ -16,29 +21,36 @@ const AddMenuForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const itemPhotoArr = menuItem.itemPhotos.split(" ");
+    props.addMenuItem(props.truck.id, {
+      ...menuItem,
+      itemPhotos: itemPhotoArr,
+    });
 
-    axiosWithAuth()
-      .post(`/api/trucks/${props.truck.id}/menu`, {
-        itemName: menuItem.itemName,
-        itemDescription: menuItem.itemDescription,
-        itemPrice: menuItem.itemPrice,
-        itemPhotos: menuItem.itemPhotos,
-      })
-      .then((res) => {
-        console.log(res.data);
-        setMenuItem(menuItem);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    setMenuItem({
+      itemName: "",
+      itemDescription: "",
+      itemPrice: "",
+      itemPhotos: "",
+    });
 
     setOpen(false);
+
+   
   };
 
   return (
     <>
       <Modal
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setOpen(false);
+          setMenuItem({
+            itemName: "",
+            itemDescription: "",
+            itemPrice: "",
+            itemPhotos: "",
+          });
+        }}
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
@@ -75,7 +87,7 @@ const AddMenuForm = (props) => {
                 <input
                   name="itemPrice"
                   type="number"
-                  placeholder="0.00"
+                  placeholder="$0"
                   value={menuItem.itemPrice}
                   onChange={handleChange}
                 />
@@ -84,7 +96,6 @@ const AddMenuForm = (props) => {
                 <label>Item Photos</label>
                 <input
                   name="itemPhotos"
-                  type="text"
                   placeholder="Enter Image URL's"
                   value={menuItem.itemPhotos}
                   onChange={handleChange}
@@ -101,4 +112,4 @@ const AddMenuForm = (props) => {
   );
 };
 
-export default AddMenuForm;
+export default connect(null, {addMenuItem})(AddMenuForm);
