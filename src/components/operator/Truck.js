@@ -1,21 +1,91 @@
 import React, {useState} from "react";
-import {Header, Segment, Radio, Icon} from "semantic-ui-react";
+import {connect} from "react-redux";
+import {Header, Segment, Radio, Icon, Modal, Button, Form} from "semantic-ui-react";
+import {updateTruck} from "../../actions";
+import LocationFinder from "./LocationFinder";
 
 const Truck = (props) => {
-  const [isOnline, setIsOnline] = useState(false);
-
-  const handleChange = () => {
-    if (isOnline === false) {
-      setIsOnline(true);
+  const [isOnline, setIsOnline] = useState(() => {
+    if(props.truck.departureTime < Date.now()) {
+      return false
     } else {
-      setIsOnline(false);
+      return true
     }
+  });
+  const [openOnlineModal, setOpenOnlineModal] = useState(false)
+  const [formValues, setFormValues] = useState({
+    departureTime: '',
+    location: ''
+  })
 
-    console.log("SR : isOnline", isOnline);
+  const handleChangeOnline = () => {
+    setIsOnline(!isOnline)
+    if(!isOnline) {
+      setOpenOnlineModal(true)
+    } else {
+      props.updateTruck(props.truck.id, {
+        currentLocation: formValues.location,
+        departureTime: Date.now()
+      })
+    }
   };
 
+  const handlePlaceSelector = (placeData) => {
+    setFormValues({
+      ...formValues,
+      location: placeData,
+    });
+  };
+
+  const handleValuesChange = (e) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    var dt = new Date();
+    dt.setHours( dt.getHours() + parseInt(formValues.departureTime) );
+    props.updateTruck(props.truck.id, {
+      currentLocation: formValues.location,
+      departureTime: Date.parse(dt)
+    })
+    setOpenOnlineModal(false)
+  }
+  
   return (
     <>
+    <Modal
+        onOpen={() => setIsOnline(true)}
+        open={openOnlineModal}
+        size="mini"
+      >
+        <Modal.Header>Go Online</Modal.Header>
+        <Modal.Content>
+          <Modal.Description>
+            <Form onSubmit={handleSubmit}>
+              <Form.Field>
+                <label>Amount of Hours</label>
+                <input
+                  name="departureTime"
+                  placeholder="ex. 2"
+                  value={formValues.departureTime}
+                  onChange={handleValuesChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Location</label>
+                <LocationFinder handlePlaceSelector={handlePlaceSelector} />
+              </Form.Field>
+              <Button type="submit" color="green">
+                <Icon name="world" /> Go Online
+              </Button>
+            </Form>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
       <Segment
         vertical
         onClick={() => {
@@ -28,7 +98,7 @@ const Truck = (props) => {
         <p>
           <Icon name="map pin" size="large" color="red" />
 
-          {props.truck.currentLocation}
+          {props.truck.currentLocation !== undefined ? `${props.truck.currentLocation.split(', ')[2]}, ${props.truck.currentLocation.split(', ')[3]}` : null}
         </p>
         <div>
           <p>
@@ -36,11 +106,11 @@ const Truck = (props) => {
 
             {props.truck.cuisineType}
           </p>
-          <Radio slider label="Online" onChange={handleChange} />
+          <Radio slider checked={isOnline} label="Online" onChange={handleChangeOnline} />
         </div>
       </Segment>
     </>
   );
 };
 
-export default Truck;
+export default connect(null,{updateTruck})(Truck);

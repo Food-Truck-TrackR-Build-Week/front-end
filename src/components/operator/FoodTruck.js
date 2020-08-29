@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Container, Grid, Segment} from "semantic-ui-react";
 import AddMenuForm from "./AddMenuForm";
 import MenuList from "./MenuList";
@@ -10,13 +10,27 @@ import Chart from "react-apexcharts";
 const FoodTruck = (props) => {
   const [chart, setChart] = useState({
     options: {
-      chart: {
-        type: "donut",
-      },
+        labels: ['5 Stars', '4 Stars', '3 Stars', '2 Stars', '1 Star']
     },
-    series: [44, 55, 41, 17, 15],
-    labels: ["A", "B", "C", "D", "E"],
+    series: [5,6,7,5,4],
+    
+    
   });
+
+  useEffect(() => {
+    let newRatings = [0,0,0,0,0]
+    props.trucks.filter((t) => {
+      return t.id === props.showTruckById;
+    }).forEach(item => {
+      item.customerRatings.forEach(rating => {
+        newRatings[newRatings.length - rating] += 1
+      })
+    })
+    setChart({
+      ...chart,
+      series: newRatings
+    })
+  },[props.showTruckById])
 
   return (
     <Container>
@@ -36,17 +50,11 @@ const FoodTruck = (props) => {
                     <Grid columns="equal">
                       <Grid.Column>
                         <Chart
+                          type="donut"
                           options={chart.options}
                           series={chart.series}
-                          type="pie"
+                          width={500}
                         />
-                      </Grid.Column>
-                      <Grid.Column>
-                        {/* <Segment.Group>
-                  {props.truck.customerRatings.map((rating) => (
-                    <Segment key={rating}>{rating}</Segment>
-                  ))}
-                </Segment.Group> */}
                       </Grid.Column>
                     </Grid>
                   </Grid.Column>
