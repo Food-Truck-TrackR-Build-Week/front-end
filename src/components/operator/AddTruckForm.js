@@ -105,16 +105,6 @@ const AddTruckForm = (props) => {
                 <label>Location</label>
                 <LocationFinder handlePlaceSelector={handlePlaceSelector} />
               </Form.Field>
-              {/* <Form.Field>
-                <label>Departure Time</label>
-                <input
-                  type="time"
-                  name="departureTime"
-                  placeholder=""
-                  value={addTruck.departureTime}
-                  onChange={handleChange}
-                />
-              </Form.Field> */}
               <Button type="submit">
                 <Icon name="add" /> Add Truck
               </Button>

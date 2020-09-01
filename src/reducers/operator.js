@@ -2,12 +2,10 @@ import {
   FETCHING_OPERATORS_START,
   FETCHING_OPERATORS_SUCCESS,
   FETCHING_OPERATORS_ERROR,
-  // SET_OPERATOR_INFO,
   ADD_TRUCK,
   UPDATE_TRUCK,
   REMOVE_TRUCK,
   ADD_MENUITEM,
-  UPDATE_MENUITEM,
   REMOVE_MENUITEM,
 } from "../actions";
 
@@ -43,19 +41,13 @@ export const operator = (state = initialState, action) => {
         error: action.payload,
       };
 
-    // case SET_OPERATOR_INFO:
-    //   return {
-    //     ...state,
-    //     operatorInfo: action.payload,
-    //   };
-
     case ADD_TRUCK:
       return {
         ...state,
         operatorInfo: {
           ...state.operatorId,
-          trucksOwned: [...state.operatorInfo.trucksOwned, action.payload]
-        }
+          trucksOwned: [...state.operatorInfo.trucksOwned, action.payload],
+        },
       };
 
     case UPDATE_TRUCK:
@@ -63,9 +55,9 @@ export const operator = (state = initialState, action) => {
         ...state,
         operatorInfo: {
           ...state.operatorInfo,
-          trucksOwned: state.operatorInfo.trucksOwned.map( truck => {
-            return truck.id === action.payload.id ? action.payload : truck
-          })
+          trucksOwned: state.operatorInfo.trucksOwned.map((truck) => {
+            return truck.id === action.payload.id ? action.payload : truck;
+          }),
         },
       };
 
@@ -74,10 +66,10 @@ export const operator = (state = initialState, action) => {
         ...state,
         operatorInfo: {
           ...state.operatorInfo,
-          trucksOwned: state.operatorInfo.trucksOwned.filter( truck => {
-            return truck.id !== action.payload
-          })
-        }
+          trucksOwned: state.operatorInfo.trucksOwned.filter((truck) => {
+            return truck.id !== action.payload;
+          }),
+        },
       };
 
     case ADD_MENUITEM:
@@ -85,13 +77,15 @@ export const operator = (state = initialState, action) => {
         ...state,
         operatorInfo: {
           ...state.operatorInfo,
-          trucksOwned: state.operatorInfo.trucksOwned.map(truck => {
-            let temp = truck
-            console.log("im here");
-            
-            return temp
-          })
-        }
+          trucksOwned: state.operatorInfo.trucksOwned.map((truck) => {
+            let temp = truck;
+            if (truck.id === action.payload.truckId) {
+              temp.menu = [...temp.menu, action.payload.data];
+            }
+
+            return temp;
+          }),
+        },
       };
 
     case REMOVE_MENUITEM:
@@ -99,17 +93,16 @@ export const operator = (state = initialState, action) => {
         ...state,
         operatorInfo: {
           ...state.operatorInfo,
-          trucksOwned: state.operatorInfo.trucksOwned.map(truck => {
-            let temp = truck
-            if(truck.id === action.payload.truckId) {
-              temp.menu = truck.menu.filter(menu => {
-                return menu.id !== action.payload.menuItemId
-              })
+          trucksOwned: state.operatorInfo.trucksOwned.map((truck) => {
+            let temp = truck;
+            if (truck.id === action.payload.truckId) {
+              temp.menu = truck.menu.filter((menu) => {
+                return menu.id !== action.payload.menuItemId;
+              });
             }
-            return temp
-          })
-        }
-        
+            return temp;
+          }),
+        },
       };
 
     default:

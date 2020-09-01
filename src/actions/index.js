@@ -31,10 +31,6 @@ export const fetchOperatorData = (id) => (dispatch) => {
     });
 };
 
-export const setOperatorInfo = (info) => (dispatch) => {
-  dispatch({type: SET_OPERATOR_INFO, payload: info});
-};
-
 export const addTruck = (addTruck) => (dispatch) => {
   axiosWithAuth()
     .post("/api/trucks", addTruck)
@@ -49,22 +45,6 @@ export const addTruck = (addTruck) => (dispatch) => {
       console.error(err);
     });
 };
-
-// export const updateMenuItem = (truckId, menuItemId, selectItem) => (
-//   dispatch
-// ) => {
-//   axiosWithAuth()
-//     .put(`/api/trucks/${truckId}/menu/${menuItemId}`, selectItem)
-//     .then((res) => {
-//       dispatch({
-//         type: UPDATE_MENUITEM,
-//         payload: res.data,
-//       });
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-// };
 
 export const updateTruck = (truckId, selectTruck) => (dispatch) => {
   axiosWithAuth()
@@ -98,7 +78,6 @@ export const addMenuItem = (id, menuItem) => (dispatch) => {
   axiosWithAuth()
     .post(`/api/trucks/${id}/menu`, menuItem)
     .then((res) => {
-      console.log('asdasdasd', res.data);
       dispatch({
         type: ADD_MENUITEM,
         payload: {data: res.data, truckId: id},
@@ -131,7 +110,7 @@ export const removeMenuItem = (truckId, menuItemId) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: REMOVE_MENUITEM,
-        payload: {truckId: truckId, menuItemId: menuItemId}
+        payload: {truckId: truckId, menuItemId: menuItemId},
       });
     })
     .catch((err) => console.error(err.message));
@@ -139,137 +118,144 @@ export const removeMenuItem = (truckId, menuItemId) => (dispatch) => {
 
 // ---------------------------------------------------------------------------
 
+export const FETCHING_DINER_INFO_START = "FETCHING_DINER_INFO_START";
+export const FETCHING_DINER_INFO_SUCCESS = "FETCHING_DINER_INFO_SUCCESS";
+export const FETCHING_DINER_INFO_ERROR = "FETCHING_DINER_INFO_ERROR";
 
+export const SET_FAVORITE_TRUCK_SUCCESS = "SET_FAVORITE_TRUCK_SUCCESS";
+export const SET_FAVORITE_TRUCK_ERROR = "SET_FAVORITE_TRUCK_ERROR";
 
-export const FETCHING_DINER_INFO_START = "FETCHING_DINER_INFO_START"
-export const FETCHING_DINER_INFO_SUCCESS = "FETCHING_DINER_INFO_SUCCESS"
-export const FETCHING_DINER_INFO_ERROR = "FETCHING_DINER_INFO_ERROR"
+export const ADD_TRUCK_RATING_SUCCESS = "ADD_TRUCK_RATING_SUCCESS";
+export const ADD_TRUCK_RATING_ERROR = "ADD_TRUCK_RATING_ERROR";
 
-export const SET_FAVORITE_TRUCK_SUCCESS = "SET_FAVORITE_TRUCK_SUCCESS"
-export const SET_FAVORITE_TRUCK_ERROR = "SET_FAVORITE_TRUCK_ERROR"
-
-export const ADD_TRUCK_RATING_SUCCESS = "ADD_TRUCK_RATING_SUCCESS"
-export const ADD_TRUCK_RATING_ERROR = "ADD_TRUCK_RATING_ERROR"
-
-export const ADD_MENU_RATING_SUCCESS = "ADD_MENU_RATING_SUCCESS"
-export const ADD_MENU_RATING_ERROR = "ADD_MENU_RATING_ERROR"
-
+export const ADD_MENU_RATING_SUCCESS = "ADD_MENU_RATING_SUCCESS";
+export const ADD_MENU_RATING_ERROR = "ADD_MENU_RATING_ERROR";
 
 export const fetchDinerInfo = (userId) => (dispatch) => {
   dispatch({type: FETCHING_DINER_INFO_START});
   axiosWithAuth()
     .get(`/api/diners/${userId}`)
-    .then(res => {
+    .then((res) => {
       console.log(res);
       dispatch({
         type: FETCHING_DINER_INFO_SUCCESS,
-        payload: res.data
-      })
+        payload: res.data,
+      });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       dispatch({
         type: FETCHING_DINER_INFO_ERROR,
-        payload: err.data
-      })
-    })
-}
-
+        payload: err.data,
+      });
+    });
+};
 
 export const fetchTruckData = () => (dispatch) => {
   dispatch({type: FETCHING_TRUCKS_START});
   axiosWithAuth()
-  .get("/api/trucks")
-  .then((res) => {
-    dispatch({
-      type: FETCHING_TRUCKS_SUCCESS,
-      payload: res.data,
+    .get("/api/trucks")
+    .then((res) => {
+      dispatch({
+        type: FETCHING_TRUCKS_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log("error", err);
+      dispatch({type: FETCHING_TRUCKS_ERROR, payload: err.message});
     });
-  })
-  .catch((err) => {
-    console.log("error", err);
-    dispatch({type: FETCHING_TRUCKS_ERROR, payload: err.message});
-  });
-}
+};
 
 export const addFavoriteTruck = (userId, truckId) => (dispatch) => {
   axiosWithAuth()
-    .post(`/api/diners/${userId}/favoriteTrucks`,{
-      truckId: truckId
+    .post(`/api/diners/${userId}/favoriteTrucks`, {
+      truckId: truckId,
     })
-    .then(res => {
-      console.log("AC: actions/index.js: settingFavoriteTruck: axios.then: ", res);
+    .then((res) => {
+      console.log(
+        "AC: actions/index.js: settingFavoriteTruck: axios.then: ",
+        res
+      );
       dispatch({
         type: SET_FAVORITE_TRUCK_SUCCESS,
-        payload: res.data
-      })
+        payload: res.data,
+      });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log("error", err);
       dispatch({type: SET_FAVORITE_TRUCK_ERROR, payload: err.message});
-    })
-  }
+    });
+};
 
-  export const deleteFavoriteTruck = (userId, truckId) => (dispatch) => {
-    console.log(truckId);
-    axiosWithAuth()
-      .delete(`/api/diners/${userId}/favoriteTrucks`,{
-        truckId: truckId
-      })
-      .then(res => {
-        console.log("AC: actions/index.js: settingFavoriteTruck: axios.then: ", res);
-        dispatch({
-          type: SET_FAVORITE_TRUCK_SUCCESS,
-          payload: res.data
-        })
-      })
-      .catch(err => {
-        console.log("error", err);
-        dispatch({
-          type: SET_FAVORITE_TRUCK_ERROR, 
-          payload: err.message
-        });
-      })
-    }
-
-export const addTruckRating = (truckId, dinerId, customerRating) => (dispatch) => {
+export const deleteFavoriteTruck = (userId, truckId) => (dispatch) => {
+  console.log(truckId);
   axiosWithAuth()
-    .post(`/api/trucks/${truckId}/customerRatings/${dinerId}`,{
-      customerRating: customerRating
+    .delete(`/api/diners/${userId}/favoriteTrucks`, {
+      truckId: truckId,
     })
-    .then(res => {
+    .then((res) => {
+      console.log(
+        "AC: actions/index.js: settingFavoriteTruck: axios.then: ",
+        res
+      );
+      dispatch({
+        type: SET_FAVORITE_TRUCK_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log("error", err);
+      dispatch({
+        type: SET_FAVORITE_TRUCK_ERROR,
+        payload: err.message,
+      });
+    });
+};
+
+export const addTruckRating = (truckId, dinerId, customerRating) => (
+  dispatch
+) => {
+  axiosWithAuth()
+    .post(`/api/trucks/${truckId}/customerRatings/${dinerId}`, {
+      customerRating: customerRating,
+    })
+    .then((res) => {
       console.log(res);
       dispatch({
         type: ADD_TRUCK_RATING_SUCCESS,
-        payload: {data: res.data, truckId: truckId}
-      })
-      
+        payload: {data: res.data, truckId: truckId},
+      });
     })
-    .catch( err => {
+    .catch((err) => {
       dispatch({
         type: ADD_TRUCK_RATING_ERROR,
-        payload: err.message
-      })
-    })
-}
+        payload: err.message,
+      });
+    });
+};
 
-export const addMenuRating = (truckId, menuItemId, dinerId, customerRating) => (dispatch) => {
+export const addMenuRating = (truckId, menuItemId, dinerId, customerRating) => (
+  dispatch
+) => {
   axiosWithAuth()
-  .post(`/api/trucks/${truckId}/menu/${menuItemId}/customerRatings/${dinerId}`,{
-      customerRating: customerRating
-    })
-    .then(res => {
+    .post(
+      `/api/trucks/${truckId}/menu/${menuItemId}/customerRatings/${dinerId}`,
+      {
+        customerRating: customerRating,
+      }
+    )
+    .then((res) => {
       console.log(res);
       dispatch({
         type: ADD_MENU_RATING_SUCCESS,
-        payload: {data: res.data, truckId: truckId, menuItemId: menuItemId}
-      })
-      
+        payload: {data: res.data, truckId: truckId, menuItemId: menuItemId},
+      });
     })
-    .catch( err => {
+    .catch((err) => {
       dispatch({
         type: ADD_MENU_RATING_ERROR,
-        payload: err.message
-      })
-    })
-}
+        payload: err.message,
+      });
+    });
+};

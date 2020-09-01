@@ -48,7 +48,6 @@ const TruckCard = (props) => {
     props.updateTruck(props.truck.id, selectTruck);
 
     setOpen(false);
-
   };
 
   return (
@@ -116,16 +115,6 @@ const TruckCard = (props) => {
                         handlePlaceSelector={handlePlaceSelector}
                       />
                     </Form.Field>
-                    {/* <Form.Field>
-                      <label>Departure Time</label>
-                      <input
-                        type="time"
-                        name="departureTime"
-                        placeholder=""
-                        value={truckToEdit.departureTime}
-                        onChange={handleChange}
-                      />
-                    </Form.Field> */}
                     <Button type="submit">
                       <Icon name="add" /> Update Truck
                     </Button>

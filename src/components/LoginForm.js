@@ -156,7 +156,6 @@ const Login = () => {
             </Link>
           </Grid.Column>
         </Grid>
-        {/* <Divider vertical>Or</Divider> */}
       </Segment>
     </Container>
   );

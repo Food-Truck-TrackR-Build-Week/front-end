@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef} from "react";
-import {connect} from "react-redux";
 import {
   Map,
   GoogleApiWrapper,
@@ -9,16 +8,7 @@ import {
 } from "google-maps-react";
 import {mapStyles} from "../../utils/mapStyles";
 
-import {
-  Card,
-  Icon,
-  Image,
-  Grid,
-  Header,
-  List,
-  Rating,
-  Button,
-} from "semantic-ui-react";
+import {Card, Icon, Image, Grid} from "semantic-ui-react";
 
 const mapStyle = {
   width: "100%",
@@ -75,13 +65,6 @@ function MapContainer(props) {
       );
     }
   });
-
-  // useEffect(() => {
-  //     if(mapReference !== null) {
-  //         mapReference.fitBounds(circleRef.circle.getBounds())
-  //     }
-
-  // }, [props.milesRadius])
 
   useEffect(() => {
     if (props.destination !== null) {
