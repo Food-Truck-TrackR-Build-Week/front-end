@@ -98,7 +98,7 @@ function TruckListSideBar(props) {
                       {t.cuisineType}
                     </Header>
                     <Header as="h5" disabled>
-                      {`${coordinates[2]}, ${coordinates[3]}`}
+                      {t.departureTime > Date.now() ? `${coordinates[2]}, ${coordinates[3]}` : 'offline'}
                     </Header>
                   </List.Content>
                 </List.Item>
