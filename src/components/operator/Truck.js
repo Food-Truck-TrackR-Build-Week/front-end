@@ -98,7 +98,7 @@ const Truck = (props) => {
         <p>
           <Icon name="map pin" size="large" color="red" />
 
-          {props.truck.currentLocation !== undefined ? `${props.truck.currentLocation.split(', ')[2]}, ${props.truck.currentLocation.split(', ')[3]}` : null}
+          {props.truck.currentLocation !== undefined ? props.truck.departureTime > Date.now() ? `${props.truck.currentLocation.split(', ')[2]}, ${props.truck.currentLocation.split(', ')[3]}` : 'offline' : 'Offline'}
         </p>
         <div>
           <p>
