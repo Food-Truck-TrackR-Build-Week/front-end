@@ -140,7 +140,7 @@ const TruckCard = (props) => {
             <Card.Meta>
               <span className="date">
                 <Icon name="clock" />
-                {props.truck.departureTime}
+                {props.truck.departureTime > Date.now() ? props.truck.departureTime.toLocaleTimeString() : 'Offline'}
               </span>
             </Card.Meta>
             <Card.Description>
@@ -149,7 +149,7 @@ const TruckCard = (props) => {
             </Card.Description>
             <Card.Description>
               <Icon name="map pin" color="red" />
-              {props.truck.currentLocation}
+              {props.truck.departureTime > Date.now() ? `${props.truck.currentLocation.split(', ')[2]}, ${props.truck.currentLocation.split(', ')[3]}` : 'Offline'}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
