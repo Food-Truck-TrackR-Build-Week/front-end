@@ -29,7 +29,6 @@ Food Truck TrackR connects users with their favorite food truck locations in rea
  - [Axios](https://www.npmjs.com/package/axios)
  - [Semantic UI](https://react.semantic-ui.com/)
  - [Redux](https://redux.js.org/)
- - [Jest](https://jestjs.io/docs/en/getting-started)
  - [yup](https://www.npmjs.com/package/yup)
  - [Google Map API](https://console.cloud.google.com/google/maps-apis/)
  
