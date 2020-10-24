@@ -1,7 +1,7 @@
 # Food-Truck-TrackR-Front-end
 
 Food Truck TrackR connects users with their favorite food truck locations in real-time. [Live Version](https://foodtruck-trackr.vercel.app/)
-![alt text](https://github.com/BkAngel201/portfolio-website/raw/master/images/pic04-4.jpg "Logo Title Text 1")
+![alt text](https://github.com/BkAngel201/portfolio-website/raw/master/images/pic04-4.jpg "Food Truck TrackR App")
 
 
 ## How it works
